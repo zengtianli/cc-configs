@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# cc-configs install: symlink skills/commands/agents/harness.yaml to ~/.claude/
+# cc-configs install: symlink skills/commands/agents/hooks/harness.yaml to ~/.claude/
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -49,7 +49,8 @@ link_file() {
 link_dir "skills"
 link_dir "commands"
 link_dir "agents"
+link_dir "hooks"
 link_file "harness.yaml"
 
 echo ""
-echo "Done. Verify: ls -la $CLAUDE_DIR/{skills,commands,agents,harness.yaml}"
+echo "Done. Verify: ls -la $CLAUDE_DIR/{skills,commands,agents,hooks,harness.yaml}"
