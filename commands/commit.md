@@ -21,6 +21,13 @@ CLI flags：
 - `--dry` 只生成 msg 不 commit（看质量）
 - `--model claude-opus-4-7` 默认；可换 sonnet/haiku
 - `--scope <files>` 限定 staging 哪些文件
+- `--allow-derived` 关闭派生 guard（极少用，详见 [[commit-guard]] skill）
+
+## commit-guard（默认 ON · 2026-05-18）
+
+`auto_commit.py` 默认走 [[commit-guard]]：扫 staging 识别派生产物 / 缓存 / 备份 / 作废副本 / 系统元数据 / >10MB 大文件，**自动 unstage** 并 warn。规则源 `~/Dev/tools/cc-configs/skills/commit-guard/SKILL.md`。
+
+需要保留派生入仓 → `--allow-derived`。
 
 适用：任意 ~/Dev 内 git repo。
 
