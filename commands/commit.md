@@ -24,10 +24,30 @@ CLI flags：
 
 适用：任意 ~/Dev 内 git repo。
 
+## 多 repo 递归 commit（默认并行）
+
+参数含「全部 / 递归 / 所有 / N 个」或显式 `--recursive` → **必须并行**（铁律 [[agentteam-parallel-default]]）。
+
+模板：
+```bash
+REPOS=()
+while IFS= read -r gitdir; do
+  repo=$(dirname "$gitdir")
+  [[ "$repo" == *"/.claude/worktrees/"* ]] && continue
+  st=$(cd "$repo" 2>/dev/null && git status --porcelain 2>/dev/null)
+  [ -n "$st" ] && REPOS+=("$repo")
+done < <(find ~/Dev -name ".git" -not -path "*/node_modules/*" -not -path "*/_archive/*" 2>/dev/null)
+
+printf '%s\n' "${REPOS[@]}" | xargs -P 8 -I{} bash -c '
+  cd "$1" && git add -A && python3 ~/Dev/devtools/lib/tools/auto_commit.py --no-confirm --push 2>&1 | tail -3
+' _ {}
+```
+
+并发 P=8（LLM rate limit 安全区）。**禁止逐个串行跑**——24 repo 串行 = 6+ min，并行 = 45s。
+
 不适用：
 - 涉及 SSOT 多 repo cascade → 用 `/refactor dir`
 - 站点部署 → 用 `/ship`
-- 跨 repo 批量 push → 用 `python3 ~/Dev/devtools/scripts/tools/git_smart_push.py`
 
 退出码：
 - 0 成功 / dry / 用户取消
