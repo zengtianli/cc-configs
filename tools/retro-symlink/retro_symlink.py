@@ -11,7 +11,7 @@ INDEX.md 维护时间线索引。
   audit                    检查中央目录所有 .md 是否都对应有效 symlink/物理文件
 
 用法：
-  python3 retro_symlink.py link ~/Dev/wpl-calc/docs/retros/session-retro-20260501-...md
+  python3 retro_symlink.py link ~/Dev/stations/wpl-calc/docs/retros/session-retro-20260501-...md
   python3 retro_symlink.py migrate                # dry-run 默认
   python3 retro_symlink.py migrate --apply        # 真做
   python3 retro_symlink.py index
@@ -86,7 +86,7 @@ def project_label(physical: Path) -> str:
     # ~/Dev/X/docs/retros/file.md → X
     parts = rel.split("/")
     if parts[0] == "Dev" and len(parts) >= 4:
-        # ~/Dev/wpl-calc/...   → wpl-calc
+        # ~/Dev/stations/wpl-calc/...   → wpl-calc
         # ~/Dev/stations/web-stack/... → stations/web-stack
         # ~/Dev/content/investment/... → content/investment
         if parts[1] in ("stations", "labs", "content", "tools", "migrated") and len(parts) >= 5:

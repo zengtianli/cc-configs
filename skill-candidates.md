@@ -82,6 +82,6 @@
 - 出现次数: 1
 - 状态: active (n=1, 等下次 comp analysis 项目)
 - 模式描述: anchor-based comparable analysis with factor decomposition：① 数据池清洗（剔法拍 / 同户型筛选 / 标准化口径）② 因子分解（楼层 / 时间 / 位置 / 装修 各独立量化）③ 数据驱动 vs 估算 老实分（行业规则≠数据 / 不允许"保守 pad"伪装数据）④ 多锚收敛 + 单锚直推 双路径 ⑤ 敏感性分析（每因子 ±N% 看估值带宽）。本次应用于西溪蝶园 17-1-801 售房定价。
-- 涉及项目: ~/Dev/housing/sale（原 sale-estates 已重命名）
-- 潜在 skill 类型: 工程脚本（Python lib + CLI）> slash command。已落地 `~/Dev/housing/sale/tools/{parse_butterfly_park.py, valuate.py}` 作为本项目 SoT；如再有 1-2 个 comp analysis 项目（卖第二套房 / 二手车估值 / 股票投资 comparable 分析），泛化到 `~/Dev/devtools/lib/tools/comp_analysis.py` + slash `/valuate`。
+- 涉及项目: ~/Dev/labs/housing/sale（原 sale-estates 已重命名）
+- 潜在 skill 类型: 工程脚本（Python lib + CLI）> slash command。已落地 `~/Dev/labs/housing/sale/tools/{parse_butterfly_park.py, valuate.py}` 作为本项目 SoT；如再有 1-2 个 comp analysis 项目（卖第二套房 / 二手车估值 / 股票投资 comparable 分析），泛化到 `~/Dev/devtools/lib/tools/comp_analysis.py` + slash `/valuate`。
 - 教训: v1 凭"用户说位置好"verbal 估 +1-2% / 楼层 5.0% 上加 0.3% 没数据支撑的"保守 pad" — **把估算包装成数据是反模式**。代码 + CSV 把每个数字的来源逼到台面，无处藏 verbal 估算。

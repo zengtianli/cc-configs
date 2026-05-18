@@ -397,4 +397,4 @@ python3 ~/Dev/devtools/lib/tools/paths.py audit --brief
 - 中央 retro 索引：`~/Dev/stations/docs/knowledge/INDEX.md`（symlink 集合 + 时间线）
 - retro symlink 工具：`~/Dev/tools/cc-configs/tools/retro-symlink/retro_symlink.py`（link 单文件 / migrate 批量回迁）
 - 旧示例（单一中央）：`~/Dev/stations/docs/knowledge/session-retro-20260419-r7-mega.md`
-- 新示例（物理 + symlink）：`~/Dev/wpl-calc/docs/retros/session-retro-20260501-wpl-calc-v08.md` ← `~/Dev/stations/docs/knowledge/session-retro-20260501-wpl-calc-v08.md`
+- 新示例（物理 + symlink）：`~/Dev/stations/wpl-calc/docs/retros/session-retro-20260501-wpl-calc-v08.md` ← `~/Dev/stations/docs/knowledge/session-retro-20260501-wpl-calc-v08.md`

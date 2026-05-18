@@ -175,7 +175,7 @@
   },
   {
     "file": "session-retro-20260501-wpl-calc-v08.md",
-    "primary_project_path": "~/Dev/wpl-calc",
+    "primary_project_path": "~/Dev/stations/wpl-calc",
     "confidence": "high",
     "reason": "wpl-calc carry v0.8 数学模型重构，wpl-calc 是主项目（数学逻辑 + 测试）"
   },
