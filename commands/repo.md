@@ -56,7 +56,7 @@ hydro (12)  ★=auto_push
   hydro-rainfall    ~/Dev/stations/web-stack/services/hydro-rainfall    zengtianli/hydro-rainfall    /opt/hydro/hydro-rainfall
 
 work (2)
-★ zdwp              ~/Dev/Work/zdwp             zengtianli/zdwp              /var/www/zdwp
+★ zdwp              ~/Dev/Work/projects/zdwp             zengtianli/zdwp              /var/www/zdwp
 ```
 
 #### `check`

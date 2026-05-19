@@ -59,9 +59,9 @@ python3 ~/Dev/tools/dev/lib/tools/downloads_triage/triage.py apply
 
 | 内容类型 | 目标 |
 |---|---|
-| 水利业务（生态流量/水库/灌区/水资源公报） | `~/Dev/Work/zdwp/workspace/inbox/<date>-from-downloads/`（二次精分） |
-| 公司级共享（法规/标准/参考资料） | `~/Dev/Work/resources/` |
-| 生态流量项目 | `~/Dev/Work/eco-flow/` |
+| 水利业务（生态流量/水库/灌区/水资源公报） | `~/Dev/Work/projects/zdwp/workspace/inbox/<date>-from-downloads/`（二次精分） |
+| 公司级共享（法规/标准/参考资料） | `~/Dev/Work/shared/resources/` |
+| 生态流量项目 | `~/Dev/Work/projects/eco-flow/` |
 | 行政/财务（发票/报销/预算） | `~/Dev/content/admin/` |
 | 法律/案件/保单 | `~/Dev/content/ip-legal/legal/` |
 | 投资/税务（hibor/IRS/Robinhood） | `~/Dev/content/investment/` |

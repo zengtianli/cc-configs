@@ -170,7 +170,7 @@ warmup 产出。每个 indexable workspace 1 record：`status / duration_s / avg
 为大型项目生成 `_files.md`，让 Auggie 能索引那些不推 GitHub 的二进制文件。
 
 ### 参数
-- `<target>`（必填）：项目根目录，如 `~/Dev/Work/zdwp`、`~/Dev/Work/reports`
+- `<target>`（必填）：项目根目录，如 `~/Dev/Work/projects/zdwp`、`~/Dev/Work/shared/reports`
 - `--depth N`（默认 3）：扫描深度
 - `--dry-run`：只生成不提交
 

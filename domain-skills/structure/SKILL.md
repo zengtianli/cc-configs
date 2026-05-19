@@ -17,7 +17,7 @@ zdwp/
 └── .claude/                # skills + agents + commands
 ```
 
-共享资源已独立：`~/Dev/Work/resources/`（GIS、参考资料、基础数据）
+共享资源已独立：`~/Dev/Work/shared/resources/`（GIS、参考资料、基础数据）
 
 ## 项目标准结构
 
@@ -38,8 +38,8 @@ projects/{project-name}/
 
 | 文件特征 | 应放位置 |
 |---------|---------|
-| 全省/多县市共享 GIS | `~/Dev/Work/resources/gis/` |
-| 规范、政策、模板 | `~/Dev/Work/resources/references/` |
+| 全省/多县市共享 GIS | `~/Dev/Work/shared/resources/gis/` |
+| 规范、政策、模板 | `~/Dev/Work/shared/resources/references/` |
 | 脚本、工具、代码 | `~/Dev/` 下对应仓库 |
 | 历史版本 | `archives/` |
 | 归属不明的新文件 | `workspace/inbox/` |
@@ -58,12 +58,12 @@ projects/{project-name}/
 | 用水权、水权 | `projects/rights/` | — |
 | 漏损 | `projects/leak/` | — |
 | 钱塘江监测 | `projects/qiantang-monitoring/` | — |
-| 生态流量 | — | `~/Dev/Work/eco-flow/` |
-| 风险图、洪水 | — | `~/Dev/Work/risk-map/` |
-| 浙东、引水 | — | `~/Dev/Work/zdys/` |
-| 水源地 | — | `~/Dev/Work/water-src/` |
-| 岸线 | — | `~/Dev/Work/shoreline/` |
-| 建模竞赛 | — | `~/Dev/Work/modeling/` |
+| 生态流量 | — | `~/Dev/Work/projects/eco-flow/` |
+| 风险图、洪水 | — | `~/Dev/Work/projects/risk-map/` |
+| 浙东、引水 | — | `~/Dev/Work/projects/zdys/` |
+| 水源地 | — | `~/Dev/Work/projects/water-src/` |
+| 岸线 | — | `~/Dev/Work/projects/shoreline/` |
+| 建模竞赛 | — | `~/Dev/Work/projects/modeling/` |
 
 ### 按地区归类
 

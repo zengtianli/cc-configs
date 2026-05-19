@@ -2,7 +2,7 @@ name: 生态流量报告
 description: 小型水库生态流量核定与保障实施方案
 
 # 参考报告拆分目录（景宁成品）
-ref_chapters_dir: ~/Dev/Work/eco-flow/模板/ref_chapters
+ref_chapters_dir: ~/Dev/Work/projects/eco-flow/模板/ref_chapters
 
 # 变量替换映射（replace 策略用）
 replacements:

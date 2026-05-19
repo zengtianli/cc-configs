@@ -144,7 +144,7 @@ python3 ~/Dev/tools/cc-configs/tools/cc-audit/cc_audit.py --cwd $(pwd) --json
 cd ~/Dev/content/investment
 /sync-cc                   # 6 维度全跑
 
-cd ~/Dev/Work/bids
+cd ~/Dev/Work/shared/bids
 /sync-cc                   # paths/harness 跳过（不在 ~/Dev/）
 
 cd ~/zls

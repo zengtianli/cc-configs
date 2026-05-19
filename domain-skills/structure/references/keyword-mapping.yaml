@@ -47,24 +47,24 @@
 
 生态流量:
   keywords: [生态流量, 生态基流, 最小流量, 生态需水]
-  target: ~/Dev/Work/eco-flow
+  target: ~/Dev/Work/projects/eco-flow
 
 风险图:
   keywords: [风险图, 洪水, 淹没, 洪水风险]
-  target: ~/Dev/Work/risk-map
+  target: ~/Dev/Work/projects/risk-map
 
 浙东引水:
   keywords: [浙东, 引水, 水网]
-  target: ~/Dev/Work/zdys
+  target: ~/Dev/Work/projects/zdys
 
 水源地:
   keywords: [水源地, 饮用水, 水源保护, 安全保障]
-  target: ~/Dev/Work/water-src
+  target: ~/Dev/Work/projects/water-src
 
 岸线规划:
   keywords: [岸线, 河湖保护, 岸线规划]
-  target: ~/Dev/Work/shoreline
+  target: ~/Dev/Work/projects/shoreline
 
 建模竞赛:
   keywords: [建模, 竞赛, 数学建模]
-  target: ~/Dev/Work/modeling
+  target: ~/Dev/Work/projects/modeling

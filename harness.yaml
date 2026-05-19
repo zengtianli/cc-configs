@@ -16,25 +16,25 @@ global_skills:
 
 projects:
   risk-map:
-    path: ~/Dev/Work/risk-map
+    path: ~/Dev/Work/projects/risk-map
     skills: [risk-map, resources, plan-first, structure]
   eco-flow:
-    path: ~/Dev/Work/eco-flow
+    path: ~/Dev/Work/projects/eco-flow
     skills: [eco-flow, resources, plan-first, structure]
   zdys:
-    path: ~/Dev/Work/zdys
+    path: ~/Dev/Work/projects/zdys
     skills: [zdys, resources, plan-first, structure]
   water-src:
-    path: ~/Dev/Work/water-src
+    path: ~/Dev/Work/projects/water-src
     skills: [water-src, resources, plan-first, structure]
   capacity:
-    path: ~/Dev/Work/capacity
+    path: ~/Dev/Work/projects/capacity
     skills: [capacity, resources, plan-first]
   bids:
-    path: ~/Dev/Work/bids
+    path: ~/Dev/Work/shared/bids
     skills: [bid, resources, plan-first]
   reclaim:
-    path: ~/Dev/Work/reclaim
+    path: ~/Dev/Work/projects/reclaim
     skills: [capacity, resources, plan-first, structure]
   international-assets:
     path: ~/Dev/content/investment

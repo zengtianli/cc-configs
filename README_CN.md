@@ -126,10 +126,10 @@ Skills 是自动触发的上下文注入。Claude Code 检测到匹配场景时�
 
 | 技能 | 绑定项目 | 提供的知识 |
 |------|---------|-----------|
-| **risk-map** | ~/Dev/Work/risk-map | 洪水风险图数据处理、QGIS 空间工作流、Excel 模板填充 |
-| **eco-flow** | ~/Dev/Work/eco-flow | 生态流量计算（Tennant 法）、水库筛选、保障方案 |
-| **zdys** | ~/Dev/Work/zdys | 浙东引水运行态势、调度模型、灌溉需水计算 |
-| **water-src** | ~/Dev/Work/water-src | 饮用水水源地安全保障评估方法 |
+| **risk-map** | ~/Dev/Work/projects/risk-map | 洪水风险图数据处理、QGIS 空间工作流、Excel 模板填充 |
+| **eco-flow** | ~/Dev/Work/projects/eco-flow | 生态流量计算（Tennant 法）、水库筛选、保障方案 |
+| **zdys** | ~/Dev/Work/projects/zdys | 浙东引水运行态势、调度模型、灌溉需水计算 |
+| **water-src** | ~/Dev/Work/projects/water-src | 饮用水水源地安全保障评估方法 |
 | **water-quality** | （独立） | 千岛湖引水分质供水管理 |
 | **resources** | risk-map, eco-flow, zdys, water-src | 共享资源：水库 DB、GIS 底图、行政边界、水资源年报 |
 

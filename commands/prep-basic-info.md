@@ -13,15 +13,15 @@ description: 基础信息数据准备（DB优先+网搜补充→01-06.md+参考�
 从 `$ARGUMENTS` 解析目标县市名（如 "天台"）。
 
 确定目录：
-- 数据目录：`~/Dev/Work/eco-flow/{city拼音}-{county}/data/`
-- 参考资料：`~/Dev/Work/eco-flow/{city拼音}-{county}/data/参考资料/`
-- 格式模板：`~/Dev/Work/eco-flow/lishui-景宁/data/01_基本信息.md` ~ `06_水资源概况.md`
+- 数据目录：`~/Dev/Work/projects/eco-flow/{city拼音}-{county}/data/`
+- 参考资料：`~/Dev/Work/projects/eco-flow/{city拼音}-{county}/data/参考资料/`
+- 格式模板：`~/Dev/Work/projects/eco-flow/lishui-景宁/data/01_基本信息.md` ~ `06_水资源概况.md`
 
 ### 2. 先查DB（优先级最高）
 
 **DB有的数据直接用，不要网搜。** 这是铁律。
 
-从 `~/Dev/Work/eco-flow/data/db_water_stats.db` 查询所有可用 stat_type：
+从 `~/Dev/Work/projects/eco-flow/data/db_water_stats.db` 查询所有可用 stat_type：
 
 ```sql
 -- 查看该县有哪些数据类型
@@ -42,7 +42,7 @@ WHERE county='{县名}县' ORDER BY stat_type, year
 | `usage` | 06_水资源概况 | 2019-2024 | 用水量5年表 |
 | `water_resource` | 06_水资源概况 | 0 | 多年平均水资源总量 |
 
-从 `~/Dev/Work/eco-flow/data/db_reservoirs.db` 补充水库详情：
+从 `~/Dev/Work/projects/eco-flow/data/db_reservoirs.db` 补充水库详情：
 ```sql
 SELECT scale, COUNT(*) FROM reservoirs WHERE county='{县名}县' GROUP BY scale
 SELECT name, scale, total_capacity, drainage_area, eco_flow_target
@@ -64,7 +64,7 @@ FROM reservoirs WHERE county='{县名}县' ORDER BY total_capacity DESC
 1. 存到 `参考资料/网搜汇总.md`（含URL、摘录内容、搜索日期）
 2. **导入DB**：运行 `import_county_info.py` 或直接 SQL INSERT，确保下次不再网搜
 
-原始文件（PDF/网页）下载到 `~/Dev/Work/resources/data/原始xlsx/原始网搜/{县名}/`
+原始文件（PDF/网页）下载到 `~/Dev/Work/shared/resources/data/原始xlsx/原始网搜/{县名}/`
 
 ### 4. 生成6个MD
 

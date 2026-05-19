@@ -3,9 +3,9 @@ name: resources
 description: 公司级共享资源目录。当需要查找水库数据、GIS底图、行政边界、水资源年报、行业规范时触发。
 ---
 
-# 共享资源 (~/Dev/Work/resources/)
+# 共享资源 (~/Dev/Work/shared/resources/)
 
-水利公司级共享数据，多个项目复用。读取时用绝对路径 `~/Dev/Work/resources/...`。
+水利公司级共享数据，多个项目复用。读取时用绝对路径 `~/Dev/Work/shared/resources/...`。
 
 ## 数据库 (data/)
 
@@ -48,7 +48,7 @@ description: 公司级共享资源目录。当需要查找水库数据、GIS底�
 | `bin/reservoir_query.py` | 水库数据查询 + 生态流量导入 |
 | `bin/import_reservoir.py` | 从工程详表导入水库 |
 
-对应 CC commands 在 `~/Dev/Work/resources/.claude/commands/`：
+对应 CC commands 在 `~/Dev/Work/shared/resources/.claude/commands/`：
 `/import-stats` `/extract-stats` `/query-stats` `/import-reservoirs` `/extract-reservoirs` `/query-reservoirs`
 
 ## 约束

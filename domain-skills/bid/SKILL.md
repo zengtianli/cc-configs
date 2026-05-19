@@ -1,11 +1,11 @@
 ---
 name: bid
-description: 标书撰写技能。当处理 ~/Dev/Work/bids/ 下的标书项目，需要解析招标文件、搭建章节框架、盘点参考资料、走四阶段写作管线时触发。
+description: 标书撰写技能。当处理 ~/Dev/Work/shared/bids/ 下的标书项目，需要解析招标文件、搭建章节框架、盘点参考资料、走四阶段写作管线时触发。
 ---
 
 # bid — 标书撰写
 
-标书项目集中在 `~/Dev/Work/bids/`，方法论沉淀在 `~/Dev/Work/bids/CLAUDE.md`。本 skill 是入口，告诉你**做什么、按什么顺序、用哪个工具**。
+标书项目集中在 `~/Dev/Work/shared/bids/`，方法论沉淀在 `~/Dev/Work/shared/bids/CLAUDE.md`。本 skill 是入口，告诉你**做什么、按什么顺序、用哪个工具**。
 
 ## 核心原则
 
@@ -18,7 +18,7 @@ description: 标书撰写技能。当处理 ~/Dev/Work/bids/ 下的标书项目�
 
 ### 阶段 1 — 项目初始化
 ```bash
-cp -r ~/Dev/Work/bids/_template ~/Dev/Work/bids/{slug}
+cp -r ~/Dev/Work/shared/bids/_template ~/Dev/Work/shared/bids/{slug}
 ```
 把招标文件原件丢进 `招标文件/`，把所有参考资料丢进 `参考/`。
 填 `_project.yaml`（项目名、编号、采购人、预算、截止日期）。
@@ -28,7 +28,7 @@ cp -r ~/Dev/Work/bids/_template ~/Dev/Work/bids/{slug}
 🚧 `zbwj_parse.py` 待立（未来合进 `~/Dev/tools/doctools/scripts/document/`）。当前先用 `bid_doc_parser.py` 做 doc/docx → md，评分表手工提取。
 
 ```bash
-python3 ~/Dev/tools/scripts/scripts/document/bid_doc_parser.py ~/Dev/Work/bids/{slug}/招标文件/
+python3 ~/Dev/tools/scripts/scripts/document/bid_doc_parser.py ~/Dev/Work/shared/bids/{slug}/招标文件/
 # 输出 招标文件/*.md；scoring.json 需手工从 md 里抽评分表
 ```
 
@@ -51,7 +51,7 @@ python3 ~/Dev/tools/scripts/scripts/document/bid_doc_parser.py ~/Dev/Work/bids/{
 按 `技术标框架.md` 逐章派 subagent 写作，输出到 `成果/md/`。
 每个 subagent prompt 必须包含：
 - 该章的"得满分要求"
-- D1-D4 维度约束（见 ~/Dev/Work/bids/CLAUDE.md）
+- D1-D4 维度约束（见 ~/Dev/Work/shared/bids/CLAUDE.md）
 - 参考资料盘点结果（告诉它哪段抄哪里）
 - 当前章节的数据来源约束
 
@@ -62,7 +62,7 @@ python3 ~/Dev/tools/scripts/scripts/document/bid_doc_parser.py ~/Dev/Work/bids/{
 **🚧 待立**：`bid_standardize.py`（已归档 `_archive/scripts-archive/`，待重立到 doctools） / `chart_insert.py` / `md_merge.py`（只有 raycast .sh 包装）
 
 ```bash
-cd ~/Dev/Work/bids/{slug}/成果/
+cd ~/Dev/Work/shared/bids/{slug}/成果/
 
 # 5.1 质量修复（禁用词、数据来源标注）
 python3 ~/Dev/tools/doctools/scripts/document/report_quality_check.py md/ --bid --fix --output-dir md_clean/
@@ -103,7 +103,7 @@ python3 ~/Dev/tools/doctools/scripts/document/md_docx_template.py merged.md -o �
 - **组织架构与人员配置**
 - **业绩与资质**
 
-参考：`~/Dev/Work/bids/qiantang-monitoring-2026/成果/md_final/11.md` `12.md`
+参考：`~/Dev/Work/shared/bids/qiantang-monitoring-2026/成果/md_final/11.md` `12.md`
 
 ## 不要做的事
 

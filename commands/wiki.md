@@ -96,8 +96,8 @@ created: YYYY-MM-DD
 
 ```bash
 # 默认 = 项目本地 vault（reclaim 模式）
-cd ~/Dev/Work/reclaim && /wiki entry water-efficiency-method
-# → 写到 ~/Dev/Work/reclaim/wiki/water-efficiency-method.md（平铺）
+cd ~/Dev/Work/projects/reclaim && /wiki entry water-efficiency-method
+# → 写到 ~/Dev/Work/projects/reclaim/wiki/water-efficiency-method.md（平铺）
 
 # super vault 立 topic（跨项目可发现）
 /wiki new water-efficiency "工业园区水效评估方法论" --super

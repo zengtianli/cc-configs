@@ -200,7 +200,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description='ZDWP 自动整理脚本')
-    parser.add_argument('--zdwp-root', default='/Users/tianli/Dev/Work/zdwp',
+    parser.add_argument('--zdwp-root', default='/Users/tianli/Dev/Work/projects/zdwp',
                        help='ZDWP 根目录路径')
     parser.add_argument('--dry-run', action='store_true',
                        help='试运行模式，不实际移动文件')

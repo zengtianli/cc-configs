@@ -204,7 +204,7 @@ ssh root@104.218.100.67 "echo '=== Services ===' && systemctl list-units --type=
 - 版本冗余：`deliverables/` / `docs/` 下同一文档多版本
 
 #### 3. ~/Dev/Work/ 额外
-- 在 `~/Dev/Work/zdwp/` 下 → 跑 `python3 ~/Dev/tools/dev/scripts/tools/zdwp_health.py`
+- 在 `~/Dev/Work/projects/zdwp/` 下 → 跑 `python3 ~/Dev/tools/dev/scripts/tools/zdwp_health.py`
 - 大目录（>1GB）提醒
 
 ### 输出

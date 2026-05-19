@@ -370,10 +370,10 @@ python3 ~/Dev/tools/dev/lib/tools/paths.py audit --brief
 
 | cwd 前缀 | domain | playbook 文件 |
 |---|---|---|
-| `~/Dev/Work/bids/` | `bids` | `~/Dev/Work/_playbooks/bids/` |
-| `~/Dev/Work/eco-flow/` | `eco-flow` | `~/Dev/Work/_playbooks/eco-flow/` |
-| `~/Dev/Work/zdwp/projects/reclaim/` | `reclaim` | `~/Dev/Work/_playbooks/reclaim/` |
-| `~/Dev/Work/zdwp/projects/*/` | `zdwp-<子项目>` | `~/Dev/Work/_playbooks/zdwp-*/` |
+| `~/Dev/Work/shared/bids/` | `bids` | `~/Dev/Work/_playbooks/bids/` |
+| `~/Dev/Work/projects/eco-flow/` | `eco-flow` | `~/Dev/Work/_playbooks/eco-flow/` |
+| `~/Dev/Work/projects/zdwp/projects/reclaim/` | `reclaim` | `~/Dev/Work/_playbooks/reclaim/` |
+| `~/Dev/Work/projects/zdwp/projects/*/` | `zdwp-<子项目>` | `~/Dev/Work/_playbooks/zdwp-*/` |
 | `~/Dev/<name>/`（站群） | `stations` | `~/Dev/tools/configs/playbooks/stations.md` |
 | `~/Dev/<name>/`（新站） | `web-scaffold` | `~/Dev/tools/configs/playbooks/web-scaffold.md` |
 | `~/Dev/hydro-*/` | `hydro` | `~/Dev/tools/configs/playbooks/hydro.md` |

@@ -126,10 +126,10 @@ Skills are auto-triggered context injections. Claude Code loads skill knowledge 
 
 | Skill | Bound project | Knowledge provided |
 |-------|--------------|-------------------|
-| **risk-map** | ~/Dev/Work/risk-map | Flood risk map data processing, QGIS spatial workflows, Excel template filling |
-| **eco-flow** | ~/Dev/Work/eco-flow | Ecological flow calculation (Tennant method), reservoir screening, guarantee plans |
-| **zdys** | ~/Dev/Work/zdys | Zhedong diversion operational status, dispatch models, irrigation demand calculation |
-| **water-src** | ~/Dev/Work/water-src | Drinking water source safety assessment methodology |
+| **risk-map** | ~/Dev/Work/projects/risk-map | Flood risk map data processing, QGIS spatial workflows, Excel template filling |
+| **eco-flow** | ~/Dev/Work/projects/eco-flow | Ecological flow calculation (Tennant method), reservoir screening, guarantee plans |
+| **zdys** | ~/Dev/Work/projects/zdys | Zhedong diversion operational status, dispatch models, irrigation demand calculation |
+| **water-src** | ~/Dev/Work/projects/water-src | Drinking water source safety assessment methodology |
 | **water-quality** | (standalone) | Qiandao Lake diversion classified water supply management |
 | **resources** | risk-map, eco-flow, zdys, water-src | Shared resource catalog: reservoir DB, GIS basemaps, admin boundaries, water resource yearbooks |
 
