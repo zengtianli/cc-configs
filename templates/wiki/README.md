@@ -2,7 +2,7 @@
 
 把项目文档按 **Wikipedia 风格**组织：1 个 Main Page (`WIKI.md`) + N 个独立子条目 (`docs/wiki/*.md`) + 标准 markdown link（**不用 Obsidian 双方括号风格**）。
 
-参考实现：`~/Dev/content/anthropic-account-hygiene/` (WIKI.md + docs/wiki/ 共 8 条目)。
+参考实现：`~/Dev/_archive/2026-05-18-anthropic-hygiene/` (WIKI.md + docs/wiki/ 共 8 条目)。
 
 ## 文件清单
 

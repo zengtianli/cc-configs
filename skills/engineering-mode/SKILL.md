@@ -151,7 +151,7 @@ _Karpathy + CC 业界对比报告 2026-05-13 立_
 | Plans | `~/.claude/plans/<slug>.md` | 同上 |
 | Commands/Skills 说明书 | `~/Dev/tools/cc-configs/commands/*.md` | `cmds.tianlizeng.cloud` |
 | 架构地图 | `~/Dev/stations/stack/projects.yaml` | `stack.tianlizeng.cloud` |
-| CC 演化日志 | `~/Dev/_archive/cc-evolution-20260419/changes.yaml` | `changelog.tianlizeng.cloud` |
+| CC 演化日志 | `~/Dev/_archive/2026-04-19-cc-evolution/changes.yaml` | `changelog.tianlizeng.cloud` |
 | 会话历史 | `~/.claude/sessions/` | `cc-pulse` MCP（替代 cclog · 2026-05-03） |
 
 **新建任何重要产出**，下意识问：放哪本地？哪个子域能查？两边都没有 → 先补。

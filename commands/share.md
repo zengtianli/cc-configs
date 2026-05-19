@@ -15,7 +15,7 @@ description: 把 markdown 文件渲染成 HTML 发布到 tianlizeng.cloud/share/
 
 例子：
 ```bash
-/share ~/Dev/content/legal/yanyuan/broker-defense-v1-legal-opinion.md
+/share ~/Dev/content/ip-legal/legal/yanyuan/broker-defense-v1-legal-opinion.md
 # → https://tianlizeng.cloud/share/broker-defense-v1-legal-opinion.html
 
 /share ~/Dev/.../analysis.md yanyuan-analysis --title "燕园暴雷分析"

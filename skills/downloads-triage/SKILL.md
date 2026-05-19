@@ -63,9 +63,9 @@ python3 ~/Dev/devtools/lib/tools/downloads_triage/triage.py apply
 | 公司级共享（法规/标准/参考资料） | `~/Dev/Work/resources/` |
 | 生态流量项目 | `~/Dev/Work/eco-flow/` |
 | 行政/财务（发票/报销/预算） | `~/Dev/content/admin/` |
-| 法律/案件/保单 | `~/Dev/content/legal/` |
+| 法律/案件/保单 | `~/Dev/content/ip-legal/legal/` |
 | 投资/税务（hibor/IRS/Robinhood） | `~/Dev/content/investment/` |
-| 简历/求职 | `~/Dev/content/career/` |
+| 简历/求职 | `~/Dev/content/career/job-search/` |
 | 学术（论文/研究） | `~/Dev/content/learn/<主题>/` |
 | 舆情站 | `~/Dev/stations/web-stack/services/yuqing/data/` |
 | 工具/插件源码 | `~/Dev/labs/<name>/` |

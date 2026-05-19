@@ -201,7 +201,7 @@ mkdir -p <root>/handoffs/_archive
 - 踩过的坑写根因和解法
 - `quick` 模式跳过 Phase 1+2
 - 关闭旧 handoff：`/wrap handoff --close <旧 slug>` 或手工 `mv <root>/handoffs/<旧 slug>.md <root>/handoffs/_archive/$(date +%F)-<旧 slug>.md`
-- 落地：单 station 改动 → `<station>/handoffs/<slug>.md`；跨站群 / ~/Dev meta 级 → `~/Dev/handoffs/<slug>.md`
+- 落地：单 station 改动 → `<station>/handoffs/<slug>.md`；跨站群 / ~/Dev meta 级 → `~/Dev/wiki/handoffs/dev/<slug>.md`
 - 没有 INDEX.md / 没有 symlink — `ls handoffs/` 就是 query
 
 ---

@@ -14,7 +14,7 @@ description: 简历工作流族 — build 渲染简历 / tailor 岗位定制 / v
 | `new-app` | 新建 application 标准目录骨架 | mkdir + jd.md 模板 |
 | `form` | 填应聘登记表 xlsx（合并 public + private） | `bin/build-form.py` |
 
-**项目根**：`~/Dev/content/resume/`
+**项目根**：`~/Dev/content/career/resume/`
 **SSOT**：`profile/profile.yaml`（公开）+ `profile/profile.private.yaml`（gitignore PII）
 **模板族**：`templates/{full-cn,concise-cn,full-en,role-tailored,registration-form}.md.j2`
 **Python**：`~/Dev/.venv/bin/python`（共享 venv，已含 jinja2/pyyaml/jsonschema/openpyxl/docx2pdf）
@@ -38,7 +38,7 @@ description: 简历工作流族 — build 渲染简历 / tailor 岗位定制 / v
 ### 例子
 
 ```bash
-cd ~/Dev/content/resume
+cd ~/Dev/content/career/resume
 ~/Dev/.venv/bin/python bin/build.py full-cn --out pdf -o build/
 ~/Dev/.venv/bin/python bin/build.py concise-cn --out docx -o build/
 ~/Dev/.venv/bin/python bin/build.py all --out md -o build/             # 全部 5 模板
@@ -91,7 +91,7 @@ custom_summary: "...一句话定位..."                  # 可选，覆盖 basic
 `/cv validate [<file>]`
 
 ```bash
-cd ~/Dev/content/resume
+cd ~/Dev/content/career/resume
 ~/Dev/.venv/bin/python bin/validate.py                      # 校验 public + private
 ~/Dev/.venv/bin/python bin/validate.py profile/profile.yaml # 单文件
 ```
@@ -156,7 +156,7 @@ top_n_skills: 8
 `/cv form [-o OUT_DIR] [--name suffix]`
 
 ```bash
-cd ~/Dev/content/resume
+cd ~/Dev/content/career/resume
 ~/Dev/.venv/bin/python bin/build-form.py -o build/
 # 输出：build/应聘登记表-2026-04-29-曾田力.xlsx
 ```
@@ -181,7 +181,7 @@ cd ~/Dev/content/resume
 修改 `profile/profile.yaml` → 跑 build 重新生成所有产物：
 
 ```bash
-cd ~/Dev/content/resume
+cd ~/Dev/content/career/resume
 ~/Dev/.venv/bin/python bin/validate.py            # 必先校验
 ~/Dev/.venv/bin/python bin/build.py all --out pdf -o build/
 ~/Dev/.venv/bin/python bin/build-form.py -o build/
@@ -208,7 +208,7 @@ done
 
 ## 相关
 
-- SSOT: `~/Dev/content/resume/profile/profile.yaml`
-- Schema: `~/Dev/content/resume/profile/profile.schema.yaml`
-- 模板族: `~/Dev/content/resume/templates/`
-- 项目说明: `~/Dev/content/resume/CLAUDE.md`
+- SSOT: `~/Dev/content/career/resume/profile/profile.yaml`
+- Schema: `~/Dev/content/career/resume/profile/profile.schema.yaml`
+- 模板族: `~/Dev/content/career/resume/templates/`
+- 项目说明: `~/Dev/content/career/resume/CLAUDE.md`
