@@ -43,7 +43,7 @@ description: 部署族 — (default) 当前目录 / changed 按 git diff 扇出 
 部署完成（成败均记），追加一条 deploy 历史到 `ops_history.db`：
 
 ```bash
-python3 ~/Dev/personal-kb/bin/ops_history.py record-deploy \
+python3 ~/Dev/tools/kb/bin/ops_history.py record-deploy \
   --target "<repo or station name>" \
   --status "<success|failure|skipped>" \
   --branch "$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo unknown)" \

@@ -48,7 +48,7 @@ projects:
     skills: []
     notes: 浙江省水预算名录回填，skills 在项目 .claude/skills/ 下自管
   personal-kb:
-    path: ~/Dev/personal-kb
+    path: ~/Dev/tools/kb
     skills: []
     notes: 个人知识库 SQLite DB（求职/投资/软著），CLI 在 bin/{apply,inv,sc}.py，详见项目 CLAUDE.md
   mailroom:

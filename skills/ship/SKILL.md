@@ -174,4 +174,4 @@ Step 3 ✗ curl HTTP 502 Bad Gateway
 - 实测验证铁律：`~/.claude/CLAUDE.md` §执行铁律 11「不复述别人状态」
 - 底层积木：`/repo ship` `/deploy` `/health project` `/wrap retro`
 - services.ts SSOT：`~/Dev/stations/website/lib/services.ts`
-- ops 历史 DB：`~/Dev/personal-kb/bin/ops_history.py`
+- ops 历史 DB：`~/Dev/tools/kb/bin/ops_history.py`

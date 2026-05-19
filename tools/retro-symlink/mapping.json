@@ -157,7 +157,7 @@
   },
   {
     "file": "session-retro-20260429-personal-kb.md",
-    "primary_project_path": "~/Dev/personal-kb",
+    "primary_project_path": "~/Dev/tools/kb",
     "confidence": "high",
     "reason": "personal-kb v0.1 立项（3 SQLite DB + CLI），主体在 personal-kb/"
   },

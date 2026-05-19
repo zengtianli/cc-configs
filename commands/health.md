@@ -63,7 +63,7 @@ python3 ~/Dev/tools/dev/lib/tools/sites_health.py "$@"
 每次跑完 `/health <scope>` 后追加一条快照到 `ops_history.db`：
 
 ```bash
-python3 ~/Dev/personal-kb/bin/ops_history.py record-health \
+python3 ~/Dev/tools/kb/bin/ops_history.py record-health \
   --scope "<sites|services|nav|vps|project>" \
   --passed <N> --failed <N> --total <N> \
   --details '<JSON, optional>' 2>/dev/null || true

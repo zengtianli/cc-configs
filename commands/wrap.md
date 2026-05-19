@@ -377,7 +377,7 @@ python3 ~/Dev/tools/dev/lib/tools/paths.py audit --brief
 | `~/Dev/<name>/`（站群） | `stations` | `~/Dev/tools/configs/playbooks/stations.md` |
 | `~/Dev/<name>/`（新站） | `web-scaffold` | `~/Dev/tools/configs/playbooks/web-scaffold.md` |
 | `~/Dev/hydro-*/` | `hydro` | `~/Dev/tools/configs/playbooks/hydro.md` |
-| `~/Dev/personal-kb/` | `personal-kb` | `~/Dev/tools/configs/playbooks/personal-kb.md` |
+| `~/Dev/tools/kb/` | `personal-kb` | `~/Dev/tools/configs/playbooks/personal-kb.md` |
 | `~/Dev/tools/cc-configs/` 或 slash 整顿 | `cc-meta` | `~/Dev/tools/configs/playbooks/META.md` §5 |
 | 其他 | 询问用户 | — |
 
