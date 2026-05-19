@@ -52,7 +52,7 @@ projects:
     skills: []
     notes: 个人知识库 SQLite DB（求职/投资/软著），CLI 在 bin/{apply,inv,sc}.py，详见项目 CLAUDE.md
   mailroom:
-    path: ~/Dev/labs/mailroom
+    path: ~/Dev/apps/infra/mailroom
     skills: []
     notes: 多邮箱聚合（126 + Gmail IMAP）+ 内容分析（llm_client.py haiku）+ 动作派送（reminder / hsbc-statement / archive），main entry python3 -m mailroom
   devtools:

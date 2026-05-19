@@ -25,7 +25,7 @@ description: 重构族 — dir 搬目录 + 零死链 / auto 自循环 patch+test
 ### 用法
 
 ```bash
-/refactor dir ~/Dev/<old> ~/Dev/labs/<old> --reason "新 repo 归 labs 孵化"
+/refactor dir ~/Dev/<old> ~/Dev/apps/<old> --reason "新 repo 归 labs 孵化"
 /refactor dir ~/Dev/<old> ~/Dev/_archive/<old>-YYYY-MM --no-rewrite   # 归档场景跳 rewrite
 /refactor dir ~/Dev/<old> ~/Dev/<new> --dry                           # 只预览
 ```

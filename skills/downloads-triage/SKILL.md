@@ -68,7 +68,7 @@ python3 ~/Dev/devtools/lib/tools/downloads_triage/triage.py apply
 | 简历/求职 | `~/Dev/content/career/job-search/` |
 | 学术（论文/研究） | `~/Dev/content/learn/<主题>/` |
 | 舆情站 | `~/Dev/stations/web-stack/services/yuqing/data/` |
-| 工具/插件源码 | `~/Dev/labs/<name>/` |
+| 工具/插件源码 | `~/Dev/apps/<name>/` |
 | 🔒 个人证件（身份证/房产/社保/征信/学历） | `~/Documents/personal-vault/` |
 
 ## 默认跳过原则（不议）

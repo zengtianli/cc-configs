@@ -17,14 +17,14 @@ description: 刷新 auggie dashboard — GitHub repo 列表 / workspace 注册�
 
 1. **拉 GitHub 最新清单**
    ```bash
-   python3 ~/Dev/labs/auggie-dashboard/lib/scanner.py \
-       ~/Dev/labs/auggie-dashboard/data/scan.json
+   python3 ~/Dev/apps/ai-tools/auggie-dashboard/lib/scanner.py \
+       ~/Dev/apps/ai-tools/auggie-dashboard/data/scan.json
    ```
    产出当前所有 repo（公开 + 私有）的 7 字段 JSON。
 
 2. **同步到 ops-console 消费者**
    ```bash
-   cp ~/Dev/labs/auggie-dashboard/data/scan.json \
+   cp ~/Dev/apps/ai-tools/auggie-dashboard/data/scan.json \
       ~/Dev/stations/ops-console/data/auggie-scan.json
    ```
 
