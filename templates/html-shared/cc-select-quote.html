@@ -1,0 +1,147 @@
+<!--
+  cc-select-quote.html · 共享 snippet
+  用途：所有 CC 生成的 HTML 必须 inject 此片段 — 提供
+    1. 会话溯源 meta（<meta name="cc-session"> + <meta name="cc-generated">）
+    2. 顶部一行 session badge（visible）
+    3. 鼠标框选文本 → 浮动 "📋 复制为引用" 按钮 → clipboard 写 markdown quote
+    4. 底部 footer（session UUID + 生成时间 + cwd）
+
+  使用方法：
+    - 把 <meta>/<style>/<script> 整体复制到 <head> 末尾
+    - 替换占位符：{{SESSION_UUID}} / {{GENERATED_AT}} / {{CWD}} / {{HTML_PATH}}
+    - <body> 起首加 #cc-session-badge div
+    - <body> 末尾加 #cc-session-footer div
+    - 也可用 backfill 脚本批量注入：~/Dev/tools/dev/lib/tools/html_provenance_backfill.py
+-->
+
+<!-- ============== INJECT IN <head> ============== -->
+<meta name="cc-session" content="{{SESSION_UUID}}">
+<meta name="cc-generated" content="{{GENERATED_AT}}">
+<meta name="cc-cwd" content="{{CWD}}">
+<style>
+  #cc-session-badge{position:fixed;top:0;right:0;background:#161b22;color:#8b949e;border-left:1px solid #30363d;border-bottom:1px solid #30363d;padding:4px 10px;font:11px "SF Mono",Monaco,monospace;z-index:9998;border-radius:0 0 0 6px}
+  #cc-session-badge a{color:#58a6ff;text-decoration:none}
+  #cc-session-badge a:hover{text-decoration:underline}
+  #cc-session-badge .copy-sid{cursor:pointer;color:#3fb950;margin-left:6px;user-select:none}
+  #cc-session-footer{margin-top:40px;padding:16px 20px;background:#161b22;border:1px solid #30363d;border-top:2px solid #3fb950;border-radius:6px;font:12px "SF Mono",Monaco,monospace;color:#8b949e}
+  #cc-session-footer .row{margin:3px 0}
+  #cc-session-footer .label{color:#bc8cff;display:inline-block;min-width:90px}
+  #cc-session-footer code{background:#21262d;padding:1px 6px;border-radius:3px;color:#c9d1d9;font-size:11px}
+  #cc-quote-tip{position:fixed;z-index:9999;background:#161b22;border:1px solid #3fb950;border-radius:6px;padding:6px 12px;font:13px -apple-system,BlinkMacSystemFont,sans-serif;color:#3fb950;cursor:pointer;display:none;box-shadow:0 4px 12px rgba(0,0,0,.5);user-select:none;font-weight:600}
+  #cc-quote-tip:hover{background:#3fb950;color:#0d1117}
+  #cc-quote-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#3fb950;color:#0d1117;padding:10px 24px;border-radius:6px;font:14px -apple-system,sans-serif;font-weight:600;display:none;z-index:10000;box-shadow:0 4px 16px rgba(0,0,0,.6)}
+  @media print{#cc-session-badge,#cc-quote-tip,#cc-quote-toast{display:none!important}}
+</style>
+
+<!-- ============== INJECT AT START OF <body> ============== -->
+<div id="cc-session-badge">
+  CC session
+  <a href="#cc-session-footer" title="点击跳到溯源 footer">{{SESSION_UUID_SHORT}}</a>
+  <span class="copy-sid" data-sid="{{SESSION_UUID}}" title="复制完整 UUID">⧉</span>
+</div>
+
+<!-- ============== INJECT AT END OF <body> (before </body>) ============== -->
+<div id="cc-session-footer">
+  <div class="row"><span class="label">CC session</span> <code>{{SESSION_UUID}}</code></div>
+  <div class="row"><span class="label">Generated</span> <code>{{GENERATED_AT}}</code></div>
+  <div class="row"><span class="label">CWD</span> <code>{{CWD}}</code></div>
+  <div class="row"><span class="label">HTML path</span> <code>{{HTML_PATH}}</code></div>
+  <div class="row" style="margin-top:8px;color:#8b949e;font-size:11px">
+    Resume: <code>claude -r {{SESSION_UUID}}</code> · 引用本文档某段: 框选文本 → 点 "📋 复制为引用" → 粘到 CC
+  </div>
+</div>
+<div id="cc-quote-tip" title="把选中文本打包成 markdown 引用，含文件路径+锚点+session UUID">📋 复制为引用</div>
+<div id="cc-quote-toast"></div>
+<script>
+(function(){
+  var meta = {
+    session: document.querySelector('meta[name="cc-session"]')?.content || 'unknown',
+    generated: document.querySelector('meta[name="cc-generated"]')?.content || '',
+    cwd: document.querySelector('meta[name="cc-cwd"]')?.content || '',
+    title: document.title,
+    path: location.pathname
+  };
+  var tip = document.getElementById('cc-quote-tip');
+  var toast = document.getElementById('cc-quote-toast');
+  var badge = document.getElementById('cc-session-badge');
+
+  function getNearestAnchor(node){
+    var el = node && node.nodeType === 1 ? node : (node && node.parentElement);
+    while(el && el !== document.body){
+      if(el.id) return '#' + el.id;
+      var prev = el.previousElementSibling;
+      while(prev){
+        if(prev.id) return '#' + prev.id;
+        var nested = prev.querySelector ? prev.querySelector('[id]') : null;
+        if(nested) return '#' + nested.id;
+        prev = prev.previousElementSibling;
+      }
+      el = el.parentElement;
+    }
+    return '';
+  }
+
+  function showToast(msg, ok){
+    toast.textContent = msg;
+    toast.style.background = ok ? '#3fb950' : '#f85149';
+    toast.style.color = ok ? '#0d1117' : '#fff';
+    toast.style.display = 'block';
+    setTimeout(function(){ toast.style.display = 'none'; }, 2800);
+  }
+
+  document.addEventListener('mouseup', function(e){
+    if(tip.contains(e.target)) return;
+    setTimeout(function(){
+      var sel = window.getSelection();
+      var text = sel.toString().trim();
+      if(text.length < 3){ tip.style.display = 'none'; return; }
+      var rect = sel.getRangeAt(0).getBoundingClientRect();
+      var top = rect.bottom + window.scrollY + 6;
+      var left = rect.left + window.scrollX + rect.width/2 - 70;
+      tip.style.top = (rect.bottom + 8) + 'px';
+      tip.style.left = Math.max(8, rect.left + rect.width/2 - 70) + 'px';
+      tip.style.display = 'block';
+      tip._text = text;
+      tip._anchor = getNearestAnchor(sel.anchorNode);
+    }, 10);
+  });
+
+  document.addEventListener('mousedown', function(e){
+    if(!tip.contains(e.target)) tip.style.display = 'none';
+  });
+
+  tip.addEventListener('click', async function(){
+    var text = tip._text || '';
+    var anchor = tip._anchor || '';
+    var sidShort = meta.session.slice(0, 8);
+    var quote =
+      '> **[HTML 引用 · CC session `' + sidShort + '`]**\n' +
+      '> 文件: `' + meta.path + anchor + '`\n' +
+      '> 标题: ' + meta.title + '\n' +
+      '> Session: `' + meta.session + '`\n' +
+      '> \n' +
+      '> 选中文本 (' + text.length + ' 字符):\n' +
+      '\n```\n' + text + '\n```\n\n' +
+      '针对以上这段我想：';
+    try {
+      await navigator.clipboard.writeText(quote);
+      showToast('✓ 已复制 ' + text.length + ' 字符（含 session+锚点+文件路径）', true);
+      tip.style.display = 'none';
+      window.getSelection().removeAllRanges();
+    } catch(err) {
+      showToast('✗ 复制失败: ' + err.message, false);
+    }
+  });
+
+  // session UUID 复制
+  var copySid = badge && badge.querySelector('.copy-sid');
+  if(copySid){
+    copySid.addEventListener('click', async function(){
+      try {
+        await navigator.clipboard.writeText(copySid.dataset.sid);
+        showToast('✓ session UUID 已复制', true);
+      } catch(err){ showToast('✗ ' + err.message, false); }
+    });
+  }
+})();
+</script>
