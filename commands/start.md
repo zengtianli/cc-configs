@@ -29,6 +29,9 @@ python3 ~/Dev/tools/dev/lib/tools/paths.py audit --brief
 ```
 
 第 2 条输出单行 `paths: 25 registered / 20 dead / 0 drift`，作为「输出段」第 3.5 项展示。
+当工作区内存在 cold-storage 指针（`_ZIP-INDEX.md` / `_ARCHIVE-INDEX.md` · 见 `raw-archives-offload`）时，
+audit --brief 会在 paths 行后追加单行 `cold mirrors: N entries / N ok / M dead / K drift`
+（无指针时静默不打印）。详查走 `paths.py audit-cold-mirrors`。
 
 ### 输出段
 

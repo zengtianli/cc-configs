@@ -1,6 +1,6 @@
 ---
 name: vault-inject
-description: 把富 HTML 改造为 vault citizen — 顶部 nav + 侧边 aside + 底部 backlinks + body wikilink 解析。配合本地 Quartz 服务（127.0.0.1:8080）。用户说 'vault 注入 / 双链 / HTML 加 vault nav' 触发
+description: 把富 HTML 改造为 vault citizen — 顶部 nav + 侧边 aside + 底部 backlinks + body wikilink 解析。HTML 自含双链，纯 file:// 浏览（2026-05-19 起去 Quartz）。用户说 'vault 注入 / 双链 / HTML 加 vault nav' 触发
 triggers: vault inject / 双链注入 / 富 HTML 双链 / html-vault-citizen / inject-vault-nav / 加 vault nav
 ---
 
@@ -82,7 +82,7 @@ python3 ~/Dev/tools/dev/lib/tools/inject_vault_nav.py <html>
 
 - **自动备份**：原 HTML 写到 `<file>.bak.pre-vault-inject`，可回滚
 - **幂等**：重跑同一 HTML 不重复插入 nav/aside/backlinks（检测已注入标记跳过）
-- **依赖本地 Quartz**：nav 链指向 `http://127.0.0.1:8080/<slug>`；Quartz 不在跑 nav 链失效但报告主体仍可看，不阻塞
+- **纯 file:// 浏览**（2026-05-19 起去 Quartz）：nav / aside / backlinks 全部链 `file:///Users/tianli/Dev/wiki/...`；任何 HTML 直接 `open` 就能沿链网游走，零中间服务
 - **不进 git**：`.vault_index.json` / `.backlinks_map.json` / `.bak.pre-vault-inject` 都应 gitignore（local-only 派生物）
 - **wikilink 找不到**：保留原 `[[xxx]]` 文本不报错（提示 vault 缺该 entry）
 
