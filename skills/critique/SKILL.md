@@ -28,7 +28,7 @@ description: 按需深度审计用户最近的工作流 / 决策 / 会话行为�
 
 ## 6 维度审计
 
-每维度扫本会话 + 最近 1-2 个会话（走 cclog MCP 搜历史），找到问题就**明确列出**（问题 + 根因 + 修法三段），没问题就说"这维度干净"。
+每维度扫本会话 + 最近 1-2 个会话（走 `python3 ~/Dev/tools/dev/scripts/tools/cc_sessions.py` 或直接 grep `~/.claude/projects/-Users-tianli-Dev/*.jsonl`），找到问题就**明确列出**（问题 + 根因 + 修法三段），没问题就说"这维度干净"。
 
 ### 1. 决策效率
 
@@ -86,7 +86,7 @@ description: 按需深度审计用户最近的工作流 / 决策 / 会话行为�
 
 ### 2. ...
 
-## 最近会话（cclog 查）
+## 最近会话（cc_sessions.py 或 jsonl grep 查）
 
 （类似格式）
 

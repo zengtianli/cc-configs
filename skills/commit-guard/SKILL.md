@@ -45,7 +45,7 @@ python3 ~/Dev/tools/dev/lib/tools/auto_commit.py --no-confirm --push --allow-der
 
 ## 来源
 
-用户 2026-05-18 投诉："还有些 就是不必要 commit push 你应该知道，总体的规范 没有吗"。此前批量 commit `labs/hydro-apps` 入了 17 个派生 csv/bak/log/作废文件、7.2M sample input。事后 untrack + .gitignore 才补救。
+用户 2026-05-18 投诉："还有些 就是不必要 commit push 你应该知道，总体的规范 没有吗"。此前批量 commit `apps/hydro-apps` 入了 17 个派生 csv/bak/log/作废文件、7.2M sample input。事后 untrack + .gitignore 才补救。
 
 这条规则把识别从「Claude 凭经验/语义」搬到「机器强制 pattern match」。规则层 → 执行层，参考 [[rules-vs-execution-layer-framing]]。
 

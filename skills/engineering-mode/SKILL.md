@@ -133,7 +133,7 @@ _Karpathy + CC 业界对比报告 2026-05-13 立_
 | 提炼知识 | `/wrap distill`（改 memory + 写新 skill）|
 | 复盘 | `/wrap recap` |
 | 会话收尾 | `/wrap handoff` |
-| 查历史会话 | `cclog` MCP, `/cmd-stats` |
+| 查历史会话 | `python3 ~/Dev/tools/dev/scripts/tools/cc_sessions.py` 或 grep `~/.claude/projects/-Users-tianli-Dev/*.jsonl` |
 | 新建 Next.js 站 | `/site add` + `/refactor migrate` |
 
 **原则**：用之前先 `ls ~/.claude/commands/ ~/.claude/skills/`；看 skill 列表（对话开头的 system-reminder 会列全）。
@@ -152,7 +152,7 @@ _Karpathy + CC 业界对比报告 2026-05-13 立_
 | Commands/Skills 说明书 | `~/Dev/tools/cc-configs/commands/*.md` | `cmds.tianlizeng.cloud` |
 | 架构地图 | `~/Dev/stations/stack/projects.yaml` | `stack.tianlizeng.cloud` |
 | CC 演化日志 | `~/Dev/_archive/2026-04-19-cc-evolution/changes.yaml` | `changelog.tianlizeng.cloud` |
-| 会话历史 | `~/.claude/sessions/` | `cc-pulse` MCP（替代 cclog · 2026-05-03） |
+| 会话历史 | `~/.claude/projects/-Users-tianli-Dev/*.jsonl` | `cc.db`（personal-kb 聚合，2026-05 后替代 cclog/cc-pulse MCP） |
 
 **新建任何重要产出**，下意识问：放哪本地？哪个子域能查？两边都没有 → 先补。
 

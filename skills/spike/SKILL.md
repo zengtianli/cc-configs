@@ -66,7 +66,7 @@ description: 抛弃式 spike / poc / toy 实验协议。用户说"试一下 / �
 ## 反模式
 
 - ❌ spike 跑超 50 行还在加功能 → 已经不算 spike，立即停手并问用户"这个 idea 看起来值得提级，要走 /start --bootstrap 吗？"
-- ❌ spike 产物落 `~/Dev/` 根 / `stations/` / `labs/`（应该全在 `_archive/spikes/`）
+- ❌ spike 产物落 `~/Dev/` 根 / `stations/` / `apps/`（应该全在 `_archive/spikes/`）
 - ❌ 给 spike 配 SSOT / playbook / handoff / CLAUDE.md（违反 spike 的"用完即弃"本质）
 - ❌ 拿 spike 的产物当线上代码用（不审查、不测试、不部署 review）
 - ❌ spike 没跑通就开始"重构 / 抽象 / 加配置"（先证明能跑，再谈别的）

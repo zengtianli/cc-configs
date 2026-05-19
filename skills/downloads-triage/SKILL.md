@@ -50,7 +50,7 @@ python3 ~/Dev/tools/dev/lib/tools/downloads_triage/triage.py apply
 | hash/uuid 命名 | 必须 pdftotext / mdls 看 metadata，不能凭文件名瞎猜 |
 
 判断后：
-1. 决定 target（参考 ~/Dev 分层：stations/labs/content/Work/personal-kb）
+1. 决定 target（参考 ~/Dev 分层：stations/apps/content/tools/Work/personal-vault）
 2. **敏感证件类目标必须 ~/Dev 之外**（git 风险）—— 默认 `~/Documents/personal-vault/`
 3. 加规则到 rules.yaml entry_rules
 4. 重跑 scan 验证规则命中

@@ -19,7 +19,7 @@ description: 一命令加新 station（站群），把现状 8 步压成 1 命�
 
 **不触发**（→ 走 `web-scaffold` playbook）：
 - 静态站（非 Next.js / 非 web-stack 内）
-- 外部 labs/ workspace 不进站群 monorepo
+- 外部 apps/ workspace 不进站群 monorepo
 
 ---
 
