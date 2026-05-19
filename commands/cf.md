@@ -20,7 +20,7 @@ description: Cloudflare 统一管理 — DNS / Origin Rules / Access Application
 
 ```bash
 /cf origin list
-/cf origin add <hostname> <port>     # e.g. stack.tianlizeng.cloud 8443
+/cf origin add <hostname> <port>     # e.g. stack.tianli.cyou 8443
 ```
 
 ### Access Applications（Zero Trust）

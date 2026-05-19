@@ -10,7 +10,7 @@
 
 **验证判据**（满足任一即算成功）：
 
-- [ ] {判据 1，e.g. `curl -sI https://x.tianlizeng.cloud | head -1` 含 `200`}
+- [ ] {判据 1，e.g. `curl -sI https://x.tianli.cyou | head -1` 含 `200`}
 - [ ] {判据 2，e.g. `test -f ~/Dev/<path>/file.ext` exit 0}
 - [ ] {判据 3，e.g. `sqlite3 db "SELECT COUNT(*) FROM t" = N`}
 

@@ -34,7 +34,7 @@ Supports Streamlit apps (Playwright URL screenshots), CLI tools (terminal output
 
 ```bash
 # Screenshot a Streamlit app
-python3 ~/Dev/tools/dev/repo_manager.py screenshot streamlit hydro-rainfall https://hydro-rainfall.tianlizeng.cloud
+python3 ~/Dev/tools/dev/repo_manager.py screenshot streamlit hydro-rainfall https://hydro-rainfall.tianli.cyou
 
 # Screenshot a CLI tool
 python3 ~/Dev/tools/dev/repo_manager.py screenshot cli cc-configs "python3 tools/harness/harness.py ~/Dev/stations/dockit"

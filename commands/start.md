@@ -84,7 +84,7 @@ audit --brief 会在 paths 行后追加单行 `cold mirrors: N entries / N ok / 
 项目：hydro-rainfall (streamlit, growing → established)
 路径：~/Dev/stations/web-stack/services/hydro-rainfall
 源文件：37 个 Python, 2 个 YAML
-部署：VPS (hydro-rainfall.tianlizeng.cloud)
+部署：VPS (hydro-rainfall.tianli.cyou)
 
 现有配置：CLAUDE.md ✓  README.md ✓  README_CN.md ✗  .gitignore ✓  LICENSE ✗  hooks ✗
 harness.yaml 注册：未注册（如需要）

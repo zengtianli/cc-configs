@@ -13,7 +13,7 @@ triggers: render-md / 渲染 md / md 转 html / 链接没渲染 / 浏览器看 m
 | 维度 | `/share` | `/render-handoff`（本 skill） |
 |---|---|---|
 | 目标 | 发别人看 | 自己浏览器看 |
-| 输出 | `tianlizeng.cloud/share/<slug>.html`（VPS） | 同目录 `<name>.html`（本地 file://） |
+| 输出 | `tianli.cyou/share/<slug>.html`（VPS） | 同目录 `<name>.html`（本地 file://） |
 | 输入 | 单个 .md | 一个 HTML 报告（含 N 个 .md href）批量 |
 | 副作用 | rsync + systemctl restart | 0 网络 |
 | CSS | `share-style.html`（亮色友好） | `dark-theme.css`（与 dispatch HTML 同色板） |

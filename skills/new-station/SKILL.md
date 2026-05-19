@@ -30,7 +30,7 @@ python3 ~/Dev/tools/dev/lib/tools/new_station.py \
   --id <kebab-case>            # e.g. eco-flow, wpl-tracker
   --port <8510-8599>           # backend port; devPort 自动 = port - 5410, apiPort = port + 100
   --group <group_id>           # main | hydro-tools | applications | infra (见 entities/groups.yaml)
-  --mode <subdomain|apex_subpath>  # 独立 X.tianlizeng.cloud / 还是 tianlizeng.cloud/X 子路径
+  --mode <subdomain|apex_subpath>  # 独立 X.tianli.cyou / 还是 tianli.cyou/X 子路径
   --label "<中文名>"
   --label-en "<English name>"
   --description "<一句话描述>"
@@ -74,7 +74,7 @@ python3 ~/Dev/tools/dev/lib/tools/new_station.py \
   --description "项目成本快算工具"
 ```
 
-URL = `https://tianlizeng.cloud/cost-calc`
+URL = `https://tianli.cyou/cost-calc`
 
 ### 3. 带 FastAPI 后端
 

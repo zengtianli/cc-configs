@@ -230,7 +230,7 @@ cd ~/Dev/stations/web-stack
 pnpm build 2>/dev/null || failures+=("web-stack pnpm build failed")
 
 for site in hydro-annual hydro-capacity; do
-  code=$(curl -sI -o /dev/null -w "%{http_code}" "https://$site.tianlizeng.cloud" 2>/dev/null)
+  code=$(curl -sI -o /dev/null -w "%{http_code}" "https://$site.tianli.cyou" 2>/dev/null)
   [[ "$code" == "200" || "$code" == "302" ]] || failures+=("$site HTTP $code")
 done
 

@@ -90,7 +90,7 @@ description: 单站点 commit + push + deploy + 健康检查一条龙组合 skil
 ### Step 4 · 打印 live URL
 
 ```
-✓ Live: https://<sub>.tianlizeng.cloud (HTTP <code>)
+✓ Live: https://<sub>.tianli.cyou (HTTP <code>)
 ```
 
 URL 从 cwd 项目 CLAUDE.md「线上地址」节 / `~/Dev/stations/website/lib/services.ts` 推断。两源都无 → Step 3 阶段就该报错。
@@ -131,7 +131,7 @@ URL 从 cwd 项目 CLAUDE.md「线上地址」节 / `~/Dev/stations/website/lib/
 ─── /ship <name> ───
 Step 1 ✓ commit + push  abc1234  chore: <message>
 Step 2 ✓ deploy.sh      (12.3s)
-Step 3 ✓ curl HTTP 200  https://<sub>.tianlizeng.cloud
+Step 3 ✓ curl HTTP 200  https://<sub>.tianli.cyou
 Step 4 ✓ Live URL
 Step 5 ✓ retro          (one-liner to memory)
 

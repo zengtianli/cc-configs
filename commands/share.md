@@ -1,6 +1,6 @@
 ---
 name: share
-description: 把 markdown 文件渲染成 HTML 发布到 tianlizeng.cloud/share/<slug>.html，给人分享链接用。pandoc 渲染（含中文友好 CSS）→ 推 VPS public/share/ → restart website → 验 HTTP 200 → 打印 URL。
+description: 把 markdown 文件渲染成 HTML 发布到 tianli.cyou/share/<slug>.html，给人分享链接用。pandoc 渲染（含中文友好 CSS）→ 推 VPS public/share/ → restart website → 验 HTTP 200 → 打印 URL。
 ---
 
 把任意 .md 一键发布到自己域名下，拿一条 https 链接发给别人看。
@@ -16,10 +16,10 @@ description: 把 markdown 文件渲染成 HTML 发布到 tianlizeng.cloud/share/
 例子：
 ```bash
 /share ~/Dev/content/ip-legal/legal/yanyuan/broker-defense-v1-legal-opinion.md
-# → https://tianlizeng.cloud/share/broker-defense-v1-legal-opinion.html
+# → https://tianli.cyou/share/broker-defense-v1-legal-opinion.html
 
 /share ~/Dev/.../analysis.md yanyuan-analysis --title "燕园暴雷分析"
-# → https://tianlizeng.cloud/share/yanyuan-analysis.html
+# → https://tianli.cyou/share/yanyuan-analysis.html
 ```
 
 ## 执行

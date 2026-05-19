@@ -214,10 +214,10 @@ gh repo edit zengtianli/<name> --add-topic topic1 --add-topic topic2
 ```
 
 **Homepage** — 空且有 live demo：
-- Streamlit: `https://<name>.tianlizeng.cloud`
+- Streamlit: `https://<name>.tianli.cyou`
 - 先验证 URL 可达再设
 ```bash
-gh repo edit zengtianli/<name> --homepage "https://<name>.tianlizeng.cloud"
+gh repo edit zengtianli/<name> --homepage "https://<name>.tianli.cyou"
 ```
 
 #### 3. Screenshot
@@ -426,7 +426,7 @@ elif --kind app:    cd ~/Dev/<name> && /deploy
 ```
 
 #### Phase 5: stack 登记
-> 已上线：https://<name>.tianlizeng.cloud
+> 已上线：https://<name>.tianli.cyou
 > 建议把条目加到 `~/Dev/stations/website/lib/services.ts`
 
 ### 规则

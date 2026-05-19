@@ -12,7 +12,7 @@ description: 子域生命周期族 — add 新建 / rename 改名 / archive 下�
 | `rename` | 原子改名子域 — CF DNS/Origin/Access + nginx + services.ts + 14 天 301 |
 | `archive` | 下线闲置子域 — 停服务/删 nginx/CF DNS+Origin+Access/移 /var/www 归档 |
 | `activate` | 给闲置站点赋新用途 — 更新 projects.yaml status/notes 并记入 memory |
-| `ship` | 一键部署新静态站到 <name>.tianlizeng.cloud（rsync + Nginx + /cf + 验证） |
+| `ship` | 一键部署新静态站到 <name>.tianli.cyou（rsync + Nginx + /cf + 验证） |
 | `nginx-regen` | 从 services.ts 重新生成所有动态子域 nginx vhost（不推送 VPS） |
 
 ---
@@ -54,7 +54,7 @@ description: 子域生命周期族 — add 新建 / rename 改名 / archive 下�
 
 #### 4. 初始化内容
 - 拷贝对应 template 的 generate.py 和 deploy.sh
-- 在 deploy.sh 里把域名替换成 `<name>.tianlizeng.cloud`
+- 在 deploy.sh 里把域名替换成 `<name>.tianli.cyou`
 - 生成最小可用 projects.yaml
 - 写 CLAUDE.md（参考 ~/Dev/stations/stack/CLAUDE.md 格式）
 
@@ -107,7 +107,7 @@ description: 子域生命周期族 — add 新建 / rename 改名 / archive 下�
 一致改名一个子域，所有注册表 + CF + nginx 同步更新，老域名 N 天 301 到新域名，到期后用 `/site archive <old>` 收尾。
 
 ### 参数
-- `<old>` / `<new>` — 子域名（不带 `.tianlizeng.cloud`）
+- `<old>` / `<new>` — 子域名（不带 `.tianli.cyou`）
 - `--301-days` — 老域 301 保留天数（默认 14）
 - `--yes` — 跳过交互确认
 - `--dry-run` — 打印计划但不执行
@@ -141,7 +141,7 @@ python3 ~/Dev/tools/dev/lib/tools/site_rename.py "$@"
 
 ```bash
 /health sites --filter <new>          # 新域应 200 / 302
-curl -sI https://<old>.tianlizeng.cloud # 应 301 → new
+curl -sI https://<old>.tianli.cyou # 应 301 → new
 ```
 
 ### 回滚（每步可单步回）
@@ -302,7 +302,7 @@ echo "Next: nginx/CF Access 需改 → /site ship $name"
 - VPS 连通性：`ssh root@104.218.100.67 "echo ok"`
 
 #### 1. 本地预检
-- `HOSTNAME=<name>.tianlizeng.cloud`
+- `HOSTNAME=<name>.tianli.cyou`
 - `REMOTE=/var/www/<name>`
 
 #### 2. 幂等检查（先查再建）
@@ -351,7 +351,7 @@ rsync -avz --delete $SOURCE/ root@104.218.100.67:$REMOTE/
 
 ### 参考
 - 模板：`~/Dev/tools/dev/lib/templates/nginx-static.conf`
-- 实战：2026-04-17 stack.tianlizeng.cloud 首次部署
+- 实战：2026-04-17 stack.tianli.cyou 首次部署
 
 ---
 

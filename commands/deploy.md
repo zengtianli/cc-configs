@@ -67,7 +67,7 @@ python3 ~/Dev/tools/kb/bin/ops_history.py record-deploy \
 ### 验证逻辑
 
 从 CLAUDE.md 提取：
-- `线上地址` / `https://xxx.tianlizeng.cloud` → curl 目标
+- `线上地址` / `https://xxx.tianli.cyou` → curl 目标
 - `systemd 服务` / `端口` → systemctl 检查目标
 
 CLAUDE.md 无相关信息 → 跳过验证，提示用户补充。
@@ -187,9 +187,9 @@ bash ~/Dev/tools/dev/scripts/deploy-changed.sh $ARGUMENTS
 
 | Repo              | Status  | Commit     | Live URL                      | HTTP |
 |-------------------|---------|------------|-------------------------------|------|
-| hydro-annual      | ✅ done | abc1234    | hydro-annual.tianlizeng.cloud | 302  |
+| hydro-annual      | ✅ done | abc1234    | hydro-annual.tianli.cyou | 302  |
 | hydro-capacity    | ❌ fail | —          | —                             | err  |
-| stations/web-stack| ✅ done | def5678    | stack.tianlizeng.cloud        | 302  |
+| stations/web-stack| ✅ done | def5678    | stack.tianli.cyou        | 302  |
 ```
 
 失败列出 `issues`，提示排查路径。
