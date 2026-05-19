@@ -1,5 +1,5 @@
 ---
-description: 子域生命周期族 — add 新建 / rename 改名 / archive 下线 / activate 复活 / ship 部署上线 / nginx-regen 重生 vhost
+description: 子域生命周期族 — add 新建（含 --monorepo 站群 scaffolder）/ promote 挪进 stations 站群 / rename 改名 / archive 下线 / activate 复活 / ship 部署上线 / nginx-regen 重生 vhost。触发：加新站 / 新建工具站 / new station / 起一个 X 子域 / 加个 X-web / promote X / 把 X 加到 stations / 挪 X 进站群
 ---
 
 # /site — 子域 / 站点统一入口
@@ -8,22 +8,34 @@ description: 子域生命周期族 — add 新建 / rename 改名 / archive 下�
 
 | 子命令 | 干啥 |
 |---|---|
-| `add` | 脚手架新建 ~/Dev/<name> 静态站项目（projects.yaml + generate.py + deploy.sh） |
+| `add` | 脚手架新建 ~/Dev/<name> 静态站项目（projects.yaml + generate.py + deploy.sh）|
+| `add --monorepo` | **站群 scaffolder**（合自 ex-`/new-station` skill · 2026-05-19）— 一命令加新 station 进 web-stack monorepo，把 6 文件 8 步压成 1 命令 |
+| `promote` | **挪 ~/Dev/<name> → ~/Dev/stations/<name>**（合自 ex-`/station-promote` cmd · 2026-05-19），扫硬编码路径 + 可选 --auto-fix sed |
 | `rename` | 原子改名子域 — CF DNS/Origin/Access + nginx + services.ts + 14 天 301 |
 | `archive` | 下线闲置子域 — 停服务/删 nginx/CF DNS+Origin+Access/移 /var/www 归档 |
 | `activate` | 给闲置站点赋新用途 — 更新 projects.yaml status/notes 并记入 memory |
 | `ship` | 一键部署新静态站到 <name>.tianli.cyou（rsync + Nginx + /cf + 验证） |
 | `nginx-regen` | 从 services.ts 重新生成所有动态子域 nginx vhost（不推送 VPS） |
 
+> v0.2 (2026-05-19)：合入 `add --monorepo`（ex-`new-station` skill）+ `promote`（ex-`station-promote` cmd）两个站群专属子命令
+
 ---
 
 ## add — 脚手架新建静态站项目
 
 `/site add <name> [--template stack|changelog|docs|md-docs] [--source <repo-name>]`
+`/site add <name> --monorepo --port <8510-8599> --group <id> --mode <subdomain|apex_subpath> --label "<中文>" --label-en "<EN>" --description "<一句话>" [--access cf-access|none] [--backend none|fastapi] [--dry-run]`
 
-生成可直接 `bash deploy.sh` + `/site ship <name>` 的项目骨架。
+生成可直接 `bash deploy.sh` + `/site ship <name>` 的项目骨架，或（`--monorepo`）一命令把新 station 加进 web-stack 站群 monorepo。
 
-### 流程
+### 模式判别
+
+| 触发 | 模式 | 落地路径 |
+|---|---|---|
+| 无 `--monorepo` | 独立静态站 | `~/Dev/<name>/` (后续可用 `/site promote` 挪进站群) |
+| `--monorepo` | **站群 scaffolder** | `stations/web-stack/apps/<name>-web/` (+ services/<name>/ 可选) |
+
+### 流程（默认 · 独立静态站）
 
 #### 1. 参数解析
 - `<name>` 必填，项目目录名（也是默认子域名）
@@ -97,6 +109,144 @@ description: 子域生命周期族 — add 新建 / rename 改名 / archive 下�
 - 下一步：`/site ship <name>` — 一键部署
 - 再下一步：`/repo launch` — 新项目一条龙
 - Playbook：`~/Dev/tools/configs/playbooks/web-scaffold.md`
+
+---
+
+## add --monorepo — 站群 scaffolder（合自 ex-`/new-station` skill · 2026-05-19）
+
+**触发词**：`加新站` / `加一个新站` / `起一个 X-web` / `new station` / `scaffold a station` / `起个 X 子域` / `上一个 X 工具` / `加一个工具站到站群`
+
+把"加新 station 改 6 文件 / 8 步"折叠成一条 `new_station.py` 调用。配合现有 menus.py SSOT 链路，自动跑 4 个 regenerator + audit gate，不通过自动回滚。
+
+### 不触发（→ 走 `web-scaffold` playbook 或 `/site add`）
+
+- 静态站（非 Next.js / 非 web-stack 内）→ `/site add <name>`
+- 外部 apps/ workspace 不进站群 monorepo
+
+### 工具
+
+```bash
+python3 ~/Dev/tools/dev/lib/tools/new_station.py \
+  --id <kebab-case>            # e.g. eco-flow, wpl-tracker
+  --port <8510-8599>           # backend port; devPort 自动 = port - 5410, apiPort = port + 100
+  --group <group_id>           # main | hydro-tools | applications | infra (见 entities/groups.yaml)
+  --mode <subdomain|apex_subpath>  # 独立 X.tianli.cyou / 还是 tianli.cyou/X 子路径
+  --label "<中文名>"
+  --label-en "<English name>"
+  --description "<一句话描述>"
+  [--access cf-access|none]    # 默认 none (公开)
+  [--backend none|fastapi]     # 默认 none (纯前端)
+  [--service-dir <override>]   # 默认 = --id
+  [--dry-run]                  # 不写文件，只打印
+```
+
+### 流程
+
+1. **验参**：id kebab-case 不冲突 / port 8510-8599 唯一 / group ∈ groups.yaml / mode 合法
+2. **写 SSOT**：append `entities/subdomains.yaml` + `relations/subdomain-group.yaml` + `navbar.yaml` 菜单项
+3. **渲染前端**：`tools/configs/templates/station-app/` → `stations/web-stack/apps/<id>-web/`
+4. **(可选) 渲染后端**：`--backend fastapi` → `stations/web-stack/services/<id>/`
+5. **跑 4 regenerator**：
+   - `menus.py build-services-ts -w`
+   - `menus.py build-website-navbar -w`
+   - `menus.py build-react-mega-navbar -w`
+   - `menus.py audit` ← exit 0 才算成功
+6. **任何步失败 → 自动回滚**（yaml 还原 + 新文件/目录删）
+
+### 用法示例
+
+**1. 纯前端工具站（独立子域 + CF Access）**
+
+```bash
+/site add wpl-tracker --monorepo --port 8525 --group applications --mode subdomain \
+  --label "WPL 跟踪器" --label-en "WPL Tracker" \
+  --description "WPL 余额/利息日跟踪面板" \
+  --access cf-access --backend none
+```
+
+**2. apex_subpath 子路径站（公开）**
+
+```bash
+/site add cost-calc --monorepo --port 8526 --group applications --mode apex_subpath \
+  --label "成本计算器" --label-en "Cost Calculator" \
+  --description "项目成本快算工具"
+```
+
+URL = `https://tianli.cyou/cost-calc`
+
+**3. 带 FastAPI 后端**
+
+```bash
+/site add eco-flow --monorepo --port 8527 --group hydro-tools --mode apex_subpath \
+  --label "生态流量评估" --label-en "Eco-Flow Assessment" \
+  --description "河流生态流量评估与保障率计算" \
+  --backend fastapi
+```
+
+会同时生成 `services/eco-flow/api.py` + `services/eco-flow/pyproject.toml`。
+
+### 验收（done 标准）
+
+- [ ] `menus.py audit` 退出 0（含 17 类 strict + paths-drift）
+- [ ] `cd stations/web-stack/apps/<id>-web && pnpm install && pnpm dev` 起得来
+- [ ] 浏览器 http://localhost:<devPort> 看到骨架页（含 `{{label}}` 标题）
+
+如 audit 失败：scaffolder 已自动回滚 yaml。手工检查 `git status -- stations/web-stack/apps/<id>-web/` 残留可删。
+
+### 兜底（scaffolder 异常时）
+
+如 scaffolder 本身 bug，回退到手工 8 步 SOP：见 `~/Dev/tools/configs/playbooks/station-add-via-scaffold.md` § 兜底。
+
+---
+
+## promote — 把 ~/Dev/<name> 挪进 stations 站群（合自 ex-`/station-promote` cmd · 2026-05-19）
+
+**触发词**：`挪 X 进站群` / `promote X` / `把 X 加到 stations` / `把 X promote 进 stations` / `归位 X 到生产站群`
+
+将 `~/Dev/<name>` promote 到 `~/Dev/stations/<name>`（生产站群目录），自动扫硬编码路径引用，可选 sed 批量替换。
+
+### 用法
+
+```bash
+/site promote <name>                  # 只挪 + 扫引用
+/site promote <name> --auto-fix       # 挪 + 批量 sed 替换硬编码
+/site promote <name> --dry            # 不动，只打印计划
+/site promote <name> --no-smoke       # 跳过 api-smoke 烟测（静态站适用）
+```
+
+### 何时用
+
+- 某个 `~/Dev/<xxx>/` 的项目已稳定上线，要归位到站群目录
+- 与 `add --monorepo` 的关系：`add --monorepo` 是**直接**起在 monorepo；`promote` 是**事后**把独立 repo 挪进去
+
+### 执行
+
+```bash
+bash ~/Dev/tools/dev/scripts/station-promote.sh "$@"
+```
+
+### 流程（脚本内部做的事）
+
+1. 前置检查：`~/Dev/<name>` 存在 / `~/Dev/stations/<name>` 不存在 / git clean
+2. `mv ~/Dev/<name> ~/Dev/stations/<name>`
+3. 扫 `cc-configs/` `devtools/` `configs/` `memory/` 里的 `~/Dev/<name>` 硬编码引用
+4. 若 `--auto-fix`：sed 批量替换 3 种写法（`~/Dev/` / `$HOME/Dev/` / `/Users/tianli/Dev/`）
+5. 重建 raycast symlinks 指向新位置
+6. `/api-smoke <name>` 烟测（若是 API 类站）
+7. 打印摘要 + 提示接下来哪些 repo 要 commit
+
+### 依赖
+
+- `~/Dev/tools/dev/lib/station_path.sh` / `.py` — 路径发现函数（脚本/工具均用它）
+- 核心脚本 `api-smoke.sh` / `menus.py` / `deploy-changed.sh` / `web-stack deploy.sh` 已接入 station_path，`mv` 后**零代码改动**就能正常工作
+- `--auto-fix` 只针对文档级引用（cc-configs/commands/*.md 描述路径）
+
+### 不做
+
+- 不改 nginx / systemd / VPS 侧（VPS 路径与本地路径无耦合）
+- 不改 GitHub remote
+- 不 archive 源 repo
+- 不回滚（要回滚：`mv ~/Dev/stations/<name> ~/Dev/<name>`，sed 改过的文件 `git checkout --`）
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-description: 会话收尾族 — recap 复盘 / retro 写 playbook / handoff 全流程交接 / distill 提炼到全局
+description: 会话收尾族 — recap 复盘 / retro 写 playbook / handoff 全流程交接 / distill 提炼到全局 / render .md → .html 批量本地渲染 (md 渲染 / 点进去看 / 链接没渲染 / render md / md 转 html)
 ---
 
 # /wrap — 会话收尾统一入口
@@ -12,6 +12,7 @@ description: 会话收尾族 — recap 复盘 / retro 写 playbook / handoff 全
 | `recap` | CC 自己 | 更新 memory/skills/commands，session-retro MD |
 | `retro` | 用户 | Playbook 式复盘（slash command 编排流程） |
 | `distill` | 全局知识库 | 从项目提炼 commands / 踩坑 / playbook 骨架 |
+| `render` | 用户浏览器 | HTML 报告里的 .md href 批量渲染成同目录 .html（GitHub dark + wikilinks 解析） |
 
 未传子命令 → `handoff`（最完整）。
 
@@ -33,6 +34,7 @@ description: 会话收尾族 — recap 复盘 / retro 写 playbook / handoff 全
 | `<root>/handoffs/<slug>.md` | **handoff** Step 3.1 | 建 / 覆盖更新 | recap/retro/distill 禁写 |
 | `<主项目>/docs/retros/session-retro-{date}-{slug}.md` | **retro** Step 2 / **recap** Step 4 | recap 默认调 retro 内部逻辑（共享 Step 1 主项目判别） | handoff/distill 禁写 |
 | `~/.claude/commands/*.md` | **distill** Phase 4 (`--apply` 模式) | 同名冲突列 diff 让用户决 | 其他子命令禁写 |
+| `<input-html>.md` 的同目录 `.html` | **render** Step 2 | pandoc 渲染产物（同名同目录） | 其他子命令禁写 |
 
 ### 2. Priority marker 格式（待办标准化）
 
@@ -344,6 +346,7 @@ python3 ~/Dev/tools/dev/lib/tools/paths.py audit --brief
 | 健康检查 | `/health {sites,vps,project}` |
 | 整理目录 | `/tidy <path>` |
 | 收尾 | `/wrap handoff` |
+| HTML 报告里 .md 渲染 | `/wrap render <html>` |
 
 详细识别流程：通读会话 → 提取每个关键动作 → 查 available-skills 对照 → 找到=标"本该用 /xxx" / 找不到=保留工程工作。
 
@@ -391,10 +394,92 @@ python3 ~/Dev/tools/dev/lib/tools/paths.py audit --brief
 3. 踩坑不重复（先 grep domain CLAUDE.md）
 4. Playbook 时间轴 + 命令清单简洁颗粒度
 
+---
+
+## render — HTML 报告里 .md href 批量本地渲染（合自 ex-`/render-handoff` skill · 2026-05-19）
+
+**触发词**：`render md` / `md 渲染` / `md 转 html` / `链接没渲染` / `点进去看` / `浏览器看 md` / `batch render`
+
+**核心理念**：handoff / retro / dispatch / debrief 类 HTML 报告里大量 `<a href="file://*.md">` 入口，浏览器点进去是 raw markdown 难看且 wikilinks 不解析。本子命令一键扫 + 批量渲染 + 同目录落 `.html` + 父 HTML href 自动重写。
+
+### 参数
+
+```
+/wrap render <html-path>           # 处理单个 HTML 报告
+/wrap render <html-1> <html-2> ... # 批量多个 HTML
+/wrap render --dir <dir>           # 扫目录所有 *.html
+```
+
+### 与姊妹工具区别
+
+| 维度 | `/share` | `/wrap render`（本子命令） |
+|---|---|---|
+| 目标 | 发别人看 | 自己浏览器看 |
+| 输出 | `tianli.cyou/share/<slug>.html`（VPS） | 同目录 `<name>.html`（本地 file://） |
+| 输入 | 单个 .md | 一个 HTML 报告（含 N 个 .md href）批量 |
+| 副作用 | rsync + systemctl restart | 0 网络 |
+| CSS | `share-style.html`（亮色友好） | `dark-theme.css`（与 dispatch HTML 同色板） |
+
+### 何时用 / 何时不用
+
+**触发**：
+- handoff / retro / dispatch / debrief HTML 落盘后，里面 .md 链接想点进去本地看
+- 单独要把一批 handoff/memory/wiki .md 转 HTML 给浏览器开
+- 私域内容（memory / handoff / 中间产物）不要发 VPS
+
+**不触发**：
+- 发别人看 → 走 `/share`
+- 单文件 ad-hoc 看 → 用 Read / `glow` / `bat`
+- HTML 报告里没 .md href → 没活干
+
+### 4 步流水线
+
+1. **扫输入 HTML** — 提取所有 `<a href="file://*.md">` 的 .md 绝对路径列表（去重 + 过滤不存在）
+2. **批量 pandoc 渲染** — 对每个 .md：
+   ```bash
+   pandoc <md> -f markdown -t html5 --standalone \
+     --metadata title="<filename>" \
+     -H ~/.claude/skills/render-handoff/templates/dark-theme.css \
+     -o <md>.html
+   ```
+   per-file try/except，单失败不中断其他
+3. **wikilinks 解析** — `[[topic-name]]` regex → 同目录 / 兄弟目录 grep 找对应 .md → 重写为 `<a href="...html">`；找不到留 raw 不报错
+4. **父 HTML href 重写** — 把输入 HTML 里所有 `file://<md>` → `file://<html>`，**只重写渲染成功的**
+
+### 工具与脚本
+
+```bash
+# 单 HTML（含完整 4 步）
+python3 ~/.claude/skills/render-handoff/templates/render.py <html-file>
+
+# 批量
+for f in ~/Dev/wiki/handoffs/dev/*.html; do
+  python3 ~/.claude/skills/render-handoff/templates/render.py "$f"
+done
+```
+
+模板 / CSS：`~/.claude/skills/render-handoff/templates/`（`render.py` + `dark-theme.css`）。
+
+### 反模式
+
+- 把 .md 推到 VPS 当 share → 不是本子命令目标，走 `/share`
+- 重写 href 前不验证 .html 已生成 → 写出指向不存在文件的 href
+- pandoc 失败整批中断 → 必须 per-file try / except
+- CSS 用网络 CDN → 必须内联（用户可能在飞机上无网）
+- 假设 .md 都在 git repo → 接受任意绝对路径（memory / wiki / Downloads 均可）
+
+### 与其他 skill 衔接
+
+- **`/dispatch`** — 多 agent 跑完产出 HTML → 跑 `/wrap render` 让 .md 链接全渲染（再跑 `/wiki vault-inject` 接进 vault）
+- **`/wiki vault-inject`** — 渲染完 .html 后跑 vault-inject 加 nav + backlinks
+- **[[user-facing-output-is-html]]** memory — 用户对话窗口里要 HTML 不要 markdown 入口
+- **[[html-must-drill-down]]** memory — clickable 入口必须真能点进去看到渲染好的页面
+
 ## 参考
 
 - Playbook 总入口：`~/Dev/tools/configs/playbooks/META.md`
 - 中央 retro 索引：`~/Dev/stations/docs/knowledge/INDEX.md`（symlink 集合 + 时间线）
 - retro symlink 工具：`~/Dev/tools/cc-configs/tools/retro-symlink/retro_symlink.py`（link 单文件 / migrate 批量回迁）
+- render 模板：`~/.claude/skills/render-handoff/templates/render.py` + `dark-theme.css`（脚本保留，仅 SKILL.md 入口合入本族）
 - 旧示例（单一中央）：`~/Dev/stations/docs/knowledge/session-retro-20260419-r7-mega.md`
 - 新示例（物理 + symlink）：`~/Dev/stations/wpl-calc/docs/retros/session-retro-20260501-wpl-calc-v08.md` ← `~/Dev/stations/docs/knowledge/session-retro-20260501-wpl-calc-v08.md`

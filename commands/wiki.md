@@ -1,6 +1,6 @@
 ---
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, mcp__auggie__codebase-retrieval
-description: Wiki 工作流族。默认 = cwd 本地 vault（平铺）。super vault 显式 --super。强制 frontmatter + [[wikilinks]] + README MOC。长度服务内容（把事情说清楚就行），不设硬上限。
+description: Wiki 工作流族。默认 = cwd 本地 vault（平铺）。super vault 显式 --super。强制 frontmatter + [[wikilinks]] + README MOC。长度服务内容（把事情说清楚就行），不设硬上限。子命令 vault-inject 把富 HTML 改造为 vault citizen — 顶部 nav + 侧边 aside + 底部 backlinks + body wikilink 解析（触发：vault 注入 / 双链 / HTML 加 vault nav / inject-vault-nav / html-vault-citizen）。
 ---
 
 # /wiki — 本地 vault 优先 wiki 工作流
@@ -13,8 +13,11 @@ description: Wiki 工作流族。默认 = cwd 本地 vault（平铺）。super v
 /wiki verify [<topic>] [--super] [--vault <path>]
 /wiki link <project-path> --super
 /wiki rebuild --super
+/wiki vault-inject <html-path>               # 富 HTML → vault citizen（合自 ex-/vault-inject skill · 2026-05-19）
 ```
 
+> v0.5 (2026-05-19)：合入 `vault-inject` 作为子命令（HTML 双链改造，纯 file:// 浏览取代 Quartz）
+>
 > v0.4 (2026-05-12)：**默认 = cwd 本地平铺**（`<cwd>/wiki/<entry>.md`）。去掉 `.obsidian/` 父目录探测的子 vault 推断逻辑。super vault 用 `--super` 显式（取代旧 `--global`/`--here`）。
 >
 > v0.3 (2026-05-08)：加 `--here`（已被 v0.4 设为默认行为，flag 废弃）
@@ -349,6 +352,92 @@ python3 ~/Dev/tools/dev/lib/tools/obsidian_sync.py rebuild-index
 
 ---
 
+## /wiki vault-inject — 富 HTML → vault citizen（合自 ex-`/vault-inject` skill · 2026-05-19）
+
+**触发词**：`vault 注入` / `双链` / `双链注入` / `HTML 加 vault nav` / `富 HTML 双链` / `vault citizen` / `inject-vault-nav` / `html-vault-citizen`
+
+**核心理念**：dispatch / debrief / handoff render 出的 HTML 默认是孤岛 — 没 nav / 没 backlinks / `[[wikilink]]` 是纯文本。本子命令三步流水线把它接进本地 vault（`~/Dev/wiki/`）双链网络。
+
+**与铁律的关系**：是「零尾巴」(全局 CLAUDE.md 铁律 3) 的产物收口环节 — HTML 落盘后跑 vault-inject 才算 vault citizen，不跑就只是临时文件。
+
+### 何时用 / 何时不用
+
+**触发**：
+- dispatch / debrief HTML 报告生成后想加 vault 双链 + backlinks
+- 一批已有 HTML（`~/Dev/*.html` / handoffs/*.html）集体改造
+- 想验证某 HTML 是否已被 vault 索引（看注入后的 aside 是否有"反向引用"段）
+- `/wrap render` 把 .md 渲成 .html 之后
+
+**不触发**：
+- 公开分享 HTML（`/share` 推 VPS 那条线）— vault-inject 是 local-only
+- 纯 markdown 工作（vault 内 .md 已经是 vault citizen，不需要注入）
+
+### 3 步流水线
+
+#### Step 1 — 重建 vault 索引（vault 改了才需要）
+
+```bash
+python3 ~/Dev/tools/dev/lib/tools/vault_index.py
+```
+
+扫 `~/Dev/wiki/` 所有 .md → 出 `~/Dev/wiki/.vault_index.json`（当前 ~202 entries）。包含 slug / title / path / tags / aliases，供 wikilink 解析。
+
+#### Step 2 — 重建反向链 map（新增 HTML 后需要）
+
+```bash
+python3 ~/Dev/tools/dev/lib/tools/backlinks_map.py
+```
+
+扫所有源（.md + .html）→ 出 `~/Dev/wiki/.backlinks_map.json`（当前 ~899 backlinks keys）。供注入时查"谁引用了我"。
+
+#### Step 3 — 注入单 HTML
+
+```bash
+python3 ~/Dev/tools/dev/lib/tools/inject_vault_nav.py /path/to/report.html
+```
+
+幂等改写 HTML：顶部 nav（vault home / search / graph 链）+ 侧边 aside（同 tag 邻居）+ 底部 backlinks（反向引用列表）+ body 内 `[[wikilink]]` 解析成 `<a href>`。原文件备份到 `.bak.pre-vault-inject`。
+
+### 调用模板
+
+```bash
+# 单 HTML 注入（最常用）
+/wiki vault-inject /path/to/report.html
+
+# 实际执行
+python3 ~/Dev/tools/dev/lib/tools/inject_vault_nav.py /path/to/report.html
+
+# 批量
+for f in ~/Dev/wiki/handoffs/dev/*.html; do
+  python3 ~/Dev/tools/dev/lib/tools/inject_vault_nav.py "$f"
+done
+
+# 完整三步（vault 有改动 + 新增 HTML 后）
+python3 ~/Dev/tools/dev/lib/tools/vault_index.py
+python3 ~/Dev/tools/dev/lib/tools/backlinks_map.py
+python3 ~/Dev/tools/dev/lib/tools/inject_vault_nav.py <html>
+
+# 只注入（索引没变，仅新增/修改 HTML）
+python3 ~/Dev/tools/dev/lib/tools/inject_vault_nav.py <html>
+```
+
+### 约束
+
+- **自动备份**：原 HTML 写到 `<file>.bak.pre-vault-inject`，可回滚
+- **幂等**：重跑同一 HTML 不重复插入 nav/aside/backlinks（检测已注入标记跳过）
+- **纯 file:// 浏览**（2026-05-19 起去 Quartz）：nav / aside / backlinks 全部链 `file:///Users/tianli/Dev/wiki/...`；任何 HTML 直接 `open` 就能沿链网游走，零中间服务
+- **不进 git**：`.vault_index.json` / `.backlinks_map.json` / `.bak.pre-vault-inject` 都应 gitignore（local-only 派生物）
+- **wikilink 找不到**：保留原 `[[xxx]]` 文本不报错（提示 vault 缺该 entry）
+
+### 与其他 skill 衔接
+
+- **`/dispatch`** — 多 agent 跑完产出 HTML 报告 → 收尾跑 `/wiki vault-inject` 让所有产物 vault citizen，不再是孤岛
+- **`/wrap render`** — MD → HTML 渲染完 → 跑 `/wiki vault-inject` 加 nav + backlinks，handoff 点进去能跳到相关 wiki
+- **`/share`** — 推 VPS public 路径，**不冲突且不应叠加** — share 出去的是 public，vault-inject 是 local-only vault 内循环
+- **`/wiki entry|new`** — 改 vault 内 .md 后，下次 vault-inject 前先跑 Step 1 重建索引（不然新增的 wiki entry wikilink 解析不到）
+
+---
+
 ## 反模式（命令运行时立即纠正）
 
 ❌ topic-slug 用驼峰 / 含空格 / 含中文 → 强制 kebab-case
@@ -357,6 +446,7 @@ python3 ~/Dev/tools/dev/lib/tools/obsidian_sync.py rebuild-index
 ❌ 把 STATUS / README 放进 wiki/ → /wiki 拒绝接受根目录 MD 入 wiki
 ❌ entry 用 markdown link 而非 wikilink → /wiki verify 报红
 ❌ 为了凑长度填充冗余 / 为了压短度漏掉必要业务深度 → 反模式（2026-05-13 立 · 用户原话「把事情说清楚就行」）
+❌ vault-inject 跑前没重建索引就抱怨 wikilink 不解析 → 先 Step 1 / Step 2
 
 ---
 
@@ -367,6 +457,7 @@ python3 ~/Dev/tools/dev/lib/tools/obsidian_sync.py rebuild-index
 | 在当前项目立本地 wiki | **本 command** 默认 — `cd <project> && /wiki entry <slug>` |
 | 跨项目方法论沉淀 | **本 command** `--super` — 写到 `~/Obsidian/dev-vault/topics/` |
 | 大 vault（如 stations）立子 wiki | **本 command** `--vault ~/Dev/stations` |
+| HTML 产物接进 vault 双链 | **本 command** `vault-inject` 子命令 |
 | 拆长 reference 多条目（项目内） | 走 `~/Dev/tools/configs/playbooks/obsidian-wiki.md` 流程 |
 | 整理目录文件命名 | `/tidy` |
 | 写项目 README / CLAUDE / STATUS | 不走 wiki，单文件高密度 |
@@ -387,3 +478,9 @@ python3 ~/Dev/tools/dev/lib/tools/obsidian_sync.py rebuild-index
 - [ ] `/wiki verify <topic>` 全 ✅
 - [ ] 报告：N 文件 / 总行数 / 跨 topic 引用清单
 - [ ] 提示用户在 Obsidian 里 `Cmd+G` 看 graph view 验证
+
+**vault-inject**：
+- [ ] HTML 顶部有 vault nav bar / 侧边 aside / 底部 backlinks 三段
+- [ ] body 内 `[[wikilink]]` 全部解析为 `<a href="file://...">`（或保留原文+log 提示 vault 缺该 entry）
+- [ ] `.bak.pre-vault-inject` 同目录已生成
+- [ ] 浏览器 `open` 后能从 nav 跳回 vault home 且 backlinks 可点
