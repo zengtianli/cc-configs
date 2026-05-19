@@ -1,6 +1,6 @@
 ---
 name: harness-sync
-description: 管理 CC skills 跨项目分发与同步。当需要检查/同步/初始化项目 skills 配置时触发。
+description: 把 ~/Dev/tools/cc-configs/ 里的项目专属 skills/commands/agents 分发到各项目 .claude/，并审计跨项目 CC 配置漂移（status/sync/init/audit 四子命令，注册表在 harness.yaml）。当用户说「同步 skills / 分发 skills / 把 X skill 也加到 Y 项目 / harness sync / 跨项目 skill 一致性 / .claude/skills 漂移 / 新项目初始化 .claude/ / 审计项目 CC 配置 / cc-configs 改了推到所有项目」时触发。区别于 /sync-cc（单项目漂移）和 /start（单项目入场只读诊断）— 本 skill 专管多项目分发。
 ---
 
 # Harness — CC 配置分发管理
