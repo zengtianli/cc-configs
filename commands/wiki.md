@@ -322,7 +322,7 @@ done
 ```
 0. 解析 vault root（仅 super vault 场景，必须 `--super`；本地平铺无意义）
 1. 校验 project-path 存在 + 有 wiki/ 子目录
-2. `python3 ~/Dev/devtools/lib/tools/obsidian_sync.py link <project-path> --super`
+2. `python3 ~/Dev/tools/dev/lib/tools/obsidian_sync.py link <project-path> --super`
 3. 自动反查 topic-index.yaml 找该项目对应 topic
 4. 建 symlink 到 `<vault>/wiki/topics/<topic>/<project-name>/`（提炼层 `<vault>/topics/<topic>/<project-name>/`）
 5. 报告 md_files 数 + topic 归属
@@ -339,7 +339,7 @@ done
 重生 `_meta/projects-index.md` + `_meta/topic-graph.md`。
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/obsidian_sync.py rebuild-index
+python3 ~/Dev/tools/dev/lib/tools/obsidian_sync.py rebuild-index
 ```
 
 什么时候用：

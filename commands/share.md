@@ -25,12 +25,12 @@ description: 把 markdown 文件渲染成 HTML 发布到 tianlizeng.cloud/share/
 ## 执行
 
 ```bash
-bash ~/Dev/devtools/scripts/tools/share_md.sh $ARGUMENTS
+bash ~/Dev/tools/dev/scripts/tools/share_md.sh $ARGUMENTS
 ```
 
 ## 脚本行为
 
-- pandoc 渲染（`--standalone` + `--include-in-header=~/Dev/devtools/lib/templates/share-style.html`，自带中文 + 暗色模式 CSS）
+- pandoc 渲染（`--standalone` + `--include-in-header=~/Dev/tools/dev/lib/templates/share-style.html`，自带中文 + 暗色模式 CSS）
 - 落本地 `~/Dev/stations/website/public/share/<slug>.html`（同时被下次 `pnpm build` 带上，不会丢）
 - rsync 单文件到 `$VPS:/opt/website/public/share/`
 - `systemctl restart website` 让 Next.js 看到新静态文件（不重启会 404）
@@ -41,4 +41,4 @@ bash ~/Dev/devtools/scripts/tools/share_md.sh $ARGUMENTS
 - slug 自动小写化 + 非 `[a-z0-9_-]` 替成 `-`
 - 同 slug 重复发布 = 覆盖更新（pandoc 重渲，rsync 覆盖）
 - 默认是公开 URL（无 CF Access），不要发敏感原件 — 发草稿/对外稿前自己脱敏
-- 改 CSS 改 `~/Dev/devtools/lib/templates/share-style.html`，下次 share 自动生效
+- 改 CSS 改 `~/Dev/tools/dev/lib/templates/share-style.html`，下次 share 自动生效

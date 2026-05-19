@@ -25,7 +25,7 @@ SSOT：`~/Dev/tools/configs/repo-map.json`
 字段：local / github / vps（null=未部署）/ category（hydro/tools/infra/knowledge/personal/work）/ auto_push
 
 **Consumers**（嵌入此映射的文件）：
-1. `~/Dev/devtools/scripts/tools/git_smart_push.py` — 运行时读 JSON，过滤 `auto_push: true`
+1. `~/Dev/tools/dev/scripts/tools/git_smart_push.py` — 运行时读 JSON，过滤 `auto_push: true`
 2. `~/Dev/CLAUDE.md` — repo map table 节。`sync` 更新
 3. `/repo ship` — `all` 模式读 `repo-map.json` 解析路径
 
@@ -82,8 +82,8 @@ work (2)
 
 实际执行：
 ```bash
-python3 ~/Dev/devtools/lib/tools/repo_map_gen.py            # 写入
-python3 ~/Dev/devtools/lib/tools/repo_map_gen.py --stdout   # 预览
+python3 ~/Dev/tools/dev/lib/tools/repo_map_gen.py            # 写入
+python3 ~/Dev/tools/dev/lib/tools/repo_map_gen.py --stdout   # 预览
 ```
 
 **和 scan 区别**：scan 增量对账（找新增/缺失），交互式确认每条；regen 全量重建（覆盖 JSON），用于"手工漂移已严重，统一对齐"场景。2026-04-22 调查 22 条陈旧 + 8 条缺失 → regen 一次清干净。
@@ -179,7 +179,7 @@ python3 ~/Dev/devtools/lib/tools/repo_map_gen.py --stdout   # 预览
 ### Per-project 流程
 
 #### 1. README audit
-`python3 ~/Dev/devtools/repo_manager.py audit <name>`
+`python3 ~/Dev/tools/dev/repo_manager.py audit <name>`
 
 发现问题列出，**不自动改 README**（README 改动单独走）。
 
@@ -283,7 +283,7 @@ gh repo view zengtianli/<name> --json description,repositoryTopics,homepageUrl
 
 ### 参考
 - `~/Dev/tools/configs/repo-standards.json`
-- `python3 ~/Dev/devtools/repo_manager.py audit`
+- `python3 ~/Dev/tools/dev/repo_manager.py audit`
 
 ### 输出
 

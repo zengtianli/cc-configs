@@ -11,10 +11,10 @@ description: 把 ~/Downloads/ 顶层 entry 按规则派送到 ~/Dev / ~/Document
 
 ```bash
 # 1. 看现状（按当前规则分类）
-python3 ~/Dev/devtools/lib/tools/downloads_triage/triage.py scan
+python3 ~/Dev/tools/dev/lib/tools/downloads_triage/triage.py scan
 
 # 2. 出 plan.md（dry-run，不动）
-python3 ~/Dev/devtools/lib/tools/downloads_triage/triage.py plan
+python3 ~/Dev/tools/dev/lib/tools/downloads_triage/triage.py plan
 
 # 3. 看 ⚠ 未知 entry，每个：
 #    a) 用 mdls / pdftotext / Read 看内容判断主题
@@ -23,12 +23,12 @@ python3 ~/Dev/devtools/lib/tools/downloads_triage/triage.py plan
 #    d) 敏感证件类 target 必须在 ~/Dev 之外（git 风险）
 
 # 4. 执行
-python3 ~/Dev/devtools/lib/tools/downloads_triage/triage.py apply
+python3 ~/Dev/tools/dev/lib/tools/downloads_triage/triage.py apply
 ```
 
 ## 规则 SSOT
 
-`~/Dev/devtools/lib/tools/downloads_triage/rules.yaml`
+`~/Dev/tools/dev/lib/tools/downloads_triage/rules.yaml`
 
 四层匹配（优先级：exact > prefix > regex > keyword）：
 - `skip_dirs`: 永远不动的顶层目录（用户已自分类 / 不入 Dev 类）

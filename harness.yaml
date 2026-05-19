@@ -56,7 +56,7 @@ projects:
     skills: []
     notes: 多邮箱聚合（126 + Gmail IMAP）+ 内容分析（llm_client.py haiku）+ 动作派送（reminder / hsbc-statement / archive），main entry python3 -m mailroom
   devtools:
-    path: ~/Dev/devtools
+    path: ~/Dev/tools/dev
     skills: []
     notes: 工具基建 repo（CC hooks / Git 工具 / paths / menus / repo_manager 等），全局工具，按需在子目录引用
   wpl-calc:

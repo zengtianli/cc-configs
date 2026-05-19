@@ -83,7 +83,7 @@ CLAUDE.md 无相关信息 → 跳过验证，提示用户补充。
 
 `/deploy changed [--since origin/main] [--fast] [--dry]`
 
-薄皮 — 调 `~/Dev/devtools/scripts/deploy-changed.sh`。一键"我刚改的几站上线"，不用手工列站名。
+薄皮 — 调 `~/Dev/tools/dev/scripts/deploy-changed.sh`。一键"我刚改的几站上线"，不用手工列站名。
 
 ### Pre-flight（`--dry` 隐含，非 `--dry` 时强制）
 
@@ -97,14 +97,14 @@ CLAUDE.md 无相关信息 → 跳过验证，提示用户补充。
 ### 执行
 
 ```bash
-bash ~/Dev/devtools/scripts/deploy-changed.sh $ARGUMENTS
+bash ~/Dev/tools/dev/scripts/deploy-changed.sh $ARGUMENTS
 ```
 
 ### 脚本行为
 
 扫三个来源 `git diff --name-only <since> HEAD`：
 
-- `~/Dev/devtools/lib/` — 共享 Python 模块，变了 → **所有**已迁站点
+- `~/Dev/tools/dev/lib/` — 共享 Python 模块，变了 → **所有**已迁站点
 - `~/Dev/stations/web-stack/` — `apps/<name>-web/*` 变了 → 对应站；`packages/*` 变了 → 所有站
 - `~/Dev/hydro-*`、`~/Dev/stations/audiobook` — 该 repo 任意变动 → 对应站
 

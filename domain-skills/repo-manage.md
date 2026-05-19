@@ -4,10 +4,10 @@ When the user wants to manage, audit, screenshot, or promote GitHub repositories
 
 ## Unified Tool: `repo_manager.py`
 
-All three workflows consolidated into `~/Dev/devtools/repo_manager.py` with subcommands `audit` / `screenshot` / `promote`.
+All three workflows consolidated into `~/Dev/tools/dev/repo_manager.py` with subcommands `audit` / `screenshot` / `promote`.
 
 ```bash
-alias rm='python3 ~/Dev/devtools/repo_manager.py'
+alias rm='python3 ~/Dev/tools/dev/repo_manager.py'
 ```
 
 ### 1. audit — 项目合规性审计
@@ -15,13 +15,13 @@ Checks README structure, badges, screenshots, gitignore, dependency pinning agai
 
 ```bash
 # Audit all projects
-python3 ~/Dev/devtools/repo_manager.py audit
+python3 ~/Dev/tools/dev/repo_manager.py audit
 
 # Audit specific projects
-python3 ~/Dev/devtools/repo_manager.py audit cc-configs dockit
+python3 ~/Dev/tools/dev/repo_manager.py audit cc-configs dockit
 
 # Audit + auto-fix gitignore gaps
-python3 ~/Dev/devtools/repo_manager.py audit --fix-gitignore
+python3 ~/Dev/tools/dev/repo_manager.py audit --fix-gitignore
 ```
 
 **Checks performed:**
@@ -34,19 +34,19 @@ Supports Streamlit apps (Playwright URL screenshots), CLI tools (terminal output
 
 ```bash
 # Screenshot a Streamlit app
-python3 ~/Dev/devtools/repo_manager.py screenshot streamlit hydro-rainfall https://hydro-rainfall.tianlizeng.cloud
+python3 ~/Dev/tools/dev/repo_manager.py screenshot streamlit hydro-rainfall https://hydro-rainfall.tianlizeng.cloud
 
 # Screenshot a CLI tool
-python3 ~/Dev/devtools/repo_manager.py screenshot cli cc-configs "python3 tools/harness/harness.py ~/Dev/stations/dockit"
+python3 ~/Dev/tools/dev/repo_manager.py screenshot cli cc-configs "python3 tools/harness/harness.py ~/Dev/stations/dockit"
 
 # Screenshot a Tauri desktop app
-python3 ~/Dev/devtools/repo_manager.py screenshot tauri <repo>
+python3 ~/Dev/tools/dev/repo_manager.py screenshot tauri <repo>
 
 # Batch all Streamlit apps
-python3 ~/Dev/devtools/repo_manager.py screenshot batch
+python3 ~/Dev/tools/dev/repo_manager.py screenshot batch
 
 # Batch all (including CLI)
-python3 ~/Dev/devtools/repo_manager.py screenshot batch --include-cli
+python3 ~/Dev/tools/dev/repo_manager.py screenshot batch --include-cli
 ```
 
 **Output:** `docs/screenshots/demo.png` (1280x800) in each project directory.
@@ -56,10 +56,10 @@ Generates bilingual READMEs, SVG demo previews, badges, and pushes to GitHub.
 
 ```bash
 # Promote all registered repos
-python3 ~/Dev/devtools/repo_manager.py promote
+python3 ~/Dev/tools/dev/repo_manager.py promote
 
 # Promote specific repos
-python3 ~/Dev/devtools/repo_manager.py promote hydro-rainfall dockit
+python3 ~/Dev/tools/dev/repo_manager.py promote hydro-rainfall dockit
 ```
 
 **Note:** This tool generates from templates, overwriting existing READMEs. Use for initial setup only.
@@ -77,18 +77,18 @@ When creating a new project under ~/Dev:
    - Feature table, Install, Quick Start sections
    - README_CN.md as full Chinese mirror
 
-2. **Screenshot** — `python3 ~/Dev/devtools/repo_manager.py screenshot {streamlit|cli|tauri} <name> [...]`
+2. **Screenshot** — `python3 ~/Dev/tools/dev/repo_manager.py screenshot {streamlit|cli|tauri} <name> [...]`
 
-3. **.gitignore** — `python3 ~/Dev/devtools/repo_manager.py audit --fix-gitignore <name>`
+3. **.gitignore** — `python3 ~/Dev/tools/dev/repo_manager.py audit --fix-gitignore <name>`
 
 4. **Dependencies** — Pin all versions: `package>=X.Y.Z`
 
-5. **Verify** — `python3 ~/Dev/devtools/repo_manager.py audit <name>`
+5. **Verify** — `python3 ~/Dev/tools/dev/repo_manager.py audit <name>`
 
 ## SOP: Periodic Audit
 
 ```bash
-python3 ~/Dev/devtools/repo_manager.py audit
+python3 ~/Dev/tools/dev/repo_manager.py audit
 ```
 
 Fix any issues found, then re-run to confirm clean.

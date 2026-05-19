@@ -7,7 +7,7 @@ description: commit/push 前自动识别"不该入 git"的派生产物 / 缓存 
 
 ## 触发
 
-任何 `python3 ~/Dev/devtools/lib/tools/auto_commit.py` 调用（含 `/commit` 和递归批 commit 模板）**自动**跑 guard。无需用户显式调用。
+任何 `python3 ~/Dev/tools/dev/lib/tools/auto_commit.py` 调用（含 `/commit` 和递归批 commit 模板）**自动**跑 guard。无需用户显式调用。
 
 ## 拦截的文件类型
 
@@ -37,10 +37,10 @@ ec=3 立即退出：
 
 ```bash
 # 标准（默认 guard ON）
-python3 ~/Dev/devtools/lib/tools/auto_commit.py --no-confirm --push
+python3 ~/Dev/tools/dev/lib/tools/auto_commit.py --no-confirm --push
 
 # 强制保留派生产物（极少用，仅在需要 commit 模板输出时）
-python3 ~/Dev/devtools/lib/tools/auto_commit.py --no-confirm --push --allow-derived
+python3 ~/Dev/tools/dev/lib/tools/auto_commit.py --no-confirm --push --allow-derived
 ```
 
 ## 来源
@@ -51,7 +51,7 @@ python3 ~/Dev/devtools/lib/tools/auto_commit.py --no-confirm --push --allow-deri
 
 ## 关联
 
-- 实现：`~/Dev/devtools/lib/tools/auto_commit.py` 中 `DERIVED_PATTERNS` + `derived_guard()` + `scan_derived()`
+- 实现：`~/Dev/tools/dev/lib/tools/auto_commit.py` 中 `DERIVED_PATTERNS` + `derived_guard()` + `scan_derived()`
 - 命令：`/commit` 默认走这条管道
 - memory: [[commit-guard-derived-files]] 教训 + 触发场景
 - 反模式：commit 前不扫 untracked 类别，先 add -A 再发现派生入仓

@@ -79,7 +79,7 @@
   },
   {
     "file": "session-retro-20260424-paths-v0.6-full-refactor.md",
-    "primary_project_path": "~/Dev/devtools",
+    "primary_project_path": "~/Dev/tools/dev",
     "confidence": "high",
     "reason": "paths SSOT v0.6 重构主体在 devtools（paths.py + paths_const.* 三端 + skill md），跨 5 repo 但主体 devtools"
   },
@@ -91,7 +91,7 @@
   },
   {
     "file": "session-retro-20260425-paths-v1.1-drift-zero.md",
-    "primary_project_path": "~/Dev/devtools",
+    "primary_project_path": "~/Dev/tools/dev",
     "confidence": "high",
     "reason": "paths v1.1 drift 清零（paths.py + paths.yaml），主 commit 在 devtools/feat/paths-ssot；stations 102 files 是顺手收尾"
   },
@@ -103,7 +103,7 @@
   },
   {
     "file": "session-retro-20260425-ssot-blindspots-v1.0.md",
-    "primary_project_path": "~/Dev/devtools",
+    "primary_project_path": "~/Dev/tools/dev",
     "confidence": "high",
     "reason": "SSOT 盲区补救（symlink + allow_missing + 运行时拼装路径），主体改 paths.py + refactor-dir.md skill，devtools 为主"
   },

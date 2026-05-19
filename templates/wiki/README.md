@@ -49,13 +49,13 @@ scaffold.py 的 mini-template 只支持：
 
 ```bash
 # 渲染 main page 到 stdout
-python3 ~/Dev/devtools/lib/tools/scaffold.py preview <project> --kind wiki-mainpage
+python3 ~/Dev/tools/dev/lib/tools/scaffold.py preview <project> --kind wiki-mainpage
 
 # 渲染单条目
-python3 ~/Dev/devtools/lib/tools/scaffold.py preview <project> --kind wiki-entry
+python3 ~/Dev/tools/dev/lib/tools/scaffold.py preview <project> --kind wiki-entry
 
 # 一键初始化 docs/wiki/ + WIKI.md 骨架
-python3 ~/Dev/devtools/lib/tools/scaffold.py wiki-init <project> [--topic proxy-and-vpn]
+python3 ~/Dev/tools/dev/lib/tools/scaffold.py wiki-init <project> [--topic proxy-and-vpn]
 ```
 
 `wiki-init` 创建空骨架（用户自己填内容），不破坏已有文件（如已存在则跳过 + 警告）。
@@ -65,7 +65,7 @@ python3 ~/Dev/devtools/lib/tools/scaffold.py wiki-init <project> [--topic proxy-
 项目内为真，Obsidian vault 用 symlink 引用：
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/obsidian_sync.py link <project>
+python3 ~/Dev/tools/dev/lib/tools/obsidian_sync.py link <project>
 # → ~/Obsidian/dev-vault/topics/<topic-id>/<project-name>/  (symlink)
 ```
 

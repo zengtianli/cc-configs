@@ -49,13 +49,13 @@ curl -s --noproxy '*' https://dashboard.tianlizeng.cloud/api/auggie \
 
 1. **rebuild auggie-workspaces.json**
    ```bash
-   python3 ~/Dev/devtools/lib/tools/auggie_workspaces.py build
-   python3 ~/Dev/devtools/lib/tools/auggie_workspaces.py audit  # 必须 0 退出
+   python3 ~/Dev/tools/dev/lib/tools/auggie_workspaces.py build
+   python3 ~/Dev/tools/dev/lib/tools/auggie_workspaces.py audit  # 必须 0 退出
    ```
 
 2. **retry-failed warmup**（仅重跑 status != 'ok' 的，保留已 ok）
    ```bash
-   python3 ~/Dev/devtools/lib/tools/auggie_warmup.py run --retry-failed
+   python3 ~/Dev/tools/dev/lib/tools/auggie_warmup.py run --retry-failed
    ```
    产出 `~/Dev/tools/configs/auggie-health.json`。预计耗时几分钟（视失败数量）。
 
@@ -150,8 +150,8 @@ warmup 产出。每个 indexable workspace 1 record：`status / duration_s / avg
 4. **写 yaml**：在 `auggie-workspaces.yaml` 合适分组（tools/labs/content/Work/migrated）末尾追加，缩进对齐
 5. **重生成 + 校验**：
    ```bash
-   python3 ~/Dev/devtools/lib/tools/auggie_workspaces.py build
-   python3 ~/Dev/devtools/lib/tools/auggie_workspaces.py audit
+   python3 ~/Dev/tools/dev/lib/tools/auggie_workspaces.py build
+   python3 ~/Dev/tools/dev/lib/tools/auggie_workspaces.py audit
    ```
 6. **验证 dispatch**：`auggie_workspaces.py resolve <id>` 应输出绝对路径
 7. **提示**：是否 `cd ~/Dev/tools/configs && git commit`（pre-commit hook 自动跑 audit gate）

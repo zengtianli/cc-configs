@@ -6,7 +6,7 @@ description: 智能 commit · Opus 4.7 看 diff 写 conventional commit msg · �
 
 `/commit [--push]`
 
-跑 `python3 ~/Dev/devtools/lib/tools/auto_commit.py "$@"`。
+跑 `python3 ~/Dev/tools/dev/lib/tools/auto_commit.py "$@"`。
 
 cwd 必须在 git repo 内。脚本会：
 1. 扫敏感文件（.env / .key / credentials → 立即拒绝）
@@ -46,7 +46,7 @@ while IFS= read -r gitdir; do
 done < <(find ~/Dev -name ".git" -not -path "*/node_modules/*" -not -path "*/_archive/*" 2>/dev/null)
 
 printf '%s\n' "${REPOS[@]}" | xargs -P 8 -I{} bash -c '
-  cd "$1" && git add -A && python3 ~/Dev/devtools/lib/tools/auto_commit.py --no-confirm --push 2>&1 | tail -3
+  cd "$1" && git add -A && python3 ~/Dev/tools/dev/lib/tools/auto_commit.py --no-confirm --push 2>&1 | tail -3
 ' _ {}
 ```
 

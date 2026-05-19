@@ -29,7 +29,7 @@ cd ~/Dev/tools/raycast && git add -A && git commit -m "sync: <脚本名> 加入/
 
 ```
 源命令（每个 repo 自己管）
-  ~/Dev/devtools/raycast/commands/<name>.sh
+  ~/Dev/tools/dev/raycast/commands/<name>.sh
   ~/Dev/tools/mactools/raycast/commands/<name>.{sh,py}
   ~/Dev/tools/doctools/raycast/commands/<name>.sh
                   ↓ sync.py absolute-path symlink ↓

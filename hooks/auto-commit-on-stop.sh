@@ -100,7 +100,7 @@ git add -A >> "$LOG" 2>&1
 
 # 11. fire auto_commit.py
 log "FIRE $repo_root (push=${PUSH_FLAG:-NO})"
-timeout 90 python3 "$HOME/Dev/devtools/lib/tools/auto_commit.py" \
+timeout 90 python3 "$HOME/Dev/tools/dev/lib/tools/auto_commit.py" \
   --no-confirm $PUSH_FLAG --model claude-sonnet-4-6 \
   >> "$LOG" 2>&1
 rc=$?

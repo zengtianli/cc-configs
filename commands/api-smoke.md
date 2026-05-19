@@ -17,7 +17,7 @@ description: 本地 FastAPI 烟雾测试 — 起 uvicorn → curl /api/health+me
 ## 执行
 
 ```bash
-bash ~/Dev/devtools/scripts/api-smoke.sh $ARGUMENTS
+bash ~/Dev/tools/dev/scripts/api-smoke.sh $ARGUMENTS
 ```
 
 ## 脚本行为
@@ -46,5 +46,5 @@ bash ~/Dev/devtools/scripts/api-smoke.sh $ARGUMENTS
 ## 相关
 
 - `~/Dev/stations/web-stack/infra/deploy/verify.py` — 生产环境浏览器端验证
-- `~/Dev/devtools/lib/hydro_api_helpers.py` — 所有 api.py 共享的 Python 工具
+- `~/Dev/tools/dev/lib/hydro_api_helpers.py` — 所有 api.py 共享的 Python 工具
 - `playbooks/hydro.md` — 完整编排上下文

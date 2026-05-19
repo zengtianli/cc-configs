@@ -47,7 +47,7 @@ description: 重构族 — dir 搬目录 + 零死链 / auto 自循环 patch+test
 Grep 扫 `<old>` 在以下位置出现次数（三种写法：`~/Dev/...` + `/Users/tianli/Dev/...` + 裸路径）：
 - `~/Dev/tools/cc-configs/`
 - `~/Dev/tools/configs/`
-- `~/Dev/devtools/`
+- `~/Dev/tools/dev/`
 - `~/Dev/stations/docs/`
 - `~/Dev/CLAUDE.md` / `HANDOFF.md` / `paths.yaml`
 
@@ -74,21 +74,21 @@ mv <old> <new>
 #### Step 5 · rewrite-dead（若无 `--no-rewrite`）
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/paths.py rewrite-dead --dry-run   # 预览
+python3 ~/Dev/tools/dev/lib/tools/paths.py rewrite-dead --dry-run   # 预览
 # --dry 开启 → 中止
-python3 ~/Dev/devtools/lib/tools/paths.py rewrite-dead             # 实跑
+python3 ~/Dev/tools/dev/lib/tools/paths.py rewrite-dead             # 实跑
 ```
 
 #### Step 6 · build-const 刷派生
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/paths.py build-const -w
+python3 ~/Dev/tools/dev/lib/tools/paths.py build-const -w
 ```
 
 #### Step 6.5 · rewrite-allow-missing
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/paths.py rewrite-allow-missing --apply
+python3 ~/Dev/tools/dev/lib/tools/paths.py rewrite-allow-missing --apply
 ```
 
 把 `allow_missing:` 段命中本次 migration 的 path 前缀整体平移到新路径。避免老前缀失效后"隐性死链"显形。
@@ -96,7 +96,7 @@ python3 ~/Dev/devtools/lib/tools/paths.py rewrite-allow-missing --apply
 #### Step 6.6 · rebuild-symlinks
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/paths.py rebuild-symlinks --apply --backup
+python3 ~/Dev/tools/dev/lib/tools/paths.py rebuild-symlinks --apply --backup
 ```
 
 扫 ~/Dev 所有 symlink，对 `target` 命中 migration 但 dangling 的，按新 target 重建。`--backup` 写 `<link>\t<old>\t<new>` 到 `~/Dev/_archive/symlink-rewrites/<ts>.tsv`。
@@ -109,7 +109,7 @@ while IFS=$'\t' read l o n; do ln -sfn "$o" "$l"; done < ~/Dev/_archive/symlink-
 #### Step 6.7 · scan-symlinks 验证（**硬阻塞**）
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/paths.py scan-symlinks --strict
+python3 ~/Dev/tools/dev/lib/tools/paths.py scan-symlinks --strict
 ```
 
 - exit 0 = 0 个 migration-hit dangling，继续
@@ -118,7 +118,7 @@ python3 ~/Dev/devtools/lib/tools/paths.py scan-symlinks --strict
 #### Step 7 · scan-dead 验证（**硬阻塞**）
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/paths.py scan-dead --strict
+python3 ~/Dev/tools/dev/lib/tools/paths.py scan-dead --strict
 ```
 
 - exit 0 = 零新死链，继续
@@ -157,8 +157,8 @@ python3 ~/Dev/devtools/lib/tools/paths.py scan-dead --strict
 
 ### 依赖
 - `~/Dev/paths.yaml`（SSOT 手写）
-- `~/Dev/devtools/lib/tools/paths.py`（CLI）
-- `~/Dev/devtools/lib/paths_const.py`（派生）
+- `~/Dev/tools/dev/lib/tools/paths.py`（CLI）
+- `~/Dev/tools/dev/lib/paths_const.py`（派生）
 
 ### 参考 playbook
 完整 SOP + 踩坑：`~/Dev/tools/configs/playbooks/paths.md`
@@ -387,7 +387,7 @@ fi
 ### 调用
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/classify.py $ARGUMENTS
+python3 ~/Dev/tools/dev/lib/tools/classify.py $ARGUMENTS
 ```
 
 ### 输出列
@@ -449,7 +449,7 @@ python3 ~/Dev/devtools/lib/tools/classify.py $ARGUMENTS
 ### 调用
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/stack_migrate_hydro.py $ARGUMENTS
+python3 ~/Dev/tools/dev/lib/tools/stack_migrate_hydro.py $ARGUMENTS
 ```
 
 ### 产物

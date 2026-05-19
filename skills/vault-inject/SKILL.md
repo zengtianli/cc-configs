@@ -33,7 +33,7 @@ triggers: vault inject / 双链注入 / 富 HTML 双链 / html-vault-citizen / i
 ### Step 1 — 重建 vault 索引（vault 改了才需要）
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/vault_index.py
+python3 ~/Dev/tools/dev/lib/tools/vault_index.py
 ```
 
 扫 `~/Dev/wiki/` 所有 .md → 出 `~/Dev/wiki/.vault_index.json`（当前 202 entries）。包含 slug / title / path / tags / aliases，供 wikilink 解析。
@@ -41,7 +41,7 @@ python3 ~/Dev/devtools/lib/tools/vault_index.py
 ### Step 2 — 重建反向链 map（新增 HTML 后需要）
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/backlinks_map.py
+python3 ~/Dev/tools/dev/lib/tools/backlinks_map.py
 ```
 
 扫所有源（.md + .html）→ 出 `~/Dev/wiki/.backlinks_map.json`（当前 899 backlinks keys）。供注入时查"谁引用了我"。
@@ -49,7 +49,7 @@ python3 ~/Dev/devtools/lib/tools/backlinks_map.py
 ### Step 3 — 注入单 HTML
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/inject_vault_nav.py /path/to/report.html
+python3 ~/Dev/tools/dev/lib/tools/inject_vault_nav.py /path/to/report.html
 ```
 
 幂等改写 HTML：顶部 nav（vault home / search / graph 链）+ 侧边 aside（同 tag 邻居）+ 底部 backlinks（反向引用列表）+ body 内 `[[wikilink]]` 解析成 `<a href>`。原文件备份到 `.bak.pre-vault-inject`。
@@ -60,20 +60,20 @@ python3 ~/Dev/devtools/lib/tools/inject_vault_nav.py /path/to/report.html
 
 ```bash
 # 单 HTML 注入
-python3 ~/Dev/devtools/lib/tools/inject_vault_nav.py /path/to/report.html
+python3 ~/Dev/tools/dev/lib/tools/inject_vault_nav.py /path/to/report.html
 
 # 批量
 for f in ~/Dev/*.html; do
-  python3 ~/Dev/devtools/lib/tools/inject_vault_nav.py "$f"
+  python3 ~/Dev/tools/dev/lib/tools/inject_vault_nav.py "$f"
 done
 
 # 完整三步（vault 有改动 + 新增 HTML 后）
-python3 ~/Dev/devtools/lib/tools/vault_index.py
-python3 ~/Dev/devtools/lib/tools/backlinks_map.py
-python3 ~/Dev/devtools/lib/tools/inject_vault_nav.py <html>
+python3 ~/Dev/tools/dev/lib/tools/vault_index.py
+python3 ~/Dev/tools/dev/lib/tools/backlinks_map.py
+python3 ~/Dev/tools/dev/lib/tools/inject_vault_nav.py <html>
 
 # 只注入（索引没变，仅新增/修改 HTML）
-python3 ~/Dev/devtools/lib/tools/inject_vault_nav.py <html>
+python3 ~/Dev/tools/dev/lib/tools/inject_vault_nav.py <html>
 ```
 
 ---

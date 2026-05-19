@@ -35,7 +35,7 @@ description: 健康检查族 — sites 边缘 HTTP / services 全景 12 服务�
 ### 执行
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/sites_health.py "$@"
+python3 ~/Dev/tools/dev/lib/tools/sites_health.py "$@"
 ```
 
 ### 输出解读
@@ -91,7 +91,7 @@ python3 ~/Dev/personal-kb/bin/ops_history.py record-health \
 ### 执行
 
 ```bash
-python3 ~/Dev/devtools/scripts/tools/services_health.py "$@"
+python3 ~/Dev/tools/dev/scripts/tools/services_health.py "$@"
 ```
 
 ### 输出列
@@ -130,7 +130,7 @@ python3 ~/Dev/devtools/scripts/tools/services_health.py "$@"
 ### 执行
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/nav_health.py $ARGUMENTS
+python3 ~/Dev/tools/dev/lib/tools/nav_health.py $ARGUMENTS
 ```
 
 ### 检查维度
@@ -204,7 +204,7 @@ ssh root@104.218.100.67 "echo '=== Services ===' && systemctl list-units --type=
 - 版本冗余：`deliverables/` / `docs/` 下同一文档多版本
 
 #### 3. ~/Dev/Work/ 额外
-- 在 `~/Dev/Work/zdwp/` 下 → 跑 `python3 ~/Dev/devtools/scripts/tools/zdwp_health.py`
+- 在 `~/Dev/Work/zdwp/` 下 → 跑 `python3 ~/Dev/tools/dev/scripts/tools/zdwp_health.py`
 - 大目录（>1GB）提醒
 
 ### 输出
@@ -243,7 +243,7 @@ ssh root@104.218.100.67 "echo '=== Services ===' && systemctl list-units --type=
 ### 执行
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/dotfile_audit.py check $ARGUMENTS
+python3 ~/Dev/tools/dev/lib/tools/dotfile_audit.py check $ARGUMENTS
 ```
 
 `--json` → 机读，被 health 矩阵聚合时使用：解析 `summary.{fail,warn,pass}` 输出统一 ✓/⚠/✗ 行。
@@ -268,5 +268,5 @@ python3 ~/Dev/devtools/lib/tools/dotfile_audit.py check $ARGUMENTS
 - 装/卸 CLI 工具后 → 看是否产生新孤儿 dotdir
 
 ### 相关
-- pre-commit hook: `~/Dev/devtools/scripts/hooks/pre-commit-dotfiles.sh`
-- 白名单 SSOT: `~/Dev/devtools/lib/tools/dotfile_audit.py` `HOME_DOTFILE_ALLOW`
+- pre-commit hook: `~/Dev/tools/dev/scripts/hooks/pre-commit-dotfiles.sh`
+- 白名单 SSOT: `~/Dev/tools/dev/lib/tools/dotfile_audit.py` `HOME_DOTFILE_ALLOW`

@@ -2,7 +2,7 @@
 description: Cloudflare 统一管理 — DNS / Origin Rules / Access Applications / Audit 对账
 ---
 
-替代已归档的 `/cf-dns` `/cf-audit`。后端：`~/Dev/devtools/lib/tools/cf_api.py` + `cf_audit.py`，凭证自动从 `~/.personal_env` 读取。
+替代已归档的 `/cf-dns` `/cf-audit`。后端：`~/Dev/tools/dev/lib/tools/cf_api.py` + `cf_audit.py`，凭证自动从 `~/.personal_env` 读取。
 
 ## 用法
 
@@ -43,7 +43,7 @@ description: Cloudflare 统一管理 — DNS / Origin Rules / Access Application
 执行：
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/cf_audit.py
+python3 ~/Dev/tools/dev/lib/tools/cf_audit.py
 ```
 
 **报告分类**：
@@ -69,7 +69,7 @@ python3 ~/Dev/devtools/lib/tools/cf_audit.py
 
 ## 执行规则
 
-1. 所有调用直接执行 `python3 ~/Dev/devtools/lib/tools/cf_api.py <args>`，把 $ARGUMENTS 原样传过去
+1. 所有调用直接执行 `python3 ~/Dev/tools/dev/lib/tools/cf_api.py <args>`，把 $ARGUMENTS 原样传过去
 2. 不要自己调 curl 或 urllib — 工具已覆盖
 3. 凭证在 `~/.personal_env`，脚本自动 source，不问用户要
 

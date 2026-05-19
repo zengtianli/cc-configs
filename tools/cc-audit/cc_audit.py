@@ -587,8 +587,8 @@ def detect_paths_registry(cwd: Path) -> list[Finding]:
                 f"paths registry 漂移：{dead} dead / {drift} drift / {registered} registered",
                 detail=out,
                 suggestion=(
-                    "跑详细诊断：python3 ~/Dev/devtools/lib/tools/paths.py audit\n"
-                    "扫死链：python3 ~/Dev/devtools/lib/tools/paths.py scan-dead --strict"
+                    "跑详细诊断：python3 ~/Dev/tools/dev/lib/tools/paths.py audit\n"
+                    "扫死链：python3 ~/Dev/tools/dev/lib/tools/paths.py scan-dead --strict"
                 ),
             )
         )

@@ -17,7 +17,7 @@ argument-hint: <name> [--auto-fix] [--no-smoke] [--dry]
 ## 执行
 
 ```bash
-bash ~/Dev/devtools/scripts/station-promote.sh "$@"
+bash ~/Dev/tools/dev/scripts/station-promote.sh "$@"
 ```
 
 ## 何时用
@@ -37,7 +37,7 @@ bash ~/Dev/devtools/scripts/station-promote.sh "$@"
 
 ## 依赖
 
-- `~/Dev/devtools/lib/station_path.sh` / `.py` — 路径发现函数（脚本/工具均用它）
+- `~/Dev/tools/dev/lib/station_path.sh` / `.py` — 路径发现函数（脚本/工具均用它）
 - 核心脚本 `api-smoke.sh` / `menus.py` / `deploy-changed.sh` / `web-stack deploy.sh` 已接入 station_path，`mv` 后**零代码改动**就能正常工作
 - `--auto-fix` 只针对文档级引用（cc-configs/commands/*.md 描述路径）
 

@@ -107,7 +107,7 @@ handoff Phase 1 内部调 recap，**参数透传 + step 复用**避免重跑：
 #### Step 3.0a · Paths 健康体检（阶梯式严格度）
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/paths.py audit --brief
+python3 ~/Dev/tools/dev/lib/tools/paths.py audit --brief
 ```
 
 按 dead 数量分级处理（不阻塞 commit，但写入 handoff）：
@@ -244,7 +244,7 @@ mkdir -p <root>/handoffs/_archive
 **独立 `/wrap recap`**（不经 handoff）：本步必跑：
 
 ```bash
-python3 ~/Dev/devtools/lib/tools/paths.py audit --brief
+python3 ~/Dev/tools/dev/lib/tools/paths.py audit --brief
 ```
 
 按 dead 数量分级（与 handoff Phase 3.0a 一致）：

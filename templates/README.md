@@ -58,17 +58,17 @@ templates/
 
 ```bash
 # 探测当前项目状态（输出 JSON）
-python3 ~/Dev/devtools/lib/tools/scaffold.py detect
+python3 ~/Dev/tools/dev/lib/tools/scaffold.py detect
 
 # 预览要生成的内容（不写文件）
-python3 ~/Dev/devtools/lib/tools/scaffold.py preview --kind claude-md --stage growing
-python3 ~/Dev/devtools/lib/tools/scaffold.py preview --kind readme-en
+python3 ~/Dev/tools/dev/lib/tools/scaffold.py preview --kind claude-md --stage growing
+python3 ~/Dev/tools/dev/lib/tools/scaffold.py preview --kind readme-en
 
 # 应用（默认 dry-run，加 --yes 才真写）
-python3 ~/Dev/devtools/lib/tools/scaffold.py apply --kind claude-md --yes
+python3 ~/Dev/tools/dev/lib/tools/scaffold.py apply --kind claude-md --yes
 
 # 应用所有 gaps 推荐
-python3 ~/Dev/devtools/lib/tools/scaffold.py apply --all --yes
+python3 ~/Dev/tools/dev/lib/tools/scaffold.py apply --all --yes
 ```
 
 `/start` Phase 3-4 调这个 CLI。
