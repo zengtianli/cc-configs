@@ -57,12 +57,15 @@ fi
 touch "$STATE_FILE"
 
 REGEN="$HOME/Dev/tools/dev/lib/tools/wiki_build.py"
+INVENTORY="$HOME/Dev/tools/dev/lib/tools/wiki_inventory.py"
 if [ ! -f "$REGEN" ]; then
   echo "[$(date +%FT%T)] generator missing: $REGEN" >> "$LOG_FILE"
   exit 0
 fi
 
 # 异步重建, 不阻塞主流程; 日志固定位置便于 debug
-nohup python3 "$REGEN" >> "$LOG_FILE" 2>&1 &
+# 级联: 先 wiki_build (注 nav/backlinks + 重写 MOC + 清 stale + index + force graph),
+#       再 wiki_inventory (清单 KPI 跟着刷) —— 改一处全网派生视图 re-derive。
+nohup bash -c "python3 '$REGEN' >> '$LOG_FILE' 2>&1; [ -f '$INVENTORY' ] && python3 '$INVENTORY' >> '$LOG_FILE' 2>&1" &
 disown 2>/dev/null || true
 exit 0
