@@ -1,5 +1,5 @@
 ---
-description: 会话收尾族 — recap 复盘 / retro 写 playbook / handoff 全流程交接 / distill 提炼到全局 / render .md → .html 批量本地渲染 (md 渲染 / 点进去看 / 链接没渲染 / render md / md 转 html)
+description: 会话收尾族 — recap 复盘 / retro 写 playbook / handoff 全流程交接 / distill 提炼到全局 / render .md → .html 批量本地渲染 (md 渲染 / 点进去看 / 链接没渲染 / render md / md 转 html) / debrief 会话结束 HTML 汇报 (汇报 / debrief / 会话总结 / 做个 html)
 ---
 
 # /wrap — 会话收尾统一入口
@@ -13,6 +13,7 @@ description: 会话收尾族 — recap 复盘 / retro 写 playbook / handoff 全
 | `retro` | 用户 | Playbook 式复盘（slash command 编排流程） |
 | `distill` | 全局知识库 | 从项目提炼 commands / 踩坑 / playbook 骨架 |
 | `render` | 用户浏览器 | HTML 报告里的 .md href 批量渲染成同目录 .html（GitHub dark + wikilinks 解析） |
+| `debrief` | 用户浏览器 | 会话结束富 HTML 汇报（dark + vault nav + KPI 可点击），落 `~/Dev/wiki/handoffs/dev/` + 自动 open |
 
 未传子命令 → `handoff`（最完整）。
 
@@ -474,6 +475,61 @@ done
 - **`/wiki vault-inject`** — 渲染完 .html 后跑 vault-inject 加 nav + backlinks
 - **[[user-facing-output-is-html]]** memory — 用户对话窗口里要 HTML 不要 markdown 入口
 - **[[html-must-drill-down]]** memory — clickable 入口必须真能点进去看到渲染好的页面
+
+---
+
+## debrief — 会话结束生成富 HTML 汇报（合自 ex-`/debrief` cmd · 2026-05-19）
+
+**触发词**：`汇报` / `debrief` / `会话总结` / `做个 html` / `/wrap debrief`
+
+**核心理念**：会话收尾的「给用户看的可视化层」— 与 handoff（给下次会话）/ retro（给用户复盘）/ render（批量 md → html）正交。产出单文件富 HTML（dark 风 + vault nav + KPI 可点击 + session UUID 溯源 + clipboard 引用块），落 `~/Dev/wiki/handoffs/dev/<date>-<slug>.html` 并自动 `open` 浏览器。
+
+### 调用
+
+```
+/wrap debrief [topic]
+```
+
+等同于让 Claude 调用 `~/.claude/skills/debrief/` skill。skill 本身保持 auto-trigger（用户说"汇报 / 做个 html"等关键词时仍激活）；本子命令仅作显式入口给用户手键 `/wrap debrief` 时使用。
+
+### 与姊妹子命令区别
+
+| 维度 | `handoff` | `retro` | `render` | `debrief`（本子命令） |
+|---|---|---|---|---|
+| 受众 | 下次 CC 会话 | 用户（playbook） | 用户（点 .md 链接） | 用户（可视化汇报） |
+| 产物 | `handoffs/<slug>.md` | `docs/retros/*.md` + INDEX | `<name>.html` 批量 | `<date>-<slug>.html` 单文件富 HTML |
+| 触发 | 显式或默认 | 显式 / handoff 内部链 | 显式（md 渲染） | "汇报 / debrief / 做个 html" |
+| auto-open | 否 | 否 | 否 | **是**（`open` 浏览器） |
+
+### 何时用 / 何时不用
+
+**触发**：
+- 会话末尾用户想"看看本轮做了什么"（KPI + finding + 可点击下钻）
+- 跨多 repo / dispatch / agent team 跑完，需要 single-page 总览
+- 给非 CC 用户（自己 / 路人）看，要 vault citizen 体验
+
+**不触发**：
+- 给下次 CC 读 → `/wrap handoff`
+- 给自己复盘工程模式 → `/wrap retro`
+- 单纯把一批 .md 转 HTML → `/wrap render`
+
+### 详细规范
+
+6+1 层强制流水线 / KPI 三件套规范 / vault nav 注入逻辑 / session UUID 溯源 / clipboard 引用块 / dark 风模板见：
+
+```
+~/.claude/skills/debrief/SKILL.md
+```
+
+skill 保留 auto-trigger（"汇报 / debrief / 会话总结 / 做个 html" 关键词自动激活），本子命令不重复实现，仅作显式 slash 入口。
+
+### 与其他子命令衔接
+
+- `/wrap handoff` 落盘后 → `/wrap debrief` 把要点可视化
+- `/wrap render` 把 handoff HTML 里 .md 渲染完后 → debrief 引用渲染好的 .html 链接（不留 raw .md）
+- `/wiki vault-inject` 单独跑（debrief skill 内部已含 vault nav 注入，不需重跑）
+
+---
 
 ## 参考
 
