@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # wiki auto-rebuild hook (PostToolUse Write|Edit|MultiEdit)
 # 触发: 改动文件命中 ~/Dev/wiki/ 下 .html 或 .md → 异步重建知识网
-# 跑 wiki_build.py (扫全 wiki → 注 nav + 重算 backlinks + 生成 index)
+# 跑 wiki.py build (扫全 wiki → 注 nav + 重算 backlinks + 生成 index)
 # 异步 (不阻塞主流程), advisory, exit 0
 #
 # 安装位置: ~/.claude/hooks/wiki-rebuild.sh (主进程负责 symlink/copy)
 # settings.json 接入: PostToolUse[Write|Edit|MultiEdit] 末尾, async:true, timeout 10
 #
 # ── 防循环方案 (关键) ───────────────────────────────────────────────
-# 问题: wiki_build.py 注入 nav/backlinks 会改 wiki HTML → 又触发本 hook
+# 问题: wiki.py build 注入 nav/backlinks 会改 wiki HTML → 又触发本 hook
 #       → 再 rebuild → 死循环 / 风暴。
 # 防护双层:
 #   1. DEBOUNCE 30s (state file mtime): 任意 wiki 改动只要落在上次重建后
@@ -16,7 +16,7 @@
 #      这个窗口内 (重建瞬间完成) → 被吞掉, 不会反弹触发新一轮。
 #   2. 重建前先 touch state file: 即"宣告本轮重建已开始", 注入写回时
 #      AGE<30 → 全部 skip。下一次真实人为改动 (>30s 后) 才会再触发。
-# 即便 wiki_build.py 注入是幂等的 (marker 检测 nav 已存在则跳过), debounce
+# 即便 wiki.py build 注入是幂等的 (marker 检测 nav 已存在则跳过), debounce
 # 仍是防风暴的硬保险。
 set -u
 
@@ -42,7 +42,7 @@ except Exception:
 # Debounce: 30s 内已重建 → skip (吞掉 wiki_build.py 注入产生的写回)
 STATE_DIR="$HOME/.claude/state"
 STATE_FILE="$STATE_DIR/wiki_build_last_rebuild"
-LOG_FILE="$STATE_DIR/wiki_build.log"
+LOG_FILE="$STATE_DIR/wiki.log"
 mkdir -p "$STATE_DIR"
 
 if [ -f "$STATE_FILE" ]; then
@@ -56,16 +56,15 @@ fi
 # 先 touch: 宣告本轮重建开始, 注入写回落在 debounce 窗口内被吞
 touch "$STATE_FILE"
 
-REGEN="$HOME/Dev/tools/dev/lib/tools/wiki_build.py"
-INVENTORY="$HOME/Dev/tools/dev/lib/tools/wiki_inventory.py"
-if [ ! -f "$REGEN" ]; then
-  echo "[$(date +%FT%T)] generator missing: $REGEN" >> "$LOG_FILE"
+WIKI_CLI="$HOME/Dev/tools/dev/lib/tools/wiki.py"
+if [ ! -f "$WIKI_CLI" ]; then
+  echo "[$(date +%FT%T)] generator missing: $WIKI_CLI" >> "$LOG_FILE"
   exit 0
 fi
 
 # 异步重建, 不阻塞主流程; 日志固定位置便于 debug
-# 级联: 先 wiki_build (注 nav/backlinks + 重写 MOC + 清 stale + index + force graph),
-#       再 wiki_inventory (清单 KPI 跟着刷) —— 改一处全网派生视图 re-derive。
-nohup bash -c "python3 '$REGEN' >> '$LOG_FILE' 2>&1; [ -f '$INVENTORY' ] && python3 '$INVENTORY' >> '$LOG_FILE' 2>&1" &
+# 级联: wiki.py build (注 nav/backlinks + 重写 MOC + 清 stale + index + force graph),
+#       再 wiki.py inventory (清单 KPI 跟着刷) —— 改一处全网派生视图 re-derive。
+nohup bash -c "python3 '$WIKI_CLI' build >> '$LOG_FILE' 2>&1; python3 '$WIKI_CLI' inventory >> '$LOG_FILE' 2>&1" &
 disown 2>/dev/null || true
 exit 0
