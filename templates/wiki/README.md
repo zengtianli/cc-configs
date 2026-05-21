@@ -65,7 +65,7 @@ python3 ~/Dev/tools/dev/lib/tools/scaffold.py wiki-init <project> [--topic proxy
 项目内为真，Obsidian vault 用 symlink 引用：
 
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/obsidian_sync.py link <project>
+python3 ~/Dev/tools/dev/lib/tools/wiki.py sync link <project>
 # → ~/Obsidian/dev-vault/topics/<topic-id>/<project-name>/  (symlink)
 ```
 

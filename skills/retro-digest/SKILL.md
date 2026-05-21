@@ -38,8 +38,8 @@ description: 把一批散落的 retro/会话记录按主题线合并成少数 HT
   - 正文点名每条源 slug（D4 可追溯）。
 
 ### 4. 主进程整合（防 race，主进程独占）
-- **归档原文**：`mv` 28 条原始 retro 的 .md + .html 到 `_archive/`（先 trash 兜底：`mv -n <t> ~/.Trash/cc-pre-destruct-$(date +%s)/` 再 mv 到 _archive）。_archive 已被 wiki_build 排除出 net。
-- **重建网**：`python3 ~/Dev/tools/dev/lib/tools/wiki_build.py --root ~/Dev/wiki`（注入 nav/backlinks + 重生 index + 力导向图，digest 节点入网）。
+- **归档原文**：`mv` 28 条原始 retro 的 .md + .html 到 `_archive/`（先 trash 兜底：`mv -n <t> ~/.Trash/cc-pre-destruct-$(date +%s)/` 再 mv 到 _archive）。_archive 已被 wiki.py build 排除出 net。
+- **重建网**：`python3 ~/Dev/tools/dev/lib/tools/wiki.py build --root ~/Dev/wiki`（注入 nav/backlinks + 重生 index + 力导向图，digest 节点入网）。
 - **跑验收**：`bash ~/Dev/jobs/retro-digest/check_retro.sh` → 有 FAIL 自主修/补 see-also/重跑 → 循环到全 PASS。
 
 ### 5. commit + 反馈
@@ -57,4 +57,4 @@ description: 把一批散落的 retro/会话记录按主题线合并成少数 HT
 ## 关联
 - [[wiki-is-bidirectional-graph]] · [[agent-goal-loop-until-met]] · [[trash-everything-protocol]]
 - [[user-facing-output-is-html]] · [[/debrief]] · [[/wrap]]
-- 引擎：`~/Dev/tools/dev/lib/tools/wiki_build.py`（注入+force graph+orphan 检测）
+- 引擎：`~/Dev/tools/dev/lib/tools/wiki.py build`（注入+force graph+orphan 检测）

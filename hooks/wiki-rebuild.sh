@@ -12,7 +12,7 @@
 #       → 再 rebuild → 死循环 / 风暴。
 # 防护双层:
 #   1. DEBOUNCE 30s (state file mtime): 任意 wiki 改动只要落在上次重建后
-#      30s 窗口内 → skip。wiki_build.py 自己注入产生的全部 writes 都落在
+#      30s 窗口内 → skip。wiki.py build 自己注入产生的全部 writes 都落在
 #      这个窗口内 (重建瞬间完成) → 被吞掉, 不会反弹触发新一轮。
 #   2. 重建前先 touch state file: 即"宣告本轮重建已开始", 注入写回时
 #      AGE<30 → 全部 skip。下一次真实人为改动 (>30s 后) 才会再触发。
@@ -39,7 +39,7 @@ except Exception:
 
 [ "$DETECT" != "HIT" ] && exit 0
 
-# Debounce: 30s 内已重建 → skip (吞掉 wiki_build.py 注入产生的写回)
+# Debounce: 30s 内已重建 → skip (吞掉 wiki.py build 注入产生的写回)
 STATE_DIR="$HOME/.claude/state"
 STATE_FILE="$STATE_DIR/wiki_build_last_rebuild"
 LOG_FILE="$STATE_DIR/wiki.log"
