@@ -108,7 +108,7 @@ bash ~/Dev/tools/dev/scripts/deploy-changed.sh $ARGUMENTS
 - `~/Dev/stations/web-stack/` — `apps/<name>-web/*` 变了 → 对应站；`packages/*` 变了 → 所有站
 - `~/Dev/hydro-*`、`~/Dev/stations/audiobook` — 该 repo 任意变动 → 对应站
 
-去重合并调 `~/Dev/stations/web-stack/infra/deploy/deploy-batch.sh <sites...>`。
+去重合并调 `~/Dev/tools/dev/lib/deploy/deploy-batch.sh <sites...>`。
 
 零变更 → "nothing changed" 退 0（不算错）。
 
@@ -123,9 +123,9 @@ bash ~/Dev/tools/dev/scripts/deploy-changed.sh $ARGUMENTS
 - 不部署 Streamlit legacy 站（只看 web-stack/apps/*-web 存在的站）
 
 ### 相关
-- `~/Dev/stations/web-stack/infra/deploy/deploy.sh` — 单站底层
-- `~/Dev/stations/web-stack/infra/deploy/deploy-batch.sh` — 多站并行
-- `~/Dev/stations/web-stack/infra/deploy/sync-global.sh` — 共享 devtools/lib 同步
+- `~/Dev/tools/dev/lib/deploy/deploy.sh` — 单站底层（基建层，stations-decouple P1 上提）
+- `~/Dev/tools/dev/lib/deploy/deploy-batch.sh` — 多站并行
+- `~/Dev/tools/dev/lib/deploy/sync-global.sh` — 共享 devtools/lib 同步
 - `/api-smoke` — 部署前本地 smoke
 
 ---
@@ -202,5 +202,5 @@ bash ~/Dev/tools/dev/scripts/deploy-changed.sh $ARGUMENTS
 
 ### 参考
 - services.ts: `~/Dev/stations/website/lib/services.ts`
-- 底层：`~/Dev/stations/web-stack/infra/deploy/deploy-batch.sh`
+- 底层：`~/Dev/tools/dev/lib/deploy/deploy-batch.sh`
 - 单站验证：`/health sites --filter <name>`

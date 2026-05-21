@@ -45,6 +45,6 @@ bash ~/Dev/tools/dev/scripts/api-smoke.sh $ARGUMENTS
 
 ## 相关
 
-- `~/Dev/stations/web-stack/infra/deploy/verify.py` — 生产环境浏览器端验证
+- `~/Dev/tools/dev/lib/deploy/verify.py` — 生产环境浏览器端验证
 - `~/Dev/tools/dev/lib/hydro_api_helpers.py` — 所有 api.py 共享的 Python 工具
 - `playbooks/hydro.md` — 完整编排上下文
