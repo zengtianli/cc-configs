@@ -32,8 +32,11 @@ description: 重构族 — dir 搬目录 + 零死链 / auto 自循环 patch+test
 
 ### 何时用
 - 搬 `~/Dev/<xxx>` 目录到新位置（labs/ / stations/ / tools/ / content/ / _archive/）
-- 触发词：搬目录 / 搬 repo / 归档项目 / refactor-dir / 把 X 挪到 Y
+- **搬 `~` 顶层 / 跨 workspace 目录**（如 `~/Archives/scatter/zdys`、`~/Archives/<x>`、`~/Work/<x>`）——**任何目录迁移都禁裸 `mv`,一律走这里**（全局铁律 #19）
+- 触发词：搬目录 / 搬 repo / 归档项目 / refactor-dir / 把 X 挪到 Y / 迁移目录
 - **不是**：新建 stations 子项目（用 `/station-promote`）；CF 子域下线（用 `/site archive`）
+
+> **scope 提醒**：`rewrite-dead`/`scan-dead`/`scan-symlinks` 当前只扫 `~/Dev`。搬 `~` 顶层目录时,`~/Dev` 内的引用会被修+验,但**目标仓自身内部** + `~/Dev` 外的硬编码（如 zdys 的 `GOAL.md`/`check_goal.sh`、memory 目录编码）扫不到 → 这类靠 Step 4.5 面包屑兜底 + 把该目录注册进 `paths.yaml dirs:`（让 `paths.py audit` 存在性检查 + warmup 抓漂移）。
 
 ### 执行（按顺序）
 
@@ -70,6 +73,20 @@ Grep 扫 `<old>` 在以下位置出现次数（三种写法：`~/Dev/...` + `/Us
 mkdir -p "$(dirname <new>)"
 mv <old> <new>
 ```
+
+#### Step 4.5 · 旧位留转发面包屑（tombstone）
+`rewrite-dead` 只修**能扫到的**引用（`~/Dev` 内裸文件）。**扫不到的消费者**——持有旧 cwd 的活跃会话、明天才启动的 agent、`~/.claude/projects/<编码路径>/` memory 目录、其它仓硬编码——撞到旧路径只会得到「不存在」。故在旧位置留一个面包屑指向新位置：
+
+```bash
+mkdir -p <old>
+cat > <old>/.MOVED-TO <<EOF
+$(date +%F) /refactor dir
+此目录已迁移到: <new>
+原因: <--reason 内容>
+SSOT: ~/Dev/paths.yaml migrations 段已登记 {from: <old>, to: <new>}
+EOF
+```
+> 归档/重命名场景旧位本就该消失时（`mv` 后无残留），可跳过——但**跨 workspace / `~` 顶层 / 含数据仓的迁移必留**，这是 push 失效时唯一能救「撞旧路径」消费者的兜底。
 
 #### Step 5 · rewrite-dead（若无 `--no-rewrite`）
 
