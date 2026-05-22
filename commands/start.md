@@ -29,6 +29,8 @@ python3 ~/Dev/tools/dev/lib/tools/ssot/paths.py audit --brief
 ```
 
 第 2 条输出单行 `paths: 25 registered / 20 dead / 0 drift`，作为「输出段」第 3.5 项展示。
+
+**一级目录 module-map 检查（2026-05-22 /govern · 入场协议硬约束）**：cwd 是 `~/Dev` / `~/Apps` 这类**一级 workspace 目录**（或其直属一级子目录盘点）时，必查 module-map —— 每包/每 app 有 `catalog.yaml`（summary/key_scripts/depends_on 三字段）作 SSOT，`python3 ~/Dev/tools/dev/lib/tools/report/module_map_render.py` 从 catalog 派生 HTML 地图（域→包→脚本 + 依赖关系图）。**缺 catalog / map 过期（catalog 比 map 新）→ 当场补 catalog + 刷新 map**，作为「输出段」追加一行 `module-map: N 域 / M 包 / K 脚本 · <fresh|stale|missing>`。详见全局 CLAUDE.md 入场协议「module-map 检查」节。
 当工作区内存在 cold-storage 指针（`_ZIP-INDEX.md` / `_ARCHIVE-INDEX.md` · 见 `raw-archives-offload`）时，
 audit --brief 会在 paths 行后追加单行 `cold mirrors: N entries / N ok / M dead / K drift`
 （无指针时静默不打印）。详查走 `paths.py audit-cold-mirrors`。
