@@ -1,5 +1,5 @@
 ---
-description: 在任意目录生成「域 → 包 → 脚本」模块地图。扫直属子目录的 catalog.yaml（每个=一个域）→ 缺的派 agent team 补齐 → 确定性引擎渲染 HTML 拓扑 + 依赖图。catalog 是 SSOT，地图从它派生。
+description: 在任意目录生成「域 → 包 → 脚本」模块地图。扫直属子目录的 catalog.yaml（每个=一个域）→ 缺的派 agent team 补齐 → 确定性引擎渲染 HTML 拓扑 + 依赖图 + 平台总部↔子公司视图 + distill 上提候选。catalog 是 SSOT，地图从它派生。
 ---
 
 # /module-map — 一句话看清一个工作区的模块拓扑
@@ -60,9 +60,28 @@ python3 ~/Dev/tools/dev/lib/tools/report/catalog_module_map.py <dir> --open
 module-map: N 域 / M 包 / K 脚本 · file://.../<basename>-module-map.html
 ```
 
-### 5. 零尾巴（铁律 #3 + #4）
+### 5. distill 复盘（看「⬆ distill 候选」面板）
+引擎渲染的 **⬆ distill 候选** 小节列出"值得上提到总部 ~/Dev 的包/脚本"——判据：纯 pypi/stdlib 自洽、无总部依赖、无本工作区专属数据、或含通用基建语义（client/util/render/parse…）。逐条**人工判断**：
+- 确属通用能力 → **distill 到 `~/Dev/tools` 对应域**（成为总部共享服务），子公司改为绝对路径调用；**同步更新 `~/Dev/SSOT-INDEX.md` + 相关 catalog**。
+- 仅本业务专用 → 留在子公司，标记排除。
+> distill 是判断不是自动搬迁；候选面板给信号，落地要走「上提总部 + 更新 SSOT + 子公司改调用」三步，且总部不得反依赖子公司（见下「平台模型」不变量）。
+
+### 6. 零尾巴（铁律 #3 + #4）
 - 缺的 catalog **全部补齐**，不留 TODO、不留「下轮处理」；
 - catalog 是新建文件 → 按铁律 #4 **自动** `git status → diff → commit → push` 所在 repo（不问）；该 repo 无远端 → 自动建私库再推。
+
+---
+
+## 平台总部 ↔ 子公司模型（引擎内置）
+
+引擎把工作区读成**集团组织架构**（hub-and-spoke），渲染「🏛 平台总部 ↔ 子公司」面板：
+
+- **总部 HQ / Shared Kernel** = `~/Dev/tools`，持 8 项共享服务（llm_client / paths SSOT / menus SSOT / cf_api / deploy 家族 / doctools / kb / CC skills·hooks·playbooks）。
+- **子公司 spoke** = `~/Apps`（个人 app）/ `~/Work`（客户业务）/ `~/Archives`（归档），各自独立、**只按绝对路径消费总部能力**。
+- **核心不变量（唯一）**：依赖永远向上 —— ✅ 子→总（绝对路径 import 总部共享件）；❌ 总→子（总部绝不反依赖业务）；❌ 子↔子（要共享就上提总部，不横向耦合）。
+- 引擎据此：把 `depends_on` 指向 `~/Dev/...` 的标为 **🏛 调用总部**（金色 HQ 节点 + 子→总向上边）；侦测到 **子↔子 / 反向**依赖画**红色违规边**；聚合「本工作区消费了哪些总部服务」表 + 登记处提示（`~/Dev/SSOT-INDEX.md` / `paths.yaml`）。
+
+**第一性原则**：子公司**尽可能调用总部脚本库**（不重造轮子）；子公司若沉淀出好的脚本/包/域 → **distill 上提到总部 + 更新 SSOT**（见第 5 步）。模型详解见 `~/Dev/wiki/handoffs/dev/platform-subsidiary-model.html`。
 
 ---
 
@@ -99,7 +118,8 @@ packages:     # （可选）多模块时分包声明，每包同样这三字段
 
 - **不手搓 HTML** — 一律走确定性引擎 `catalog_module_map.py`，不在主会话 / agent 里拼 HTML 字符串；
 - **不编造 catalog** — 三字段必须读真实代码得出，禁止占位 / 想当然；
-- **不留缺失 catalog** — dry 扫描列出的缺失项必须本轮全部补齐，不允许「先渲染已有的，剩下下次补」。
+- **不留缺失 catalog** — dry 扫描列出的缺失项必须本轮全部补齐，不允许「先渲染已有的，剩下下次补」；
+- **子公司不重造总部已有能力** — 子公司能调总部共享服务（llm_client/paths/kb…）的就绝对路径调用，不 vendor 一份；好脚本沉淀了就 distill 上提总部 + 更新 SSOT，不让能力散在各子公司（违反 hub-spoke 不变量）。
 
 ---
 
