@@ -24,8 +24,8 @@ description: 入场 — 一条命令了解项目 + 配脚手架。warmup（读�
 ### 执行
 
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/warmup.py
-python3 ~/Dev/tools/dev/lib/tools/paths.py audit --brief
+python3 ~/Dev/tools/dev/lib/tools/scaffold/warmup.py
+python3 ~/Dev/tools/dev/lib/tools/ssot/paths.py audit --brief
 ```
 
 第 2 条输出单行 `paths: 25 registered / 20 dead / 0 drift`，作为「输出段」第 3.5 项展示。
@@ -38,7 +38,7 @@ audit --brief 会在 paths 行后追加单行 `cold mirrors: N entries / N ok / 
 1. **项目** — CWD、git branch、脏/干净、未推 commit、最近一次 commit
 2. **🔗 跨项目主题**（仅在 cwd 命中 `topic-index.yaml` 时显示） — 当前 topic + description + primary 入口 + 同 topic 兄弟项目清单。**避免"我在 X 目录但不知道 Y 目录有现成基建"**。
    - 数据源：`~/Dev/tools/configs/topic-index.yaml`（10 topics × directories 反向索引）
-   - 实现：`warmup.py section_topics()` → `python3 ~/Dev/tools/dev/lib/tools/topic_index.py lookup <cwd>`
+   - 实现：`warmup.py section_topics()` → `python3 ~/Dev/tools/dev/lib/tools/ssot/topic_index.py lookup <cwd>`
    - 维护：加新项目→找最匹配 topic 的 `directories:` 加一行；找不到→加新 topic
 3. **CC 配置** — 是否有 `.claude/`、CLAUDE.md（+ H1）、`harness.yaml` 的全局 + 本项目 skills、合计加载数
 4. **交接状态** — 多输入感知（与 `/wrap` 对称）：
@@ -116,16 +116,16 @@ mcp__auggie__codebase-retrieval(
 
 ```bash
 # 探测 type / stage / gaps
-python3 ~/Dev/tools/dev/lib/tools/scaffold.py detect [path]
+python3 ~/Dev/tools/dev/lib/tools/scaffold/scaffold.py detect [path]
 
 # 预览某项产物（不写文件）
-python3 ~/Dev/tools/dev/lib/tools/scaffold.py preview [path] --kind <claude-md|readme-en|readme-cn|gitignore|dot-claude> [--stage <s>] [--type <t>]
+python3 ~/Dev/tools/dev/lib/tools/scaffold/scaffold.py preview [path] --kind <claude-md|readme-en|readme-cn|gitignore|dot-claude> [--stage <s>] [--type <t>]
 
 # 应用单项（默认 dry-run，加 --yes 实写）
-python3 ~/Dev/tools/dev/lib/tools/scaffold.py apply [path] --kind <k> [--yes]
+python3 ~/Dev/tools/dev/lib/tools/scaffold/scaffold.py apply [path] --kind <k> [--yes]
 
 # 应用所有 gaps（推荐主入口）
-python3 ~/Dev/tools/dev/lib/tools/scaffold.py apply [path] --all [--yes]
+python3 ~/Dev/tools/dev/lib/tools/scaffold/scaffold.py apply [path] --all [--yes]
 ```
 
 ### 模板路径

@@ -65,8 +65,8 @@ python3 ~/Dev/tools/dev/lib/tools/downloads_triage/triage.py apply
 | 水利业务 | `~/Dev/Work/projects/zdwp/workspace/inbox/<date>-from-downloads/` |
 | 公司共享（法规/标准） | `~/Dev/Work/shared/resources/` |
 | 行政/财务 | `~/Dev/content/admin/` |
-| 法律/案件 | `~/Dev/content/ip-legal/legal/` |
-| 投资/税务 | `~/Dev/content/investment/` |
+| 法律/案件 | `~/Archives/ip-legal/legal/` |
+| 投资/税务 | `~/Archives/investment/` |
 | 简历/求职 | `~/Dev/content/career/job-search/` |
 | 学术 | `~/Dev/content/learn/<主题>/` |
 | 工具源码 | `~/Dev/apps/<name>/` |
@@ -104,14 +104,14 @@ python3 ~/Dev/tools/dev/lib/tools/downloads_triage/triage.py apply
 
 ```bash
 # 1. scan dry-run
-python3 ~/Dev/tools/dev/lib/tools/zip_offload.py scan
+python3 ~/Dev/tools/dev/lib/tools/oneshot/zip_offload.py scan
 # 输出：候选数 + 总体积 + offload/skip/conflict + 前 50 大
 
 # 2. 让用户拍板（推荐措辞）
 #    「我推荐 apply，候选 N 个 / 总 XG，前 5 大都是 raw 归档，冲突 0」
 
 # 3. apply
-python3 ~/Dev/tools/dev/lib/tools/zip_offload.py apply
+python3 ~/Dev/tools/dev/lib/tools/oneshot/zip_offload.py apply
 # 或 --yes 跳交互（已经确认过）
 ```
 
@@ -136,5 +136,5 @@ python3 ~/Dev/tools/dev/lib/tools/zip_offload.py apply
 ## 相关
 
 - 配套：`/tidy`（深度整理目录）
-- 实现：`~/Dev/tools/dev/lib/tools/downloads_triage/triage.py` · `~/Dev/tools/dev/lib/tools/zip_offload.py`（stdlib only）
+- 实现：`~/Dev/tools/dev/lib/tools/downloads_triage/triage.py` · `~/Dev/tools/dev/lib/tools/oneshot/zip_offload.py`（stdlib only）
 - memory: `feedback_raw_archives_offload`

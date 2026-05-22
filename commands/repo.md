@@ -82,8 +82,8 @@ work (2)
 
 实际执行：
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/repo_map_gen.py            # 写入
-python3 ~/Dev/tools/dev/lib/tools/repo_map_gen.py --stdout   # 预览
+python3 ~/Dev/tools/dev/lib/tools/ssot/repo_map_gen.py            # 写入
+python3 ~/Dev/tools/dev/lib/tools/ssot/repo_map_gen.py --stdout   # 预览
 ```
 
 **和 scan 区别**：scan 增量对账（找新增/缺失），交互式确认每条；regen 全量重建（覆盖 JSON），用于"手工漂移已严重，统一对齐"场景。2026-04-22 调查 22 条陈旧 + 8 条缺失 → regen 一次清干净。

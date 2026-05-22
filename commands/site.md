@@ -126,7 +126,7 @@ description: 子域生命周期族 — add 新建（含 --monorepo 站群 scaffo
 ### 工具
 
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/new_station.py \
+python3 ~/Dev/tools/dev/lib/tools/sites/new_station.py \
   --id <kebab-case>            # e.g. eco-flow, wpl-tracker
   --port <8510-8599>           # backend port; devPort 自动 = port - 5410, apiPort = port + 100
   --group <group_id>           # main | hydro-tools | applications | infra (见 entities/groups.yaml)
@@ -266,7 +266,7 @@ bash ~/Dev/tools/dev/scripts/station-promote.sh "$@"
 
 ```bash
 source ~/.personal_env
-python3 ~/Dev/tools/dev/lib/tools/site_rename.py "$@"
+python3 ~/Dev/tools/dev/lib/tools/sites/site_rename.py "$@"
 ```
 
 ### 动作顺序
@@ -322,7 +322,7 @@ curl -sI https://<old>.tianli.cyou # 应 301 → new
 
 ```bash
 source ~/.personal_env
-python3 ~/Dev/tools/dev/lib/tools/site_archive.py "$@"
+python3 ~/Dev/tools/dev/lib/tools/sites/site_archive.py "$@"
 ```
 
 ### 动作顺序
@@ -457,8 +457,8 @@ echo "Next: nginx/CF Access 需改 → /site ship $name"
 
 #### 2. 幂等检查（先查再建）
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/cf_api.py dns list --filter $HOSTNAME
-python3 ~/Dev/tools/dev/lib/tools/cf_api.py access list | grep $HOSTNAME
+python3 ~/Dev/tools/dev/lib/tools/cloud/cf_api.py dns list --filter $HOSTNAME
+python3 ~/Dev/tools/dev/lib/tools/cloud/cf_api.py access list | grep $HOSTNAME
 ssh root@104.218.100.67 "ls /etc/nginx/sites-enabled/$HOSTNAME 2>/dev/null"
 ```
 已存在跳过，不重建。
@@ -516,7 +516,7 @@ rsync -avz --delete $SOURCE/ root@104.218.100.67:$REMOTE/
 ### 执行
 
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/services_to_nginx.py [name]
+python3 ~/Dev/tools/dev/lib/tools/ssot/services_to_nginx.py [name]
 ```
 
 ### 端口约定

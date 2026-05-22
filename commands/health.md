@@ -35,7 +35,7 @@ description: 健康检查族 — sites 边缘 HTTP / services 全景 12 服务�
 ### 执行
 
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/sites_health.py "$@"
+python3 ~/Dev/tools/dev/lib/tools/sites/sites_health.py "$@"
 ```
 
 ### 输出解读
@@ -130,7 +130,7 @@ python3 ~/Dev/tools/dev/scripts/tools/services_health.py "$@"
 ### 执行
 
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/nav_health.py $ARGUMENTS
+python3 ~/Dev/tools/dev/lib/tools/sites/nav_health.py $ARGUMENTS
 ```
 
 ### 检查维度
@@ -243,7 +243,7 @@ ssh root@104.218.100.67 "echo '=== Services ===' && systemctl list-units --type=
 ### 执行
 
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/dotfile_audit.py check $ARGUMENTS
+python3 ~/Dev/tools/dev/lib/tools/scaffold/dotfile_audit.py check $ARGUMENTS
 ```
 
 `--json` → 机读，被 health 矩阵聚合时使用：解析 `summary.{fail,warn,pass}` 输出统一 ✓/⚠/✗ 行。
@@ -269,4 +269,4 @@ python3 ~/Dev/tools/dev/lib/tools/dotfile_audit.py check $ARGUMENTS
 
 ### 相关
 - pre-commit hook: `~/Dev/tools/dev/scripts/hooks/pre-commit-dotfiles.sh`
-- 白名单 SSOT: `~/Dev/tools/dev/lib/tools/dotfile_audit.py` `HOME_DOTFILE_ALLOW`
+- 白名单 SSOT: `~/Dev/tools/dev/lib/tools/scaffold/dotfile_audit.py` `HOME_DOTFILE_ALLOW`

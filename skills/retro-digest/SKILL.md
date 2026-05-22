@@ -14,7 +14,7 @@ description: 把一批散落的 retro/会话记录按主题线合并成少数 HT
 ## 执行流程（goal-loop · 未达标不停）
 
 ### 1. 先钉 GOAL（machine-checkable）
-写 `~/Dev/jobs/retro-digest/GOAL.md` + `check_retro.sh`，验收标准至少：
+写 `~/Archives/dev-jobs/jobs/retro-digest/GOAL.md` + `check_retro.sh`，验收标准至少：
 - D1 ≤8 个 digest 节点存在
 - D2 每节点含 起因/迭代/现状 三段 + 状态 badge
 - D3 原始 retro 全移出 live tree 到 _archive（live 计数=0）
@@ -39,8 +39,8 @@ description: 把一批散落的 retro/会话记录按主题线合并成少数 HT
 
 ### 4. 主进程整合（防 race，主进程独占）
 - **归档原文**：`mv` 28 条原始 retro 的 .md + .html 到 `_archive/`（先 trash 兜底：`mv -n <t> ~/.Trash/cc-pre-destruct-$(date +%s)/` 再 mv 到 _archive）。_archive 已被 wiki.py build 排除出 net。
-- **重建网**：`python3 ~/Dev/tools/dev/lib/tools/wiki.py build --root ~/Dev/wiki`（注入 nav/backlinks + 重生 index + 力导向图，digest 节点入网）。
-- **跑验收**：`bash ~/Dev/jobs/retro-digest/check_retro.sh` → 有 FAIL 自主修/补 see-also/重跑 → 循环到全 PASS。
+- **重建网**：`python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py build --root ~/Dev/wiki`（注入 nav/backlinks + 重生 index + 力导向图，digest 节点入网）。
+- **跑验收**：`bash ~/Archives/dev-jobs/jobs/retro-digest/check_retro.sh` → 有 FAIL 自主修/补 see-also/重跑 → 循环到全 PASS。
 
 ### 5. commit + 反馈
 全 PASS 才 commit wiki（local subrepo）+ 反馈用户。HTML 已 open 给用户看。
@@ -57,4 +57,4 @@ description: 把一批散落的 retro/会话记录按主题线合并成少数 HT
 ## 关联
 - [[wiki-is-bidirectional-graph]] · [[agent-goal-loop-until-met]] · [[trash-everything-protocol]]
 - [[user-facing-output-is-html]] · [[/debrief]] · [[/wrap]]
-- 引擎：`~/Dev/tools/dev/lib/tools/wiki.py build`（注入+force graph+orphan 检测）
+- 引擎：`~/Dev/tools/dev/lib/tools/wikigen/wiki.py build`（注入+force graph+orphan 检测）

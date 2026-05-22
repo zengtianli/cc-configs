@@ -325,7 +325,7 @@ done
 ```
 0. 解析 vault root（仅 super vault 场景，必须 `--super`；本地平铺无意义）
 1. 校验 project-path 存在 + 有 wiki/ 子目录
-2. `python3 ~/Dev/tools/dev/lib/tools/wiki.py sync link <project-path> --super`
+2. `python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py sync link <project-path> --super`
 3. 自动反查 topic-index.yaml 找该项目对应 topic
 4. 建 symlink 到 `<vault>/wiki/topics/<topic>/<project-name>/`（提炼层 `<vault>/topics/<topic>/<project-name>/`）
 5. 报告 md_files 数 + topic 归属
@@ -342,7 +342,7 @@ done
 重生 `_meta/projects-index.md` + `_meta/topic-graph.md`。
 
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/wiki.py sync rebuild-index
+python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py sync rebuild-index
 ```
 
 什么时候用：
@@ -377,7 +377,7 @@ python3 ~/Dev/tools/dev/lib/tools/wiki.py sync rebuild-index
 #### Step 1 — 重建 vault 索引（vault 改了才需要）
 
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/wiki.py index
+python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py index
 ```
 
 扫 `~/Dev/wiki/` 所有 .md → 出 `~/Dev/wiki/.vault_index.json`（当前 ~202 entries）。包含 slug / title / path / tags / aliases，供 wikilink 解析。
@@ -385,7 +385,7 @@ python3 ~/Dev/tools/dev/lib/tools/wiki.py index
 #### Step 2 — 重建反向链 map（新增 HTML 后需要）
 
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/wiki.py backlinks
+python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py backlinks
 ```
 
 扫所有源（.md + .html）→ 出 `~/Dev/wiki/.backlinks_map.json`（当前 ~899 backlinks keys）。供注入时查"谁引用了我"。
@@ -393,7 +393,7 @@ python3 ~/Dev/tools/dev/lib/tools/wiki.py backlinks
 #### Step 3 — 注入单 HTML
 
 ```bash
-python3 ~/Dev/tools/dev/lib/tools/wiki.py inject /path/to/report.html
+python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py inject /path/to/report.html
 ```
 
 幂等改写 HTML：顶部 nav（vault home / search / graph 链）+ 侧边 aside（同 tag 邻居）+ 底部 backlinks（反向引用列表）+ body 内 `[[wikilink]]` 解析成 `<a href>`。原文件备份到 `.bak.pre-vault-inject`。
@@ -405,23 +405,23 @@ python3 ~/Dev/tools/dev/lib/tools/wiki.py inject /path/to/report.html
 /wiki vault-inject /path/to/report.html
 
 # 实际执行
-python3 ~/Dev/tools/dev/lib/tools/wiki.py inject /path/to/report.html
+python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py inject /path/to/report.html
 
 # 批量
 for f in ~/Dev/wiki/handoffs/dev/*.html; do
-  python3 ~/Dev/tools/dev/lib/tools/wiki.py inject "$f"
+  python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py inject "$f"
 done
 
 # 完整三步（vault 有改动 + 新增 HTML 后）
-python3 ~/Dev/tools/dev/lib/tools/wiki.py index
-python3 ~/Dev/tools/dev/lib/tools/wiki.py backlinks
-python3 ~/Dev/tools/dev/lib/tools/wiki.py inject <html>
+python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py index
+python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py backlinks
+python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py inject <html>
 
 # 只注入（索引没变，仅新增/修改 HTML）
-python3 ~/Dev/tools/dev/lib/tools/wiki.py inject <html>
+python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py inject <html>
 
 # 完整重建（推荐）
-python3 ~/Dev/tools/dev/lib/tools/wiki.py rebuild
+python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki.py rebuild
 ```
 
 ### 约束
