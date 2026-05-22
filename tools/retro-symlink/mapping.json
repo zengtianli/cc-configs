@@ -31,7 +31,7 @@
   },
   {
     "file": "session-retro-20260419-assets-launch.md",
-    "primary_project_path": "~/Dev/content/investment",
+    "primary_project_path": "~/Archives/investment",
     "confidence": "high",
     "reason": "assets.tianli.cyou 上线，源仓是 investment/docs/，把 investment md 发布成静态站"
   },
@@ -111,7 +111,7 @@
     "file": "session-retro-20260427-auggie-workspace-registry.md",
     "primary_project_path": "~/Dev/tools/configs",
     "confidence": "high",
-    "reason": "auggie workspace 注册表 41 repo SSOT 落地，主体是 tools/configs/auggie-workspaces.yaml + lib/tools/auggie_workspaces.py"
+    "reason": "auggie workspace 注册表 41 repo SSOT 落地，主体是 tools/configs/auggie-workspaces.yaml + lib/tools/search/auggie_workspaces.py"
   },
   {
     "file": "session-retro-20260427-v0.1-ssot-os.md",
@@ -133,9 +133,9 @@
   },
   {
     "file": "session-retro-20260429.md",
-    "primary_project_path": "~/Dev/content/investment",
+    "primary_project_path": "~/Archives/investment",
     "confidence": "high",
-    "reason": "文件头第 3 行明确写 '项目：~/Dev/content/investment'，HSBC 资产策略 5 篇 md 迭代"
+    "reason": "文件头第 3 行明确写 '项目：~/Archives/investment'，HSBC 资产策略 5 篇 md 迭代"
   },
   {
     "file": "session-retro-20260429-ssot-cross-domain.md",

@@ -21,14 +21,14 @@
 
 ### 批量 patch / backfill
 
-跑 `~/Dev/tools/dev/lib/tools/html_provenance_backfill.py`，自动扫 ~/Dev 内 mtime 范围内的 HTML，幂等注入。
+跑 `~/Dev/tools/dev/lib/tools/oneshot/html_provenance_backfill.py`，自动扫 ~/Dev 内 mtime 范围内的 HTML，幂等注入。
 
 ```bash
 # 过去 24h
-python3 ~/Dev/tools/dev/lib/tools/html_provenance_backfill.py --hours 24 [--session <UUID>] [--dry-run]
+python3 ~/Dev/tools/dev/lib/tools/oneshot/html_provenance_backfill.py --hours 24 [--session <UUID>] [--dry-run]
 
 # 单文件
-python3 ~/Dev/tools/dev/lib/tools/html_provenance_backfill.py --file <path> [--session <UUID>]
+python3 ~/Dev/tools/dev/lib/tools/oneshot/html_provenance_backfill.py --file <path> [--session <UUID>]
 ```
 
 ## Rules（memory link）
