@@ -17,6 +17,7 @@ description: DOCX 工作流族 — read 读章节 / edit 改标题 / diff 对比
 | `merge` | md=MD 写入 DOCX 章节 / revisions=合并多修改稿 | python-docx |
 | `fix` | refs=角标 / heading=编号 / numbering=表图 / all=全部 | fix_superscript_refs.py |
 | `md2word` | MD/DOCX → Word 标准工作流（套模板 → 文本修复 → 图名居中） | md_docx_template.py |
+| `renumber` | 图被增删/挪位后，按出现顺序重排 Figure 号 + 同步全部正文引用 | docx_renumber_figures.py |
 
 ⚠️ 文件名含中文引号时用 `glob` 或 `ls` 拿路径，不要手敲。
 
@@ -298,6 +299,30 @@ DOCX 三步修复：
 ### all — 全部修复
 
 按顺序：heading → numbering → refs，中间不需用户确认。
+
+---
+
+## renumber — 图重排后重编号 + 同步正文引用
+
+`/docx renumber <docx> [-o OUT | --inplace] [--dry-run] [--prefix Figure]`
+
+工具：`docx_renumber_figures.py`。用于**图被增删/挪位后**：扫所有图题（caption），按它们在文档里**实际出现的物理顺序**重编号为 1..N，并把 captions + 全部正文引用（含范围 `Figures N–M`、列举 `Figures N, M and K`）一并改对。
+
+与 `fix numbering` 区别：`fix numbering` 是诊断+修不连续；本子命令是**给定一份已被人工挪好位置的稿，按位置强制顺排**（典型场景：reviewer 让加/删图、作者在 Word 里拖动图位置后）。
+
+### 流程
+1. `--dry-run` 先看 `现号→新号` 映射 + 变动（置换/轮转都支持）。
+2. 确认后 `-o` 出新档 或 `--inplace`（自动留 `.bak`）。
+3. 脚本自验重编号后 captions 连续 1..N，不连续退出码 2。
+
+### 关键实现（踩坑封装，直接用别重写）
+- **跨 run 分裂**：Word 把 `Figure ` 和 `23` 拆进相邻 w:t；脚本按"段落 concat + 字符偏移定位"改，朴素正则会漏。
+- **置换防碰撞**：逐 token 读旧值原子写新值（朴素全局 replace 会 23→25 又被 25→27 二次串改）。
+- **排除 w:del**：track-changes 删除态旧文本不改。
+- ⚠ **python-docx 陷阱**：`Paragraph.text` 静默漏 `w:ins`（修订插入）run 文本 → 用它扫图题会漏"修订态插入的图/引用"。脚本走 lxml 遍历 w:t（含 w:ins 排除 w:del），不踩坑。**任何在修订态 docx 上做图/引用统计，都不能信 python-docx 的 .text，要走 XML。**
+
+### 重复图号
+若多个 caption 共用同一现号（引用无法安全 remap）→ 退出码 2 + 列出重复号，先消重再跑。
 
 ---
 
