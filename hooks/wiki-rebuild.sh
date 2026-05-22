@@ -56,7 +56,7 @@ fi
 # 先 touch: 宣告本轮重建开始, 注入写回落在 debounce 窗口内被吞
 touch "$STATE_FILE"
 
-WIKI_CLI="$HOME/Dev/tools/dev/lib/tools/wiki.py"
+WIKI_CLI="$HOME/Dev/tools/dev/lib/tools/wikigen/wiki.py"
 if [ ! -f "$WIKI_CLI" ]; then
   echo "[$(date +%FT%T)] generator missing: $WIKI_CLI" >> "$LOG_FILE"
   exit 0

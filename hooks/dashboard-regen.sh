@@ -51,7 +51,7 @@ fi
 touch "$STATE_FILE"
 
 # 异步 regen, 不阻塞主流程; 日志固定位置便于 debug
-REGEN="$HOME/Dev/tools/dev/lib/tools/cc_dashboard.py"
+REGEN="$HOME/Dev/tools/dev/lib/tools/report/cc_dashboard.py"
 if [ ! -f "$REGEN" ]; then
   echo "[$(date +%FT%T)] generator missing: $REGEN" >> "$LOG_FILE"
   exit 0
