@@ -1,0 +1,9 @@
+# catalog.yaml — 模块 SSOT(认知单位,仿 Backstage catalog-info.yaml)
+name: cc-harness
+domain: dev-infra
+function: 让我 6 维度评分审计 CC 配置、分发 skill、检测项目漂移、统计命令频次、追踪 token 费用与会话健康,把 CC 工作流本身当工程对象管理
+public_api: harness.py / context.py
+key_scripts: [context.py, harness.py, cc_audit.py]
+depends_on: [hydro-district, audiobook, hydro-irrigation, downloads-organizer, hydro-qgis, hydro-risk, paths-ssot]
+tier: CORE
+owner: tianli
