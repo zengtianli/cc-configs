@@ -49,8 +49,9 @@ STAGED="$(git diff --cached --name-only 2>/dev/null || true)"
 SSOT_PATTERN='(paths\.yaml|paths_const\.py|SSOT-INDEX\.md|_dotfiles/claude/CLAUDE\.md|hq_capabilities\.yaml)'
 HIT="$(printf '%s\n' "$STAGED" | grep -E "$SSOT_PATTERN" || true)"
 
-# CC harness 触发条件:staged 含 cc-configs skills/commands/hooks/agents/settings.json 或 projects/*/memory
-CC_HARNESS_PATTERN='(cc-configs/(skills|commands|hooks|agents)/|settings\.json|projects/.+/memory/)'
+# CC harness 触发条件:staged 含 skills/commands/hooks/agents/settings.json 或 projects/*/memory
+# (git diff --cached 给相对仓库根路径,cc-configs 仓内即 skills/x.md;projects/ 仓走 cc-memory 私库)
+CC_HARNESS_PATTERN='(^(skills|commands|hooks|agents)/|cc-configs/(skills|commands|hooks|agents)/|settings\.json|projects/.+/memory/)'
 CC_HIT="$(printf '%s\n' "$STAGED" | grep -E "$CC_HARNESS_PATTERN" || true)"
 
 # 两类都没命中 → 放行
