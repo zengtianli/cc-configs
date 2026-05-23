@@ -440,7 +440,6 @@ python3 ~/Dev/tools/dev/lib/tools/ssot/paths.py audit --brief
    ```bash
    pandoc <md> -f markdown -t html5 --standalone \
      --metadata title="<filename>" \
-     -H ~/.claude/skills/render-handoff/templates/dark-theme.css \
      -o <md>.html
    ```
    per-file try/except，单失败不中断其他
@@ -449,17 +448,19 @@ python3 ~/Dev/tools/dev/lib/tools/ssot/paths.py audit --brief
 
 ### 工具与脚本
 
+走 `/share` skill 渲染单 md（pandoc + 中文友好 CSS）；批量用 wikigen 模块：
+
 ```bash
-# 单 HTML（含完整 4 步）
-python3 ~/.claude/skills/render-handoff/templates/render.py <html-file>
+# 单 file
+python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki_render_md.py <md-or-dir>
 
 # 批量
-for f in ~/Dev/wiki/handoffs/dev/*.html; do
-  python3 ~/.claude/skills/render-handoff/templates/render.py "$f"
+for f in ~/Dev/wiki/handoffs/dev/*.md; do
+  python3 ~/Dev/tools/dev/lib/tools/wikigen/wiki_render_md.py "$f"
 done
 ```
 
-模板 / CSS：`~/.claude/skills/render-handoff/templates/`（`render.py` + `dark-theme.css`）。
+旧的 render-handoff/templates 已合入本族（v3 合并）。
 
 ### 反模式
 
@@ -536,6 +537,5 @@ skill 保留 auto-trigger（"汇报 / debrief / 会话总结 / 做个 html" 关�
 - Playbook 总入口：`~/Dev/tools/configs/playbooks/META.md`
 - 中央 retro 索引：`~/Dev/stations/docs/knowledge/INDEX.md`（symlink 集合 + 时间线）
 - retro symlink 工具：`~/Dev/tools/cc-configs/tools/retro-symlink/retro_symlink.py`（link 单文件 / migrate 批量回迁）
-- render 模板：`~/.claude/skills/render-handoff/templates/render.py` + `dark-theme.css`（脚本保留，仅 SKILL.md 入口合入本族）
-- 旧示例（单一中央）：`~/Dev/stations/docs/knowledge/session-retro-20260419-r7-mega.md`
-- 新示例（物理 + symlink）：`~/Dev/stations/wpl-calc/docs/retros/session-retro-20260501-wpl-calc-v08.md` ← `~/Dev/stations/docs/knowledge/session-retro-20260501-wpl-calc-v08.md`
+- render 入口：`~/Dev/tools/dev/lib/tools/wikigen/wiki_render_md.py`（合并自旧 render-handoff/templates）
+- 示例 retro（物理 + symlink）：`~/Dev/stations/wpl-calc/docs/retros/`

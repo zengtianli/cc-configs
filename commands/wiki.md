@@ -99,16 +99,16 @@ created: YYYY-MM-DD
 
 ```bash
 # 默认 = 项目本地 vault（reclaim 模式）
-cd ~/Dev/Work/projects/reclaim && /wiki entry water-efficiency-method
-# → 写到 ~/Dev/Work/projects/reclaim/wiki/water-efficiency-method.md（平铺）
+cd ~/Work/projects/reclaim && /wiki entry water-efficiency-method
+# → 写到 PROJECT/wiki/<entry>.md（平铺）
 
 # super vault 立 topic（跨项目可发现）
 /wiki new water-efficiency "工业园区水效评估方法论" --super
-# → 写到 ~/Obsidian/dev-vault/topics/water-efficiency/
+# → 写到 SUPER_VAULT/topics/<topic>/
 
 # 在 super vault 既有 topic 下加 entry
 /wiki entry zdwp-water/industrial-water-efficiency-method --super
-# → 写到 ~/Obsidian/dev-vault/topics/zdwp-water/industrial-water-efficiency-method.md
+# → 写到 SUPER_VAULT/topics/zdwp-water/industrial-water-efficiency-method.md
 
 # 显式指任意大 vault
 /wiki entry mega-navbar --vault ~/Dev/stations

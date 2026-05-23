@@ -492,4 +492,4 @@ python3 ~/Dev/tools/dev/lib/tools/oneshot/stack_migrate_hydro.py $ARGUMENTS
 
 ### 相关
 - `/refactor classify` — 全项目分类，判断哪些该迁
-- `~/.claude/projects/-Users-tianli-Dev/memory/reference_stations_arch.md` — monorepo 速查
+- `~/Dev/stations/CLAUDE.md` — monorepo 速查

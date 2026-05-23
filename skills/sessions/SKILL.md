@@ -13,7 +13,7 @@ triggers: 列会话 / session 现状 / 会话 ROI / sessions / 看下 session / 
 ## 执行 3 步
 
 1. **刷索引**：`uv run python3 ~/Dev/tools/dev/scripts/tools/cc_sessions.py index`
-   → 写 `~/.claude/projects/session_index.json`（全 jsonl 扫一遍）
+   → 写 runtime 索引 session_index.json 到 ~/.claude/projects/（全 jsonl 扫一遍）
 2. **生成 HTML**：`uv run python3 ~/Dev/tools/dev/scripts/tools/regen_dev_roi.py`
    → 重生 `~/Dev/wiki/handoffs/dev/dev-sessions-roi.html`
 3. **打开**：`open ~/Dev/wiki/handoffs/dev/dev-sessions-roi.html`

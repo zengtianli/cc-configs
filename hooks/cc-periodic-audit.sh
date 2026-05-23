@@ -81,5 +81,17 @@ if [ -f "$SSOT_CHK" ]; then
     fi
 fi
 
+# E. Claude harness 7 层健康巡检（铁律 #25 · skills/commands/hooks/agents/goals/memory/settings）
+CC_HARNESS="$DEV/tools/dev/lib/tools/report/cc_harness_consistency.py"
+if [ -f "$CC_HARNESS" ]; then
+    out="$(python3 "$CC_HARNESS" --strict 2>&1 | tail -3 || true)"
+    if echo "$out" | grep -qE "(dead|FAIL|⚠)"; then
+        echo "  ⚠ cc-harness 7 层有 dead:"
+        echo "$out" | sed 's/^/      /'
+    else
+        echo "  ✅ cc-harness 7 层 clean (skills/commands/hooks/agents/goals/memory/settings)"
+    fi
+fi
+
 touch "$STAMP" 2>/dev/null
 exit 0

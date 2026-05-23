@@ -45,5 +45,5 @@ from htmlfig import RAMPS, mako, ramp, textcolor, export_svg, download_page
 - 未经批准直接落地最终样式（违 #8）。
 
 ## 实战参考
-zdys 降雨论文相关热图 F1：`deliverables/学术/期刊论文/data_process/fig_correlation_23-25.py`
+zdys 降雨论文相关热图 F1：`~/Archives/scatter/zdys/deliverables/学术/期刊论文/data_process/fig_correlation_23-25.py`
 （Python 生 SVG → rsvg-convert 多格式 → `correlation_heatmaps_F1.html` 下载/复制）。

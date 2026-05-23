@@ -204,8 +204,7 @@ ssh root@104.218.100.67 "echo '=== Services ===' && systemctl list-units --type=
 - docx 解包残留：含 `word/` / `_rels/` / `[Content_Types].xml` 的目录
 - 版本冗余：`deliverables/` / `docs/` 下同一文档多版本
 
-#### 3. ~/Dev/Work/ 额外
-- 在 `~/Dev/Work/projects/zdwp/` 下 → 跑 `python3 ~/Dev/tools/dev/scripts/tools/zdwp_health.py`
+#### 3. ~/Work/ 业务工作区额外（已移出 ~/Dev，2026-05-21）
 - 大目录（>1GB）提醒
 
 ### 输出

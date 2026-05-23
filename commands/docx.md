@@ -52,7 +52,7 @@ description: DOCX 工作流族 — read 读章节 / edit 改标题 / diff 对比
 
 `/docx edit <docx> --list` 或 `/docx edit <docx> '<json_ops>' [--dry-run] [-o output]`
 
-工具：`~/Dev/tools/scripts/scripts/document/docx_heading_edit.py`
+工具：`~/Dev/_archive/scripts-archive/document/docx_heading_edit.py`
 
 支持操作：
 - `rename`: `{"action":"rename", "index":185, "new_text":"新标题"}`

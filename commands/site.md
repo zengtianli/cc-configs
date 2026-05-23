@@ -68,7 +68,7 @@ description: 子域生命周期族 — add 新建（含 --monorepo 站群 scaffo
 - 拷贝对应 template 的 generate.py 和 deploy.sh
 - 在 deploy.sh 里把域名替换成 `<name>.tianli.cyou`
 - 生成最小可用 projects.yaml
-- 写 CLAUDE.md（参考 ~/Dev/stations/stack/CLAUDE.md 格式）
+- 写 CLAUDE.md（参考 ~/Dev/stations/CLAUDE.md 格式）
 
 #### 5. 第一次生成
 运行 `python3 generate.py` 验证能出 site/index.html
