@@ -47,7 +47,7 @@ fi
 if [[ -z "$L1" ]] && echo "$CMD" | grep -qE 'rm[[:space:]]+(-[rRfF]+|--recursive|--force)[[:space:]]+'; then
   RT=$(echo "$CMD" | sed -nE 's/.*rm[[:space:]]+-[rRfF]+[[:space:]]+([^ &|;]+).*/\1/p' | head -1)
   RT="${RT//\~/$HOME}"
-  if echo "$RT" | grep -qE '(/Work/(shared|projects|water-)|\.gpkg|\.gdb|/data/|/gis/|^~/gis)'; then
+  if echo "$RT" | grep -qE '(/Work/(shared|projects|water-)|\.gpkg|\.gdb|/data/|/gis/|^~/Archives/scatter/gis)'; then
     L1="rm-data"; R="rm -rf 数据敏感路径"; T="$RT"
   elif [[ -d "$RT" ]]; then
     SZ=$(du -sk "$RT" 2>/dev/null | cut -f1)
@@ -55,7 +55,52 @@ if [[ -z "$L1" ]] && echo "$CMD" | grep -qE 'rm[[:space:]]+(-[rRfF]+|--recursive
   fi
 fi
 
+# mv home 顶层目录 → L1 (铁律 #19: 必走 /refactor dir, 不许裸 mv)
+# 检测: source 是 $HOME/<非隐藏顶层> 且为目录, dest 不在 ~/.Trash; CC_DESTRUCT_OK=1 已在前面 bypass
+if [[ -z "$L1" ]] && echo "$CMD" | grep -qE '(^|[[:space:]&|;])mv[[:space:]]'; then
+  HIT=$(echo "$CMD" | HOME="$HOME" python3 -c '
+import sys, shlex, os, re
+HOME = os.environ["HOME"]
+cmd = sys.stdin.read()
+for piece in re.split(r"&&|\|\||[;&|]|\n", cmd):
+    piece = piece.strip()
+    if not re.match(r"^mv(\s|$)", piece): continue
+    try: args = shlex.split(piece)
+    except Exception: continue
+    posargs = [a for a in args[1:] if not a.startswith("-")]
+    if len(posargs) < 2: continue
+    dest = posargs[-1]
+    dest_exp = os.path.expanduser(dest.replace("$HOME", HOME))
+    if "/.Trash" in dest_exp: continue   # 入 Trash 是回收,放过
+    for s in posargs[:-1]:
+        s_exp = os.path.expanduser(s.replace("$HOME", HOME))
+        if not s_exp.startswith(HOME + "/"): continue
+        rel = s_exp[len(HOME)+1:].rstrip("/")
+        if "/" in rel or rel.startswith(".") or not rel: continue   # 非顶层/隐藏跳过
+        if not os.path.isdir(s_exp): continue                       # 仅拦目录
+        print(f"{s} → {dest}"); sys.exit(0)
+' 2>/dev/null)
+  if [[ -n "$HIT" ]]; then
+    L1="mv-home-top"; R="裸 mv home 顶层目录 (铁律 #19, 必走 /refactor dir)"; T="$HIT"
+  fi
+fi
+
 if [[ -n "$L1" ]]; then
+  if [[ "$L1" == "mv-home-top" ]]; then
+    cat >&2 <<EOF
+
+⛔ danger-guard L1 拦截 — 裸 mv home 顶层目录 (铁律 #19)
+  触发: $R
+  对象: $T
+  命令: ${CMD:0:300}
+
+  目录迁移 = SSOT 原子事务,禁裸 mv。正确流程:
+    1) /refactor dir <old> <new>   ← 原子事务: paths.yaml migration + mv + rewrite-dead + rebuild-symlinks + audit
+    2) 已走 SSOT 显式绕过:           CC_DESTRUCT_OK=1 <原命令>
+  Trash 回收除外: mv ... ~/.Trash/... 自动放过
+EOF
+    exit 2
+  fi
   BK="cc-pre-destruct-$(date +%s)-${L1}"
   cat >&2 <<EOF
 

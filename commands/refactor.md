@@ -71,7 +71,9 @@ Grep 扫 `<old>` 在以下位置出现次数（三种写法：`~/Dev/...` + `/Us
 
 ```bash
 mkdir -p "$(dirname <new>)"
-mv <old> <new>
+# CC_DESTRUCT_OK=1 显式表态:本次 mv 是 SSOT 原子事务的一部分(Step 3 已写 migration),
+# 绕过 danger-guard L1 mv-home-top 拦截(铁律 #19 的硬强制)
+CC_DESTRUCT_OK=1 mv <old> <new>
 ```
 
 #### Step 4.5 · 旧位留转发面包屑（tombstone）
