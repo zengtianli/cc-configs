@@ -1,0 +1,14 @@
+name: cc-configs
+domain: tools
+function: Claude Code 配置中心（commands/skills/agents/rules SSOT + harness-sync 分发 + context 监控工具）
+public_api: tools/harness/harness.py · tools/context/context.py · harness.yaml
+key_scripts:
+  - tools/harness/harness.py
+  - tools/context/context.py
+  - install.sh
+depends_on: []
+tier: CORE
+owner: tianli
+docs: ./CLAUDE.md
+notes: |
+  纯 stdlib，无第三方包；install.sh 把 commands/skills/agents/harness.yaml symlink 到 ~/.claude/。
