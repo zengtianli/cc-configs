@@ -24,7 +24,7 @@ HSBC 任意结单 PDF 一键分析。链路：
 ## 执行
 
 ```bash
-python3 ~/Dev/content/investment/.claude/skills/hsbc-statement/scripts/analyze.py "$@"
+python3 ~/Archives/investment/.claude/skills/hsbc-statement/scripts/analyze.py "$@"
 ```
 
 ## 何时跑

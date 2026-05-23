@@ -88,7 +88,7 @@ def project_label(physical: Path) -> str:
     if parts[0] == "Dev" and len(parts) >= 4:
         # ~/Dev/stations/wpl-calc/...   → wpl-calc
         # ~/Dev/stations/web-stack/... → stations/web-stack
-        # ~/Dev/content/investment/... → content/investment
+        # ~/Archives/investment/... → content/investment
         if parts[1] in ("stations", "labs", "content", "tools", "migrated") and len(parts) >= 5:
             return f"{parts[1]}/{parts[2]}"
         return parts[1]

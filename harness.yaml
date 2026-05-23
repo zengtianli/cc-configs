@@ -37,7 +37,7 @@ projects:
     path: ~/Dev/Work/projects/reclaim
     skills: [capacity, resources, plan-first, structure]
   international-assets:
-    path: ~/Dev/content/investment
+    path: ~/Archives/investment
     skills: [cc-dashboard]
   zls:
     path: ~/zls
