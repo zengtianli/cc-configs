@@ -579,7 +579,7 @@ dws doc read --node "https://alidocs.dingtalk.com/document/preview?cid=749936706
 
 | 脚本 | 场景 | 用法 |
 |------|------|------|
-| [doc_create_and_write.py](../../scripts/doc_create_and_write.py) | 创建文档并写入 Markdown 内容 | `python doc_create_and_write.py --name "周报" --content "# 本周总结"` |
+| doc_create_and_write.py | 创建文档并写入 Markdown 内容 | `python doc_create_and_write.py --name "周报" --content "# 本周总结"` |
 
 ## 相关产品
 

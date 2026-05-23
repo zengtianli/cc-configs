@@ -48,7 +48,13 @@ STAGED="$(git diff --cached --name-only 2>/dev/null || true)"
 # 触发条件:staged 含 SSOT 文档之一
 SSOT_PATTERN='(paths\.yaml|paths_const\.py|SSOT-INDEX\.md|_dotfiles/claude/CLAUDE\.md|hq_capabilities\.yaml)'
 HIT="$(printf '%s\n' "$STAGED" | grep -E "$SSOT_PATTERN" || true)"
-[ -z "$HIT" ] && exit 0
+
+# CC harness 触发条件:staged 含 cc-configs skills/commands/hooks/agents/settings.json 或 projects/*/memory
+CC_HARNESS_PATTERN='(cc-configs/(skills|commands|hooks|agents)/|settings\.json|projects/.+/memory/)'
+CC_HIT="$(printf '%s\n' "$STAGED" | grep -E "$CC_HARNESS_PATTERN" || true)"
+
+# 两类都没命中 → 放行
+[ -z "$HIT" ] && [ -z "$CC_HIT" ] && exit 0
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 DEV_ROOT="$HOME/Dev"
@@ -56,6 +62,21 @@ export PYTHONPATH="$DEV_ROOT:$DEV_ROOT/tools/dev/scripts:$DEV_ROOT/tools/dev:$DE
 
 FAILED=0
 FAIL_MSGS=()
+
+# CC harness 守门:staged 含 cc-configs harness 类文件 → 跑 cc_harness_consistency --strict
+# dead 增长 = 阻断(类比 G1 文档驱动的 import 验证)
+if [ -n "$CC_HIT" ]; then
+    CC_HARNESS_PY="$DEV_ROOT/tools/dev/lib/tools/report/cc_harness_consistency.py"
+    if [ -f "$CC_HARNESS_PY" ]; then
+        if ! python3 "$CC_HARNESS_PY" --strict >/tmp/cc-harness-precommit.log 2>&1; then
+            dead_summary="$(tail -5 /tmp/cc-harness-precommit.log | sed 's/^/      /')"
+            FAIL_MSGS+=("CC harness 7 层有 dead 引用 (cc_harness_consistency --strict 非零):")
+            FAIL_MSGS+=("$dead_summary")
+            FAIL_MSGS+=("  详见 /tmp/cc-harness-precommit.log;修法: 跑 --fix-dry-run 看建议或清理 dead 引用")
+            FAILED=1
+        fi
+    fi
+fi
 
 # 对每个命中的 SSOT 文档抽 import 子句, 真验证
 for f in $HIT; do

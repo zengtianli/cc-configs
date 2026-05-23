@@ -84,12 +84,12 @@ fi
 # E. Claude harness 7 层健康巡检（铁律 #25 · skills/commands/hooks/agents/goals/memory/settings）
 CC_HARNESS="$DEV/tools/dev/lib/tools/report/cc_harness_consistency.py"
 if [ -f "$CC_HARNESS" ]; then
-    out="$(python3 "$CC_HARNESS" --strict 2>&1 | tail -3 || true)"
-    if echo "$out" | grep -qE "(dead|FAIL|⚠)"; then
-        echo "  ⚠ cc-harness 7 层有 dead:"
-        echo "$out" | sed 's/^/      /'
-    else
+    # 用退出码判定(0=clean / 3=有 dead);避免 grep "dead" 命中"0 项 dead"误报
+    if python3 "$CC_HARNESS" --strict >/tmp/cc-harness-audit.log 2>&1; then
         echo "  ✅ cc-harness 7 层 clean (skills/commands/hooks/agents/goals/memory/settings)"
+    else
+        echo "  ⚠ cc-harness 7 层有 dead:"
+        tail -5 /tmp/cc-harness-audit.log | sed 's/^/      /'
     fi
 fi
 
