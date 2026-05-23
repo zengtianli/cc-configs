@@ -14,6 +14,7 @@ description: 健康检查族 — sites 边缘 HTTP / services 全景 12 服务�
 | `vps` | VPS 服务/端口/磁盘/内存/Docker | 文本 |
 | `project` | 当前目录 / 多 repo 的 git 状态 + 文件卫生 | 表格 |
 | `dotfiles` | _dotfiles symlink 健康 / 孤儿副本 / SSOT 反向覆盖 / ~ 顶层 orphan | 表格行 |
+| `claude` | CC harness 一致性 — skills/commands/agents/hooks 漂移 + dead refs + scope L | 表格 / JSON |
 
 未传子命令 → `project`（最常用）。
 
@@ -270,3 +271,49 @@ python3 ~/Dev/tools/dev/lib/tools/scaffold/dotfile_audit.py check $ARGUMENTS
 ### 相关
 - pre-commit hook: `~/Dev/tools/dev/scripts/hooks/pre-commit-dotfiles.sh`
 - 白名单 SSOT: `~/Dev/tools/dev/lib/tools/scaffold/dotfile_audit.py` `HOME_DOTFILE_ALLOW`
+
+---
+
+## claude — CC harness 一致性 (skills/commands/agents/hooks)
+
+`/health claude [--strict] [--json] [--scope all|L1..L7] [--fix-dry-run]`
+
+跑 `cc_harness_consistency.py`，盘 CC harness 全链：skills/commands/agents/hooks 在 `~/Dev/tools/cc-configs/` SSOT 与各 project `.claude/` 之间漂移、死引用、orphan、scope 越界。
+
+**触发词**：`/health claude` · `cc 健康` · `harness 健康` · `claude 配置 dead` · `cc-harness audit`
+
+### 执行
+
+```bash
+python3 ~/Dev/tools/dev/lib/tools/report/cc_harness_consistency.py --strict $ARGUMENTS
+```
+
+默认 `--strict`（任一 FAIL 退 1）。
+
+### 参数透传
+
+- `--json` — 机器可读输出，供聚合矩阵 / CI gate 消费
+- `--scope <L>` — 限定层（L1=skills / L2=commands / L3=hooks / L4=agents / L5=goals / L6=memory / L7=settings；默认 all）
+- `--fix-dry-run` — 展示可修复项（不实际改文件），人确认后再跑 `harness-sync`
+
+### 检查维度
+
+| 层 | 含义 |
+|---|---|
+| L1 skills | `~/Dev/tools/cc-configs/skills/*` (= `~/.claude/skills/` symlink) 内引用 |
+| L2 commands | `~/Dev/tools/cc-configs/commands/*` (= `~/.claude/commands/` symlink) 内引用 |
+| L3 hooks | `~/.claude/settings.json` 注册的 hook 脚本是否存在 |
+| L4 agents | `~/.claude/agents/*` + `~/Dev/tools/cc-configs/agents/*` |
+| L5 goals | `~/.claude/goals/*/{GOAL.md,check_goal.sh}` |
+| L6 memory | `~/.claude/projects/*/memory/{MEMORY.md, *.md}` |
+| L7 settings | `~/.claude/settings.json` allow/deny + env file refs |
+
+### 修复
+
+- `--fix-dry-run` 给清单 → 确认后跑 `~/Dev/tools/cc-configs/skills/harness-sync/` 分发同步
+- 真凭证 / 真 stale → 手动决断（不自动改）
+
+### 相关
+- `/health dotfiles` — _dotfiles SSOT 漂移（CC 配置之外的 dotfiles）
+- `harness-sync` skill — 实际执行 SSOT → 项目分发
+- SSOT: `~/Dev/tools/cc-configs/harness.yaml`
