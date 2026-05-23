@@ -11,6 +11,42 @@ description: 并行 agent team 处理多目标任务，每个 agent goal-loop �
 
 ---
 
+## 0. Idle-Orchestrator Mode（2026-05-23 用户钦定 · 硬约束）
+
+**触发**：用户键入 `/dispatch`（不带任务参数或带 "mode on / 进入模式" 等）→ **本会话从此刻起进入 idle-orchestrator mode**，直到用户显式 `/dispatch off` 或 `/wrap` 退出。
+
+**模式语义**：
+- 主会话 = **纯编排者**，永远 idle 等用户命令；用户每次发任务 → 主会话**只**做：① 拆解 ② 派 agent team ③ 收报告整合 ④ 主进程亲自实测 verify ⑤ commit+push 收口 ⑥ 出 HTML 给用户
+- 主会话 **绝对禁止**亲手 Read / Edit / Write / Bash 业务文件（编排必需的 TaskCreate / Agent / ToolSearch / 读 agent 报告 / 整合用的 Read 例外）
+- 用户没下命令 = 主会话不主动开火，**安静等指令**（不要"我来看看 X / 顺便扫一下 Y"）
+- 单 agent 也不行 — 进入模式后任何任务最低 **agent team N≥2 并发**（即使只 1 个目标，也派 1 worker + 1 verifier 并发；除非用户明说 "/dispatch off 退出"）
+
+**模式状态记录**：
+- 主会话开头第一句必声明：「✅ 已进入 dispatch idle-orchestrator mode · 等待你的命令」
+- 每次接到用户任务，回复必须以「📋 任务收到 · 拆 N 个 worker 并发派发」开头，证明走的是 dispatch 路径
+- 不要在主会话里偷偷干活然后假装"派了 agent"
+
+**例外**（仅 4 种主会话可直接动手）：
+1. 用户问纯信息类问题（"X 是什么 / Y 在哪"）— 答完继续 idle
+2. 编排必需的 status 类只读命令（`git status` / `ls handoffs/` / 读 agent 报告）
+3. 整合 agent 输出到 SSOT（合并 patch / 改 settings.json）— 这是编排的整合环节
+4. commit + push 收口（铁律 #3：subagent 不动 git，commit 由主进程统一收口）
+
+**退出**：
+- 用户键入 `/dispatch off` / `/wrap` / `/clear` → 退出 idle mode 回归普通会话
+- 退出时主会话回复：「🛑 已退出 dispatch mode · 恢复普通编排」
+
+**Why**：用户原话「主会话 一定要idle，一定要等我命令，就调度。任务给 agentteam」。CLAUDE.md 铁律 #1 + #16 已立"默认 multi-agent"，但仍出现主会话偷偷亲手干 + 假装派了 agent 的反模式。idle-orchestrator mode = 把"默认派 agent"升级成"模式锁定派 agent"，让主会话在用户没发命令时**安静不动**，发命令时**只走 agent 路径**。配合铁律 #13（执行约束需 GOAL/Hook 层）后续可补 PreToolUse hook 拦截非编排类工具调用。
+
+**反模式**：
+- 进 mode 后主会话亲手 Edit 文件 / 跑业务 Bash / 写脚本 — 应派 agent
+- "顺便我来扫一下 X" 用户没问也开火 — 应 idle 等命令
+- 派 1 个 agent 就算 — 模式内最低 N≥2 并发
+- 跳过开头声明 / 任务收到声明 — 用户没法 verify 你真在 dispatch 路径
+- 模式没退出就开始普通会话风格 — 应显式 `/dispatch off`
+
+---
+
 ## 1. when to use
 
 任一触发即用：
