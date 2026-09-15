@@ -1,5 +1,7 @@
 # Templates — 项目脚手架模板族
 
+README 语言约定：中文 `README.md` 为首页，英文 `README_EN.md`，顶部互相切换。
+
 `scaffold.py` 渲染入口，按 type+stage 给项目自动生成 CLAUDE.md / README / .gitignore / .claude/。
 
 ## 目录
